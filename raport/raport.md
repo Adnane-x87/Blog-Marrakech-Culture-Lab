@@ -77,7 +77,7 @@ Ensure the platform maintains high-quality, verified cultural content and provid
 - **Connection:** Stable office internet
 - **Usage pattern:** Checks submissions 2-3 times daily, weekly reporting, responds to organizer requests within 24 hours
 
-### Problem
+## Problem
 How can we centralize Marrakech’s cultural events to make discovery easier for visitors and promotion more efficient for local organizers?
 
 ## Problem Statements
