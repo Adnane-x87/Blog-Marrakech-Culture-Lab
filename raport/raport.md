@@ -52,3 +52,27 @@ Promote his cultural events to the right audience in Marrakech and increase visi
 - Device: Laptop for creating events, smartphone for quick responses and updates
 - Connection: Good WiFi at gallery/home
 - Usage pattern: Posts events 2-3 weeks in advance, checks engagement daily, responds to inquiries
+
+# Persona 3: Sofia, the Platform Administrator
+
+##  Age/Context
+- **Age:** 32 years old
+- **Occupation:** Digital project manager working with the Marrakech Cultural Office
+- **Lifestyle:** Responsible for maintaining the quality and credibility of the platform, works regular office hours
+- **Tech usage:** Desktop computer at office, tablet at home, comfortable with admin dashboards and content management systems
+
+##  Main Objective
+Ensure the platform maintains high-quality, verified cultural content and provides a trustworthy experience for both event organizers and visitors.
+
+##  Key Needs (3 max)
+1. **Moderate content efficiently** – Review and approve/reject submitted events quickly to ensure only legitimate cultural events are published.
+2. **Manage user accounts** – Handle organizer registrations, verify credentials, and manage user roles and permissions easily.
+3. **Monitor platform activity** – Get quick insights on platform usage (number of events, active users, popular categories) to report to stakeholders.
+
+##  Main Frustration
+**"Manual verification is overwhelming and time-consuming!"** – She has to check every event submission manually, verify organizers' credentials separately, and often gets overwhelmed during peak cultural seasons (festivals, Ramadan cultural nights) when multiple events are submitted daily.
+
+##  Environment
+- **Device:** Desktop at office (primary), tablet for evening checks
+- **Connection:** Stable office internet
+- **Usage pattern:** Checks submissions 2-3 times daily, weekly reporting, responds to organizer requests within 24 hours
