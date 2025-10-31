@@ -76,3 +76,23 @@ Ensure the platform maintains high-quality, verified cultural content and provid
 - **Device:** Desktop at office (primary), tablet for evening checks
 - **Connection:** Stable office internet
 - **Usage pattern:** Checks submissions 2-3 times daily, weekly reporting, responds to organizer requests within 24 hours
+
+### Problem
+How can we centralize Marrakech’s cultural events to make discovery easier for visitors and promotion more efficient for local organizers?
+
+## Problem Statements
+For Yasmine, who struggles to find accurate and up-to-date information about cultural and artistic events in Marrakech,
+we want to create a centralized and dynamic platform that gathers all event information in one place,
+so that she can quickly discover what’s happening and participate more in the city’s cultural life.
+
+For the Event Organizer (Karim):
+For Karim, who spends too much time promoting his events on multiple platforms with little reach,
+we want to offer an online space where he can publish, manage, and track his events efficiently,
+so that he can reach a larger cultural audience and boost participation with less effort.
+
+## Proposed Solution
+
+- A mobile-first web platform that displays upcoming and ongoing events by date and category.
+-  Smart filters to search by interest, date, and popularity.
+- Simple event creation form with title, description, date, location, and images.
+- Automatic formatting: generate a professional event card automatically from the form.
