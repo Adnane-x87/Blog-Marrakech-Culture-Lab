@@ -52,9 +52,10 @@
 
 👉 Deliver the site map → Complete list of pages including: page title + short description of purpose (no detailed content needed at this stage)
 
-## 📊  Use Case Diagram
+## 📊 Use Case Diagram
 
 ```plantuml
+
 @startuml
 left to right direction
 skinparam packageStyle rectangle
@@ -98,3 +99,36 @@ Sofia --> UC11
 UC2 ..> UC1 : <<extends>>
 UC3 ..> UC1 : <<extends>>
 @enduml
+
+
+## 🗂️ Site Map — Blog "Marrakech Cultural Scene"
+
+### 🎭 Public Area
+
+| Page | Description |
+|------|-------------|
+| **Home** | Landing page with hero banner, featured events, and latest cultural highlights |
+| **Events / Blog** | Grid display of events (thumbnail, title, date, category tags) |
+| **Event Details** | Individual event page: full information, organizer details, images, engagement section |
+| **Category Page** | Events filtered by type (exhibitions, concerts, theater, workshops...) |
+| **About** | Platform mission, cultural vision, community goals |
+| **Submit Event** | Simple form for organizers: event name, date, location, description, image upload |
+
+### 🔐 Admin / Editor Area
+
+| Page | Description |
+|------|-------------|
+| **Admin Dashboard** | Overview: pending submissions, published events, statistics |
+| **Events List** | Table view of all events (title, date, status, organizer, actions) |
+| **Approve Event** | Review and approve/reject submitted events |
+| **Delete Event** | Remove event with confirmation prompt |
+
+### 🛠️ Key Features
+
+✅ CRUD operations for events (Admin/Editor)  
+✅ Event display with images and filters  
+✅ Event page with community engagement  
+✅ Fully responsive design  
+✅ Modern cultural aesthetic with Marrakech-inspired colors
+
+ 
