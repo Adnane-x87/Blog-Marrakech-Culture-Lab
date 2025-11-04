@@ -96,3 +96,53 @@ so that he can reach a larger cultural audience and boost participation with les
 -  Smart filters to search by interest, date, and popularity.
 - Simple event creation form with title, description, date, location, and images.
 - Automatic formatting: generate a professional event card automatically from the form.
+
+## Use Case Diagram
+
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Yasmine\n(Visitor)" as Yasmine
+actor "Karim\n(Editor)" as Karim
+actor "Sofia\n(Admin)" as Sofia
+
+rectangle "Marrakech Cultural Events Platform" {
+
+  ' Yasmine's Use Cases
+  usecase "Browse Events" as UC1
+  usecase "Filter Events\n(by category & date)" as UC2
+  usecase "View Event Details" as UC3
+  usecase "See Event Popularity" as UC4
+
+  ' Karim's Use Cases
+  usecase "Create/Publish Event" as UC7
+  usecase "Manage Events" as UC9
+
+  ' Sofia's Use Cases
+  usecase "Manage published articles" as UC10
+  usecase "Approve / Reject posts" as UC11
+}
+
+' Connections for Yasmine
+Yasmine --> UC1
+Yasmine --> UC2
+Yasmine --> UC3
+Yasmine --> UC4
+
+' Connections for Karim
+Karim --> UC7
+Karim --> UC9
+
+' Connections for Sofia
+Sofia --> UC10
+Sofia --> UC11
+
+' Relationships between use cases
+UC2 ..> UC1 : <<extends>>
+UC3 ..> UC1 : <<extends>>
+@enduml
+
+
+## Use case Diagram MVP
+
