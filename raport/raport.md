@@ -99,6 +99,8 @@ so that he can reach a larger cultural audience and boost participation with les
 
 ## Use Case Diagram
 
+```plantum
+
 @startuml
 left to right direction
 skinparam packageStyle rectangle
@@ -142,7 +144,6 @@ Sofia --> UC11
 UC2 ..> UC1 : <<extends>>
 UC3 ..> UC1 : <<extends>>
 @enduml
-
 
 ## Use case Diagram MVP
 
