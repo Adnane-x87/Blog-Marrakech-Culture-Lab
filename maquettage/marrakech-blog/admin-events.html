@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events - Admin Panel</title>
+    <meta name="description" content="Manage and oversee all cultural events in the Marrakech Cultural Scene platform.">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Admin Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-indigo">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="admin-dashboard.html">
+                <i class="fas fa-cog me-2"></i>
+                Admin Panel - Marrakech Cultural Scene
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="adminNavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-dashboard.html">
+                            <i class="fas fa-chart-pie me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="admin-events.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Manage Events
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-approve.html">
+                            <i class="fas fa-check-circle me-1"></i>Approve Events
+                            <span class="badge bg-terracotta ms-1">5</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-delete.html">
+                            <i class="fas fa-trash me-1"></i>Remove Events
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminUserDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i>Admin User
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
+                            <li><a class="dropdown-item" href="#">System Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html">View Public Site</a></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1>Event Management</h1>
+                    <p class="mb-0">Oversee all cultural events and their publication status</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <button class="btn btn-terracotta" data-bs-toggle="modal" data-bs-target="#addEventModal">
+                        <i class="fas fa-plus me-2"></i>Add New Event
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Management Content -->
+    <div class="container-fluid py-4">
+        <!-- Filter and Search Controls -->
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <div class="admin-content p-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 mb-2 mb-md-0">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                                <input type="text" class="form-control" id="eventSearch" placeholder="Search events...">
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-2 mb-md-0">
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All Statuses</option>
+                                <option value="published">Published</option>
+                                <option value="pending">Pending Review</option>
+                                <option value="draft">Draft</option>
+                                <option value="archived">Archived</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-2 mb-md-0">
+                            <select class="form-select" id="categoryFilter">
+                                <option value="">All Categories</option>
+                                <option value="music">Music</option>
+                                <option value="exhibition">Art Exhibition</option>
+                                <option value="theater">Theater</option>
+                                <option value="workshop">Workshop</option>
+                                <option value="festival">Festival</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-primary w-100" onclick="applyFilters()">
+                                <i class="fas fa-filter me-1"></i>Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="admin-content p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">Total Events: <span class="text-terracotta">247</span></h6>
+                            <small class="text-muted">Published: 203 | Pending: 5 | Draft: 39</small>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-download me-1"></i>Export
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-file-csv me-2"></i>Export as CSV</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-file-excel me-2"></i>Export as Excel</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-file-pdf me-2"></i>Export as PDF</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Table -->
+        <div class="row">
+            <div class="col-12">
+                <div class="admin-content">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" class="form-check-input" id="selectAll">
+                                    </th>
+                                    <th>Event</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th>Organizer</th>
+                                    <th>Status</th>
+                                    <th>Attendees</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input event-checkbox" value="1">
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="images/music_concert_6.jpeg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <div>
+                                                <h6 class="mb-0">Traditional Moroccan Music Concert</h6>
+                                                <small class="text-muted">Marrakech Cultural Center</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-ochre">Music</span></td>
+                                    <td>
+                                        <div>Dec 15, 2024</div>
+                                        <small class="text-muted">8:00 PM</small>
+                                    </td>
+                                    <td>Cultural Center</td>
+                                    <td><span class="badge bg-success">Published</span></td>
+                                    <td>
+                                        <div>45 / 120</div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-terracotta" style="width: 38%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
+                                                <i class="fas fa-archive"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input event-checkbox" value="2">
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="images/art_exhibition_1.jpeg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <div>
+                                                <h6 class="mb-0">Contemporary Art Exhibition</h6>
+                                                <small class="text-muted">Gallery Moderne</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-indigo">Exhibition</span></td>
+                                    <td>
+                                        <div>Dec 20, 2024</div>
+                                        <small class="text-muted">6:00 PM</small>
+                                    </td>
+                                    <td>Gallery Moderne</td>
+                                    <td><span class="badge bg-warning">Pending</span></td>
+                                    <td>
+                                        <div>12 / 80</div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-ochre" style="width: 15%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
+                                                <i class="fas fa-archive"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input event-checkbox" value="3">
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="images/cultural_workshop_1.jpg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <div>
+                                                <h6 class="mb-0">Traditional Pottery Workshop</h6>
+                                                <small class="text-muted">Artisan Quarter, Medina</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-terracotta">Workshop</span></td>
+                                    <td>
+                                        <div>Dec 25, 2024</div>
+                                        <small class="text-muted">2:00 PM</small>
+                                    </td>
+                                    <td>Artisan Guild</td>
+                                    <td><span class="badge bg-success">Published</span></td>
+                                    <td>
+                                        <div>8 / 15</div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-terracotta" style="width: 53%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
+                                                <i class="fas fa-archive"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input event-checkbox" value="4">
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="images/theater_performance_0.jpg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <div>
+                                                <h6 class="mb-0">Tales of Marrakech</h6>
+                                                <small class="text-muted">Royal Theater Marrakech</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-purple">Theater</span></td>
+                                    <td>
+                                        <div>Dec 30, 2024</div>
+                                        <small class="text-muted">7:30 PM</small>
+                                    </td>
+                                    <td>Theater Company</td>
+                                    <td><span class="badge bg-success">Published</span></td>
+                                    <td>
+                                        <div>67 / 150</div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-indigo" style="width: 45%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
+                                                <i class="fas fa-archive"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input event-checkbox" value="5">
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="images/music_concert_8.jpg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <div>
+                                                <h6 class="mb-0">Gnawa Music Festival</h6>
+                                                <small class="text-muted">Palmery Cultural Garden</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge bg-ochre">Music</span></td>
+                                    <td>
+                                        <div>Jan 5, 2025</div>
+                                        <small class="text-muted">7:00 PM</small>
+                                    </td>
+                                    <td>Cultural Foundation</td>
+                                    <td><span class="badge bg-secondary">Draft</span></td>
+                                    <td>
+                                        <div>0 / 200</div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-terracotta" style="width: 0%;"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
+                                                <i class="fas fa-archive"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Bulk Actions -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="bulk-actions">
+                            <span class="me-3">Bulk Actions:</span>
+                            <button class="btn btn-sm btn-outline-success me-2" onclick="bulkPublish()">
+                                <i class="fas fa-check me-1"></i>Publish Selected
+                            </button>
+                            <button class="btn btn-sm btn-outline-warning me-2" onclick="bulkArchive()">
+                                <i class="fas fa-archive me-1"></i>Archive Selected
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="bulkDelete()">
+                                <i class="fas fa-trash me-1"></i>Delete Selected
+                            </button>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <nav aria-label="Events pagination">
+                            <ul class="pagination pagination-sm mb-0">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div class="modal fade" id="addEventModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addEventForm">
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label for="newEventTitle" class="form-label">Event Title</label>
+                                <input type="text" class="form-control" id="newEventTitle" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="newEventCategory" class="form-label">Category</label>
+                                <select class="form-select" id="newEventCategory" required>
+                                    <option value="">Choose...</option>
+                                    <option value="music">Music</option>
+                                    <option value="exhibition">Art Exhibition</option>
+                                    <option value="theater">Theater</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="festival">Festival</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="newEventDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="newEventDescription" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="newEventDate" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="newEventDate" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="newEventTime" class="form-label">Time</label>
+                                <input type="time" class="form-control" id="newEventTime" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="newEventStatus" class="form-label">Status</label>
+                                <select class="form-select" id="newEventStatus">
+                                    <option value="draft">Draft</option>
+                                    <option value="pending">Pending Review</option>
+                                    <option value="published">Published</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="newEventVenue" class="form-label">Venue</label>
+                                <input type="text" class="form-control" id="newEventVenue" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="newEventOrganizer" class="form-label">Organizer</label>
+                                <input type="text" class="form-control" id="newEventOrganizer" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveNewEvent()">Save Event</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Event Management JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select All checkbox functionality
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const eventCheckboxes = document.querySelectorAll('.event-checkbox');
+            
+            selectAllCheckbox.addEventListener('change', function() {
+                eventCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+            });
+            
+            // Individual checkbox change
+            eventCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const checkedBoxes = document.querySelectorAll('.event-checkbox:checked');
+                    selectAllCheckbox.checked = checkedBoxes.length === eventCheckboxes.length;
+                    selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < eventCheckboxes.length;
+                });
+            });
+        });
+        
+        function applyFilters() {
+            const search = document.getElementById('eventSearch').value;
+            const status = document.getElementById('statusFilter').value;
+            const category = document.getElementById('categoryFilter').value;
+            
+            // In a real application, this would filter the table content
+            console.log('Applying filters:', { search, status, category });
+        }
+        
+        function bulkPublish() {
+            const selectedEvents = document.querySelectorAll('.event-checkbox:checked');
+            if (selectedEvents.length === 0) {
+                alert('Please select events to publish.');
+                return;
+            }
+            
+            if (confirm(`Publish ${selectedEvents.length} selected event(s)?`)) {
+                // Implementation for bulk publish
+                console.log('Publishing events:', Array.from(selectedEvents).map(cb => cb.value));
+            }
+        }
+        
+        function bulkArchive() {
+            const selectedEvents = document.querySelectorAll('.event-checkbox:checked');
+            if (selectedEvents.length === 0) {
+                alert('Please select events to archive.');
+                return;
+            }
+            
+            if (confirm(`Archive ${selectedEvents.length} selected event(s)?`)) {
+                // Implementation for bulk archive
+                console.log('Archiving events:', Array.from(selectedEvents).map(cb => cb.value));
+            }
+        }
+        
+        function bulkDelete() {
+            const selectedEvents = document.querySelectorAll('.event-checkbox:checked');
+            if (selectedEvents.length === 0) {
+                alert('Please select events to delete.');
+                return;
+            }
+            
+            if (confirm(`Permanently delete ${selectedEvents.length} selected event(s)? This action cannot be undone.`)) {
+                // Implementation for bulk delete
+                console.log('Deleting events:', Array.from(selectedEvents).map(cb => cb.value));
+            }
+        }
+        
+        function saveNewEvent() {
+            const form = document.getElementById('addEventForm');
+            if (form.checkValidity()) {
+                // Implementation for saving new event
+                console.log('Saving new event...');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addEventModal'));
+                modal.hide();
+                showSuccessMessage('Event added successfully!');
+            } else {
+                form.reportValidity();
+            }
+        }
+    </script>
+    
+    <style>
+        .bg-purple {
+            background-color: #6f42c1 !important;
+        }
+    </style>
+</body>
+</html>

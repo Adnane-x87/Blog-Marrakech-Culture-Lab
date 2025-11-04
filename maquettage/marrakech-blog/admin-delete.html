@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Events - Admin Panel</title>
+    <meta name="description" content="Manage event deletions and archive expired events in the Marrakech Cultural Scene platform.">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Admin Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-indigo">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="admin-dashboard.html">
+                <i class="fas fa-cog me-2"></i>
+                Admin Panel - Marrakech Cultural Scene
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="adminNavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-dashboard.html">
+                            <i class="fas fa-chart-pie me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-events.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Manage Events
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-approve.html">
+                            <i class="fas fa-check-circle me-1"></i>Approve Events
+                            <span class="badge bg-terracotta ms-1">5</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="admin-delete.html">
+                            <i class="fas fa-trash me-1"></i>Remove Events
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminUserDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i>Admin User
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
+                            <li><a class="dropdown-item" href="#">System Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html">View Public Site</a></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Header -->
+    <div class="admin-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1>Event Deletion & Archive Management</h1>
+                    <p class="mb-0">Manage event removals, expired events, and archive maintenance</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="deletion-stats">
+                        <small class="text-white-50">
+                            <i class="fas fa-trash me-1"></i>12 deleted this month • 
+                            <i class="fas fa-archive me-1"></i>45 archived
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deletion Management Content -->
+    <div class="container-fluid py-4">
+        <!-- Action Cards -->
+        <div class="row mb-4">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="action-card bg-white rounded shadow p-4 text-center h-100">
+                    <i class="fas fa-calendar-times text-warning fa-3x mb-3"></i>
+                    <h5>Expired Events</h5>
+                    <p class="text-muted small">Events that have passed their date</p>
+                    <h3 class="text-warning">23</h3>
+                    <button class="btn btn-outline-warning btn-sm" onclick="showExpiredEvents()">
+                        <i class="fas fa-eye me-1"></i>Review
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="action-card bg-white rounded shadow p-4 text-center h-100">
+                    <i class="fas fa-exclamation-triangle text-danger fa-3x mb-3"></i>
+                    <h5>Flagged Events</h5>
+                    <p class="text-muted small">Events reported by users</p>
+                    <h3 class="text-danger">3</h3>
+                    <button class="btn btn-outline-danger btn-sm" onclick="showFlaggedEvents()">
+                        <i class="fas fa-flag me-1"></i>Review
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="action-card bg-white rounded shadow p-4 text-center h-100">
+                    <i class="fas fa-archive text-info fa-3x mb-3"></i>
+                    <h5>Archive Queue</h5>
+                    <p class="text-muted small">Events ready for archival</p>
+                    <h3 class="text-info">8</h3>
+                    <button class="btn btn-outline-info btn-sm" onclick="showArchiveQueue()">
+                        <i class="fas fa-box me-1"></i>Process
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="action-card bg-white rounded shadow p-4 text-center h-100">
+                    <i class="fas fa-trash-alt text-secondary fa-3x mb-3"></i>
+                    <h5>Recycle Bin</h5>
+                    <p class="text-muted small">Recently deleted events</p>
+                    <h3 class="text-secondary">12</h3>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="showRecycleBin()">
+                        <i class="fas fa-undo me-1"></i>Restore
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk Operations -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="admin-content">
+                    <h5 class="mb-3">
+                        <i class="fas fa-cogs text-terracotta me-2"></i>Bulk Operations
+                    </h5>
+                    
+                    <div class="row">
+                        <div class="col-lg-4 mb-3">
+                            <div class="bulk-operation-card border rounded p-3">
+                                <h6>Archive Expired Events</h6>
+                                <p class="text-muted small">Automatically archive all events older than 30 days</p>
+                                <button class="btn btn-warning btn-sm" onclick="bulkArchiveExpired()">
+                                    <i class="fas fa-archive me-1"></i>Archive All (23)
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4 mb-3">
+                            <div class="bulk-operation-card border rounded p-3">
+                                <h6>Clean Incomplete Submissions</h6>
+                                <p class="text-muted small">Remove draft events older than 7 days with no updates</p>
+                                <button class="btn btn-outline-danger btn-sm" onclick="cleanIncompleteSubmissions()">
+                                    <i class="fas fa-broom me-1"></i>Clean Up (7)
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4 mb-3">
+                            <div class="bulk-operation-card border rounded p-3">
+                                <h6>Empty Recycle Bin</h6>
+                                <p class="text-muted small">Permanently delete all events in recycle bin</p>
+                                <button class="btn btn-outline-danger btn-sm" onclick="emptyRecycleBin()">
+                                    <i class="fas fa-trash me-1"></i>Empty Bin (12)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events for Deletion Review -->
+        <div class="row">
+            <div class="col-12">
+                <div class="admin-content">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5>
+                            <i class="fas fa-list text-terracotta me-2"></i>Events Requiring Action
+                        </h5>
+                        <div class="view-filters">
+                            <button class="btn btn-sm btn-outline-primary active" onclick="showAllDeletionCandidates()">All</button>
+                            <button class="btn btn-sm btn-outline-warning" onclick="showExpiredEvents()">Expired</button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="showFlaggedEvents()">Flagged</button>
+                            <button class="btn btn-sm btn-outline-info" onclick="showArchiveQueue()">Archive</button>
+                        </div>
+                    </div>
+                    
+                    <div id="deletionCandidatesList">
+                        <!-- Expired Event 1 -->
+                        <div class="deletion-item border rounded mb-3 p-3" data-type="expired">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="images/music_concert_9.jpg" alt="Expired Concert" class="img-fluid rounded" style="height: 80px; object-fit: cover;">
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="mb-1">Andalusian Music Evening</h6>
+                                    <p class="text-muted small mb-1">Organized by: Cultural Heritage Foundation</p>
+                                    <div class="event-meta">
+                                        <span class="badge bg-warning me-1">Expired</span>
+                                        <span class="badge bg-ochre me-1">Music</span>
+                                        <small class="text-muted">Ended: Nov 15, 2024</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <small class="text-muted">Attendees</small>
+                                    <div class="h5 mb-0">87</div>
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    <div class="btn-group-vertical" role="group">
+                                        <button class="btn btn-sm btn-info mb-1" onclick="archiveEvent('music-001')" title="Archive Event">
+                                            <i class="fas fa-archive"></i> Archive
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteEvent('music-001', 'Andalusian Music Evening')" title="Delete Event">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flagged Event -->
+                        <div class="deletion-item border border-danger rounded mb-3 p-3" data-type="flagged">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="images/theater_performance_6.jpg" alt="Flagged Event" class="img-fluid rounded" style="height: 80px; object-fit: cover;">
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="mb-1">Controversial Theater Performance</h6>
+                                    <p class="text-muted small mb-1">Organized by: Independent Theater Group</p>
+                                    <div class="event-meta">
+                                        <span class="badge bg-danger me-1">Flagged</span>
+                                        <span class="badge bg-purple me-1">Theater</span>
+                                        <small class="text-muted">Scheduled: Dec 20, 2024</small>
+                                    </div>
+                                    <div class="alert alert-danger alert-sm mt-2">
+                                        <small><strong>Report:</strong> Content may not align with cultural guidelines (3 reports)</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <small class="text-muted">Reports</small>
+                                    <div class="h5 mb-0 text-danger">3</div>
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    <div class="btn-group-vertical" role="group">
+                                        <button class="btn btn-sm btn-warning mb-1" onclick="reviewFlaggedEvent('theater-002')" title="Review Event">
+                                            <i class="fas fa-eye"></i> Review
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteEvent('theater-002', 'Controversial Theater Performance')" title="Delete Event">
+                                            <i class="fas fa-ban"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Archive Queue Event -->
+                        <div class="deletion-item border border-info rounded mb-3 p-3" data-type="archive">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="images/art_exhibition_2.jpg" alt="Archive Candidate" class="img-fluid rounded" style="height: 80px; object-fit: cover;">
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="mb-1">Traditional Crafts Exhibition</h6>
+                                    <p class="text-muted small mb-1">Organized by: Artisan Collective</p>
+                                    <div class="event-meta">
+                                        <span class="badge bg-info me-1">Archive Ready</span>
+                                        <span class="badge bg-indigo me-1">Exhibition</span>
+                                        <small class="text-muted">Ended: Oct 30, 2024</small>
+                                    </div>
+                                    <div class="archive-reason mt-2">
+                                        <small class="text-info">✓ Event completed successfully • ✓ Positive feedback • ✓ 90 days elapsed</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <small class="text-muted">Rating</small>
+                                    <div class="h5 mb-0 text-success">4.8★</div>
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    <div class="btn-group-vertical" role="group">
+                                        <button class="btn btn-sm btn-info mb-1" onclick="archiveEvent('exhibition-003')" title="Archive Event">
+                                            <i class="fas fa-archive"></i> Archive
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="keepEvent('exhibition-003')" title="Keep Active">
+                                            <i class="fas fa-save"></i> Keep
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Incomplete Draft -->
+                        <div class="deletion-item border border-secondary rounded mb-3 p-3" data-type="draft">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <div class="placeholder-image bg-light rounded d-flex align-items-center justify-content-center" style="height: 80px;">
+                                        <i class="fas fa-image text-muted fa-2x"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="mb-1">Incomplete Workshop Submission</h6>
+                                    <p class="text-muted small mb-1">Organized by: Local Artist (Incomplete Profile)</p>
+                                    <div class="event-meta">
+                                        <span class="badge bg-secondary me-1">Draft</span>
+                                        <span class="badge bg-terracotta me-1">Workshop</span>
+                                        <small class="text-muted">Created: Nov 20, 2024 • Last updated: Nov 21, 2024</small>
+                                    </div>
+                                    <div class="incomplete-issues mt-2">
+                                        <small class="text-warning">⚠ Missing: Venue details, event description, organizer contact</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <small class="text-muted">Days Stale</small>
+                                    <div class="h5 mb-0 text-warning">14</div>
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    <div class="btn-group-vertical" role="group">
+                                        <button class="btn btn-sm btn-outline-warning mb-1" onclick="contactOrganizer('workshop-004')" title="Contact Organizer">
+                                            <i class="fas fa-envelope"></i> Contact
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteEvent('workshop-004', 'Incomplete Workshop Submission')" title="Delete Draft">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deletion Statistics -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="admin-content">
+                    <h5 class="mb-3">
+                        <i class="fas fa-chart-bar text-ochre me-2"></i>Deletion & Archive Statistics
+                    </h5>
+                    
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <div class="stat-box text-center">
+                                <h4 class="text-primary">247</h4>
+                                <p class="text-muted small mb-0">Total Events</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="stat-box text-center">
+                                <h4 class="text-success">203</h4>
+                                <p class="text-muted small mb-0">Active Events</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="stat-box text-center">
+                                <h4 class="text-info">32</h4>
+                                <p class="text-muted small mb-0">Archived Events</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="stat-box text-center">
+                                <h4 class="text-danger">12</h4>
+                                <p class="text-muted small mb-0">Deleted Events</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Confirm Deletion
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-trash-alt text-danger fa-3x"></i>
+                    </div>
+                    <h6 class="text-center">Are you sure you want to delete this event?</h6>
+                    <div class="event-details bg-light rounded p-3 mt-3">
+                        <h6 class="event-title mb-2"></h6>
+                        <p class="text-muted small mb-0">This action cannot be undone. The event will be moved to the recycle bin for 30 days before permanent deletion.</p>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <label for="deletionReason" class="form-label">Reason for deletion:</label>
+                        <select class="form-select" id="deletionReason">
+                            <option value="">Select reason</option>
+                            <option value="expired">Event expired</option>
+                            <option value="inappropriate">Inappropriate content</option>
+                            <option value="spam">Spam or duplicate</option>
+                            <option value="violation">Guidelines violation</option>
+                            <option value="request">Organizer request</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form class="d-inline" data-form-type="admin-delete">
+                        <input type="hidden" id="confirmDeleteEventId" name="event_id">
+                        <button type="submit" class="btn btn-danger" id="confirmDeleteBtn">
+                            <i class="fas fa-trash me-2"></i>Delete Event
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Deletion page specific JavaScript
+        function showExpiredEvents() {
+            const items = document.querySelectorAll('.deletion-item');
+            items.forEach(item => {
+                item.style.display = item.dataset.type === 'expired' ? 'block' : 'none';
+            });
+            updateFilterButtons('expired');
+        }
+        
+        function showFlaggedEvents() {
+            const items = document.querySelectorAll('.deletion-item');
+            items.forEach(item => {
+                item.style.display = item.dataset.type === 'flagged' ? 'block' : 'none';
+            });
+            updateFilterButtons('flagged');
+        }
+        
+        function showArchiveQueue() {
+            const items = document.querySelectorAll('.deletion-item');
+            items.forEach(item => {
+                item.style.display = item.dataset.type === 'archive' ? 'block' : 'none';
+            });
+            updateFilterButtons('archive');
+        }
+        
+        function showAllDeletionCandidates() {
+            const items = document.querySelectorAll('.deletion-item');
+            items.forEach(item => {
+                item.style.display = 'block';
+            });
+            updateFilterButtons('all');
+        }
+        
+        function updateFilterButtons(activeType) {
+            const buttons = document.querySelectorAll('.view-filters .btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if (activeType === 'expired') {
+                buttons[1].classList.add('active');
+            } else if (activeType === 'flagged') {
+                buttons[2].classList.add('active');
+            } else if (activeType === 'archive') {
+                buttons[3].classList.add('active');
+            } else {
+                buttons[0].classList.add('active');
+            }
+        }
+        
+        function deleteEvent(eventId, eventTitle) {
+            document.getElementById('confirmDeleteEventId').value = eventId;
+            document.querySelector('.event-title').textContent = eventTitle;
+            
+            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            modal.show();
+        }
+        
+        function archiveEvent(eventId) {
+            if (confirm('Archive this event? It will be moved to the archive and hidden from public view.')) {
+                console.log('Archiving event:', eventId);
+                showSuccessMessage('Event archived successfully!');
+            }
+        }
+        
+        function keepEvent(eventId) {
+            if (confirm('Keep this event active? It will remain visible to the public.')) {
+                console.log('Keeping event active:', eventId);
+                showSuccessMessage('Event marked as active!');
+            }
+        }
+        
+        function reviewFlaggedEvent(eventId) {
+            // In a real application, this would open a detailed review modal
+            console.log('Reviewing flagged event:', eventId);
+        }
+        
+        function contactOrganizer(eventId) {
+            // In a real application, this would open an email composition modal
+            console.log('Contacting organizer for event:', eventId);
+            showSuccessMessage('Reminder email sent to organizer!');
+        }
+        
+        function bulkArchiveExpired() {
+            if (confirm('Archive all 23 expired events? This action will move them to the archive.')) {
+                console.log('Bulk archiving expired events');
+                showSuccessMessage('23 expired events archived successfully!');
+            }
+        }
+        
+        function cleanIncompleteSubmissions() {
+            if (confirm('Delete 7 incomplete draft submissions? This action cannot be undone.')) {
+                console.log('Cleaning incomplete submissions');
+                showSuccessMessage('7 incomplete submissions cleaned up!');
+            }
+        }
+        
+        function emptyRecycleBin() {
+            if (confirm('Permanently delete all 12 events in the recycle bin? This action cannot be undone.')) {
+                console.log('Emptying recycle bin');
+                showSuccessMessage('Recycle bin emptied successfully!');
+            }
+        }
+        
+        function showRecycleBin() {
+            // In a real application, this would show the recycle bin interface
+            console.log('Showing recycle bin');
+        }
+    </script>
+    
+    <style>
+        .action-card {
+            transition: all 0.3s ease;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow-medium);
+        }
+        
+        .deletion-item {
+            transition: all 0.3s ease;
+        }
+        
+        .deletion-item:hover {
+            box-shadow: 0 3px 10px var(--shadow-light);
+        }
+        
+        .bulk-operation-card {
+            transition: all 0.3s ease;
+        }
+        
+        .bulk-operation-card:hover {
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+        
+        .stat-box {
+            padding: 1rem;
+            border-radius: 8px;
+            background: var(--cream-white);
+        }
+        
+        .bg-purple {
+            background-color: #6f42c1 !important;
+        }
+        
+        .alert-sm {
+            padding: 0.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .placeholder-image {
+            min-height: 80px;
+        }
+    </style>
+</body>
+</html>

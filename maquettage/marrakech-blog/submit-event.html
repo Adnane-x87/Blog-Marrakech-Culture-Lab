@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Cultural Event - Marrakech Cultural Scene</title>
+    <meta name="description" content="Share your cultural event with Marrakech's vibrant artistic community. Submit music concerts, art exhibitions, theater performances, and workshops through our platform.">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-mosque text-terracotta me-2"></i>
+                Marrakech Cultural Scene
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Events
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-info-circle me-1"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="submit-event.html">
+                            <i class="fas fa-plus-circle me-1"></i>Submit Event
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-th-large me-1"></i>Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="category.html?cat=music">Music</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=exhibition">Art Exhibitions</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=theater">Theater</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=workshop">Workshops</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="py-5 mt-5" style="background: linear-gradient(135deg, var(--deep-indigo), var(--terracotta-orange)); color: white;">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="display-4 mb-3">Share Your Cultural Event</h1>
+                <p class="lead">Join Marrakech's vibrant cultural community and showcase your artistic vision</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Submission Guidelines -->
+    <section class="py-4 bg-cream">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="guidelines-alert bg-white rounded shadow-sm p-4">
+                        <h5 class="mb-3">
+                            <i class="fas fa-info-circle text-terracotta me-2"></i>
+                            Submission Guidelines
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled small">
+                                    <li><i class="fas fa-check text-success me-2"></i>All events must be cultural in nature</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Events should be open to the public</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Provide accurate venue and timing information</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled small">
+                                    <li><i class="fas fa-check text-success me-2"></i>Include high-quality event images</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Review typically takes 24-48 hours</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Free submission for cultural events</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Submission Form -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="submission-form bg-white rounded shadow-lg p-5">
+                        <h2 class="mb-4">Event Details</h2>
+                        
+                        <form id="eventSubmissionForm" data-form-type="event-submission">
+                            <!-- Basic Information -->
+                            <div class="form-section mb-5">
+                                <h4 class="section-title text-terracotta mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>Basic Information
+                                </h4>
+                                
+                                <div class="row">
+                                    <div class="col-md-8 mb-3">
+                                        <label for="eventTitle" class="form-label">Event Title *</label>
+                                        <input type="text" class="form-control" id="eventTitle" name="eventTitle" required placeholder="Enter your event title">
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="eventCategory" class="form-label">Category *</label>
+                                        <select class="form-select" id="eventCategory" name="eventCategory" required>
+                                            <option value="">Choose category</option>
+                                            <option value="music">Music</option>
+                                            <option value="exhibition">Art Exhibition</option>
+                                            <option value="theater">Theater & Performance</option>
+                                            <option value="workshop">Workshop</option>
+                                            <option value="festival">Festival</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="eventDescription" class="form-label">Event Description *</label>
+                                    <textarea class="form-control" id="eventDescription" name="eventDescription" rows="4" required placeholder="Provide a detailed description of your event, including what attendees can expect..."></textarea>
+                                    <div class="form-text">Minimum 100 characters. Be specific about the cultural aspects and artistic value.</div>
+                                </div>
+                            </div>
+
+                            <!-- Date & Time -->
+                            <div class="form-section mb-5">
+                                <h4 class="section-title text-terracotta mb-3">
+                                    <i class="fas fa-calendar-alt me-2"></i>Date & Time
+                                </h4>
+                                
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="eventDate" class="form-label">Event Date *</label>
+                                        <input type="date" class="form-control" id="eventDate" name="eventDate" required>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="startTime" class="form-label">Start Time *</label>
+                                        <input type="time" class="form-control" id="startTime" name="startTime" required>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="endTime" class="form-label">End Time</label>
+                                        <input type="time" class="form-control" id="endTime" name="endTime">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="multiDay" name="multiDay">
+                                            <label class="form-check-label" for="multiDay">
+                                                Multi-day event
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3" id="endDateContainer" style="display: none;">
+                                        <label for="endDate" class="form-label">End Date</label>
+                                        <input type="date" class="form-control" id="endDate" name="endDate">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Location & Venue -->
+                            <div class="form-section mb-5">
+                                <h4 class="section-title text-terracotta mb-3">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Location & Venue
+                                </h4>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="venueName" class="form-label">Venue Name *</label>
+                                        <input type="text" class="form-control" id="venueName" name="venueName" required placeholder="Name of the venue">
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="venueType" class="form-label">Venue Type</label>
+                                        <select class="form-select" id="venueType" name="venueType">
+                                            <option value="">Select venue type</option>
+                                            <option value="gallery">Art Gallery</option>
+                                            <option value="theater">Theater</option>
+                                            <option value="cultural-center">Cultural Center</option>
+                                            <option value="palace">Historic Palace</option>
+                                            <option value="garden">Garden/Outdoor</option>
+                                            <option value="workshop-space">Workshop Space</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="venueAddress" class="form-label">Address *</label>
+                                    <input type="text" class="form-control" id="venueAddress" name="venueAddress" required placeholder="Full address including neighborhood (e.g., Medina, Gueliz, Hivernage)">
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="capacity" class="form-label">Venue Capacity</label>
+                                        <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Maximum number of attendees">
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check mt-4">
+                                            <input class="form-check-input" type="checkbox" id="wheelchairAccessible" name="wheelchairAccessible">
+                                            <label class="form-check-label" for="wheelchairAccessible">
+                                                Wheelchair accessible
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ticketing & Pricing -->
+                            <div class="form-section mb-5">
+                                <h4 class="section-title text-terracotta mb-3">
+                                    <i class="fas fa-ticket-alt me-2"></i>Ticketing & Pricing
+                                </h4>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="ticketType" class="form-label">Ticket Type *</label>
+                                        <select class="form-select" id="ticketType" name="ticketType" required>
+                                            <option value="">Select ticket type</option>
+                                            <option value="free">Free Entry</option>
+                                            <option value="paid">Paid Entry</option>
+                                            <option value="donation">Donation Based</option>
+                                            <option value="invitation">Invitation Only</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3" id="priceContainer" style="display: none;">
+                                        <label for="ticketPrice" class="form-label">Ticket Price (MAD)</label>
+                                        <input type="number" class="form-control" id="ticketPrice" name="ticketPrice" placeholder="Price in Moroccan Dirhams">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3" id="ticketInfoContainer">
+                                    <label for="ticketInfo" class="form-label">Ticketing Information</label>
+                                    <textarea class="form-control" id="ticketInfo" name="ticketInfo" rows="2" placeholder="Where to buy tickets, booking information, contact details..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Event Media -->
+                            <div class="form-section mb-5">
+                                <h4 class="section-title text-terracotta mb-3">
+                                    <i class="fas fa-images me-2"></i>Event Media
+                                </h4>
+                                
+                                <div class="mb-3">
+                                    <label for="eventImage" class="form-label">Event Image *</label>
+                                    <input type="file" class="form-control" id="eventImage" name="eventImage" accept="image/*" required>
+                                    <div class="form-text">Upload a high-quality image representing your event. Recommended size: 1200x800 pixels.</div>
+                                </div>
+                                
+                                <div class="mb-3" id="imagePreview" style="display: none;">
+                                    <!-- Image preview will be inserted here by JavaScript -->
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="additionalImages" class="form-label">Additional Images</label>
+                                    <input type="file" class="form-control" id="additionalImages" name="additionalImages" accept="image/*" multiple>
+                                    <div class="form-text">Optional: Upload additional images (gallery, venue, artists, etc.)</div>
+                                </div>
+                            </div>
+
+                            <!-- Organizer Information -->
+                            <div class="form-section mb-5">
+                                <h4 class="section-title text-terracotta mb-3">
+                                    <i class="fas fa-user-tie me-2"></i>Organizer Information
+                                </h4>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="organizerName" class="form-label">Organizer Name *</label>
+                                        <input type="text" class="form-control" id="organizerName" name="organizerName" required placeholder="Individual name or organization">
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="organizerEmail" class="form-label">Contact Email *</label>
+                                        <input type="email" class="form-control" id="organizerEmail" name="organizerEmail" required placeholder="contact@example.com">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="organizerPhone" class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" id="organizerPhone" name="organizerPhone" placeholder="+212 6XX XXX XXX">
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="organizerWebsite" class="form-label">Website/Social Media</label>
+                                        <input type="url" class="form-control" id="organizerWebsite" name="organizerWebsite" placeholder="https://www.example.com">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="organizerBio" class="form-label">Organizer Bio</label>
+                                    <textarea class="form-control" id="organizerBio" name="organizerBio" rows="3" placeholder="Brief description of the organizer, their background, and experience in cultural events..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Additional Information -->
+                            <div class="form-section mb-5">
+                                <h4 class="section-title text-terracotta mb-3">
+                                    <i class="fas fa-plus-circle me-2"></i>Additional Information
+                                </h4>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="language" class="form-label">Event Language</label>
+                                        <select class="form-select" id="language" name="language">
+                                            <option value="">Select language</option>
+                                            <option value="arabic">Arabic</option>
+                                            <option value="french">French</option>
+                                            <option value="english">English</option>
+                                            <option value="berber">Berber (Amazigh)</option>
+                                            <option value="multilingual">Multilingual</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="ageGroup" class="form-label">Target Age Group</label>
+                                        <select class="form-select" id="ageGroup" name="ageGroup">
+                                            <option value="">All ages</option>
+                                            <option value="children">Children (0-12)</option>
+                                            <option value="teens">Teenagers (13-17)</option>
+                                            <option value="adults">Adults (18+)</option>
+                                            <option value="seniors">Seniors (65+)</option>
+                                            <option value="family">Family-friendly</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="specialRequirements" class="form-label">Special Requirements or Notes</label>
+                                    <textarea class="form-control" id="specialRequirements" name="specialRequirements" rows="3" placeholder="Any special requirements, dress code, materials needed, cultural considerations..."></textarea>
+                                </div>
+                                
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="photographyAllowed" name="photographyAllowed" checked>
+                                    <label class="form-check-label" for="photographyAllowed">
+                                        Photography allowed during event
+                                    </label>
+                                </div>
+                                
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="culturalSensitive" name="culturalSensitive">
+                                    <label class="form-check-label" for="culturalSensitive">
+                                        This event involves culturally sensitive content
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Terms and Submission -->
+                            <div class="form-section">
+                                <div class="submission-terms bg-cream rounded p-4 mb-4">
+                                    <h5>Submission Terms</h5>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                        <label class="form-check-label" for="agreeTerms">
+                                            I agree to the <a href="#" class="text-terracotta">Terms of Service</a> and confirm that this event information is accurate and that I have the authority to submit this event for publication.
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" id="agreeReview" name="agreeReview" required>
+                                        <label class="form-check-label" for="agreeReview">
+                                            I understand that my event will be reviewed by the Marrakech Cultural Scene team before publication and may be edited for clarity or cultural appropriateness.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i>Submit Event for Review
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="py-5 bg-cream">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="support-card bg-white rounded shadow p-4 text-center">
+                        <i class="fas fa-headset text-terracotta fa-3x mb-3"></i>
+                        <h5>Need Help?</h5>
+                        <p class="small text-muted">Our team is here to assist you with event submission questions.</p>
+                        <a href="#" class="btn btn-outline-terracotta btn-sm">Contact Support</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="support-card bg-white rounded shadow p-4 text-center">
+                        <i class="fas fa-book text-ochre fa-3x mb-3"></i>
+                        <h5>Submission Guide</h5>
+                        <p class="small text-muted">Read our comprehensive guide for successful event submissions.</p>
+                        <a href="#" class="btn btn-outline-ochre btn-sm">View Guide</a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="support-card bg-white rounded shadow p-4 text-center">
+                        <i class="fas fa-users text-indigo fa-3x mb-3"></i>
+                        <h5>Community</h5>
+                        <p class="small text-muted">Join our organizer community for tips and networking opportunities.</p>
+                        <a href="#" class="btn btn-outline-indigo btn-sm">Join Community</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>
+                        <i class="fas fa-mosque text-ochre me-2"></i>
+                        Marrakech Cultural Scene
+                    </h5>
+                    <p>Connecting culture enthusiasts with the vibrant artistic heartbeat of Marrakech. Discover, participate, and celebrate the rich cultural heritage of Morocco's red city.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Explore</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="events.html">All Events</a></li>
+                        <li><a href="category.html?cat=music">Music</a></li>
+                        <li><a href="category.html?cat=exhibition">Art Exhibitions</a></li>
+                        <li><a href="category.html?cat=theater">Theater</a></li>
+                        <li><a href="category.html?cat=workshop">Workshops</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Community</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="submit-event.html">Submit Event</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Guidelines</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Stay Updated</h5>
+                    <p>Subscribe to our newsletter for the latest cultural events and artistic happenings in Marrakech.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Enter your email">
+                        <button class="btn btn-terracotta" type="button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Marrakech Cultural Scene. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="me-3">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Form-specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Multi-day event toggle
+            const multiDayCheckbox = document.getElementById('multiDay');
+            const endDateContainer = document.getElementById('endDateContainer');
+            
+            multiDayCheckbox.addEventListener('change', function() {
+                endDateContainer.style.display = this.checked ? 'block' : 'none';
+            });
+            
+            // Ticket type change handler
+            const ticketTypeSelect = document.getElementById('ticketType');
+            const priceContainer = document.getElementById('priceContainer');
+            
+            ticketTypeSelect.addEventListener('change', function() {
+                priceContainer.style.display = this.value === 'paid' ? 'block' : 'none';
+            });
+            
+            // Initialize additional features
+            initializeImageUpload();
+        });
+    </script>
+</body>
+</html>

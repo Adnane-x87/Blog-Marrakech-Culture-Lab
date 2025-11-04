@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Events in Marrakech - Browse All Events</title>
+    <meta name="description" content="Browse all cultural events in Marrakech. Filter by category, date, and location to find music concerts, art exhibitions, theater performances, and workshops.">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-mosque text-terracotta me-2"></i>
+                Marrakech Cultural Scene
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="events.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Events
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-info-circle me-1"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="submit-event.html">
+                            <i class="fas fa-plus-circle me-1"></i>Submit Event
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-th-large me-1"></i>Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="category.html?cat=music">Music</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=exhibition">Art Exhibitions</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=theater">Theater</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=workshop">Workshops</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="py-5 mt-5" style="background: linear-gradient(135deg, var(--deep-indigo), var(--terracotta-orange)); color: white;">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="display-4 mb-3">Cultural Events in Marrakech</h1>
+                <p class="lead">Discover inspiring cultural experiences happening in Morocco's red city</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="py-4 bg-cream">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-3 mb-lg-0">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search events by title, description, or category...">
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-3 mb-lg-0">
+                    <input type="date" class="form-control" id="dateFilter" placeholder="Filter by date">
+                </div>
+                <div class="col-lg-3">
+                    <select class="form-select" id="locationFilter">
+                        <option value="">All Locations</option>
+                        <option value="medina">Medina</option>
+                        <option value="gueliz">Gueliz</option>
+                        <option value="hivernage">Hivernage</option>
+                        <option value="palmery">Palmery</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="py-4">
+        <div class="container">
+            <div class="filter-buttons text-center">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th-large me-2"></i>All Events
+                </button>
+                <button class="filter-btn" data-filter="music">
+                    <i class="fas fa-music me-2"></i>Music
+                </button>
+                <button class="filter-btn" data-filter="exhibition">
+                    <i class="fas fa-palette me-2"></i>Art Exhibitions
+                </button>
+                <button class="filter-btn" data-filter="theater">
+                    <i class="fas fa-theater-masks me-2"></i>Theater
+                </button>
+                <button class="filter-btn" data-filter="workshop">
+                    <i class="fas fa-hands me-2"></i>Workshops
+                </button>
+                <button class="filter-btn" data-filter="festival">
+                    <i class="fas fa-star me-2"></i>Festivals
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Grid -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row" id="eventsGrid">
+                <!-- Event 1 - Traditional Music Concert -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="event-card" data-category="music" data-date="2024-12-15" data-location="medina">
+                        <img src="images/music_concert_6.jpeg" alt="Traditional Moroccan Music Concert">
+                        <div class="card-body">
+                            <div class="event-date">
+                                <i class="fas fa-calendar me-2"></i>December 15, 2024 - 8:00 PM
+                            </div>
+                            <span class="event-category">Music</span>
+                            <h3 class="card-title">Traditional Moroccan Music Concert</h3>
+                            <p class="card-text">Experience the enchanting sounds of traditional Moroccan music featuring oud, qanun, and percussion instruments performed by master musicians from across Morocco.</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Marrakech Cultural Center
+                                </small>
+                                <small class="text-success fw-bold">
+                                    <i class="fas fa-ticket-alt me-1"></i>50 MAD
+                                </small>
+                            </div>
+                            <a href="event-details.html?id=1" class="btn btn-primary w-100">
+                                <i class="fas fa-eye me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 2 - Contemporary Art Exhibition -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="event-card" data-category="exhibition" data-date="2024-12-20" data-location="gueliz">
+                        <img src="images/art_exhibition_1.jpeg" alt="Contemporary Art Exhibition">
+                        <div class="card-body">
+                            <div class="event-date">
+                                <i class="fas fa-calendar me-2"></i>December 20, 2024 - 6:00 PM
+                            </div>
+                            <span class="event-category">Exhibition</span>
+                            <h3 class="card-title">Contemporary Art Exhibition</h3>
+                            <p class="card-text">Discover modern interpretations of Moroccan culture through contemporary art pieces by local and international artists exploring themes of tradition and modernity.</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Gallery Moderne
+                                </small>
+                                <small class="text-success fw-bold">
+                                    <i class="fas fa-ticket-alt me-1"></i>Free Entry
+                                </small>
+                            </div>
+                            <a href="event-details.html?id=2" class="btn btn-primary w-100">
+                                <i class="fas fa-eye me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 3 - Traditional Craft Workshop -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="event-card" data-category="workshop" data-date="2024-12-25" data-location="medina">
+                        <img src="images/cultural_workshop_1.jpg" alt="Traditional Craft Workshop">
+                        <div class="card-body">
+                            <div class="event-date">
+                                <i class="fas fa-calendar me-2"></i>December 25, 2024 - 2:00 PM
+                            </div>
+                            <span class="event-category">Workshop</span>
+                            <h3 class="card-title">Traditional Pottery Workshop</h3>
+                            <p class="card-text">Learn the ancient art of Moroccan pottery and ceramic painting from master craftsmen in an immersive hands-on experience within the historic medina.</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Artisan Quarter, Medina
+                                </small>
+                                <small class="text-success fw-bold">
+                                    <i class="fas fa-ticket-alt me-1"></i>120 MAD
+                                </small>
+                            </div>
+                            <a href="event-details.html?id=3" class="btn btn-primary w-100">
+                                <i class="fas fa-eye me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 4 - Theater Performance -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="event-card" data-category="theater" data-date="2024-12-30" data-location="hivernage">
+                        <img src="images/theater_performance_0.jpg" alt="Theater Performance">
+                        <div class="card-body">
+                            <div class="event-date">
+                                <i class="fas fa-calendar me-2"></i>December 30, 2024 - 7:30 PM
+                            </div>
+                            <span class="event-category">Theater</span>
+                            <h3 class="card-title">Tales of Marrakech</h3>
+                            <p class="card-text">A captivating theatrical performance showcasing the rich history and legends of Marrakech, blending traditional storytelling with contemporary staging.</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Royal Theater Marrakech
+                                </small>
+                                <small class="text-success fw-bold">
+                                    <i class="fas fa-ticket-alt me-1"></i>80 MAD
+                                </small>
+                            </div>
+                            <a href="event-details.html?id=4" class="btn btn-primary w-100">
+                                <i class="fas fa-eye me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 5 - Gnawa Music Festival -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="event-card" data-category="music" data-date="2025-01-05" data-location="palmery">
+                        <img src="images/music_concert_8.jpg" alt="Gnawa Music Festival">
+                        <div class="card-body">
+                            <div class="event-date">
+                                <i class="fas fa-calendar me-2"></i>January 5, 2025 - 7:00 PM
+                            </div>
+                            <span class="event-category">Music</span>
+                            <h3 class="card-title">Gnawa Music Festival</h3>
+                            <p class="card-text">Immerse yourself in the spiritual rhythms of Gnawa music with traditional masters performing healing ceremonies and hypnotic musical journeys.</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Palmery Cultural Garden
+                                </small>
+                                <small class="text-success fw-bold">
+                                    <i class="fas fa-ticket-alt me-1"></i>100 MAD
+                                </small>
+                            </div>
+                            <a href="event-details.html?id=5" class="btn btn-primary w-100">
+                                <i class="fas fa-eye me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 6 - Modern Art Sculpture Exhibition -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="event-card" data-category="exhibition" data-date="2025-01-10" data-location="gueliz">
+                        <img src="images/art_exhibition_2.jpg" alt="Modern Art Sculpture Exhibition">
+                        <div class="card-body">
+                            <div class="event-date">
+                                <i class="fas fa-calendar me-2"></i>January 10, 2025 - 5:00 PM
+                            </div>
+                            <span class="event-category">Exhibition</span>
+                            <h3 class="card-title">Sculptures of the Atlas</h3>
+                            <p class="card-text">An innovative sculpture exhibition featuring works inspired by the Atlas Mountains, created by renowned Moroccan and international sculptors.</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Atlas Art Gallery
+                                </small>
+                                <small class="text-success fw-bold">
+                                    <i class="fas fa-ticket-alt me-1"></i>30 MAD
+                                </small>
+                            </div>
+                            <a href="event-details.html?id=6" class="btn btn-primary w-100">
+                                <i class="fas fa-eye me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 7 - Berber Carpet Weaving Workshop -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="event-card" data-category="workshop" data-date="2025-01-15" data-location="medina">
+                        <img src="images/cultural_workshop_7.jpg" alt="Berber Carpet Weaving Workshop">
+                        <div class="card-body">
+                            <div class="event-date">
+                                <i class="fas fa-calendar me-2"></i>January 15, 2025 - 10:00 AM
+                            </div>
+                            <span class="event-category">Workshop</span>
+                            <h3 class="card-title">Berber Carpet Weaving</h3>
+                            <p class="card-text">Discover the intricate art of traditional Berber carpet weaving with authentic techniques passed down through generations of mountain artisans.</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Traditional Crafts Center
+                                </small>
+                                <small class="text-success fw-bold">
+                                    <i class="fas fa-ticket-alt me-1"></i>150 MAD
+                                </small>
+                            </div>
+                            <a href="event-details.html?id=7" class="btn btn-primary w-100">
+                                <i class="fas fa-eye me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 8 - Contemporary Dance Performance -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="event-card" data-category="theater" data-date="2025-01-20" data-location="gueliz">
+                        <img src="images/theater_performance_6.jpg" alt="Contemporary Dance Performance">
+                        <div class="card-body">
+                            <div class="event-date">
+                                <i class="fas fa-calendar me-2"></i>January 20, 2025 - 8:00 PM
+                            </div>
+                            <span class="event-category">Theater</span>
+                            <h3 class="card-title">Desert Rhythms Dance</h3>
+                            <p class="card-text">A mesmerizing contemporary dance performance that interprets the movement of desert winds and the rhythm of Saharan life through modern choreography.</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Cultural Arts Theater
+                                </small>
+                                <small class="text-success fw-bold">
+                                    <i class="fas fa-ticket-alt me-1"></i>75 MAD
+                                </small>
+                            </div>
+                            <a href="event-details.html?id=8" class="btn btn-primary w-100">
+                                <i class="fas fa-eye me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 9 - Andalusian Music Concert -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="event-card" data-category="music" data-date="2025-01-25" data-location="medina">
+                        <img src="images/music_concert_9.jpg" alt="Andalusian Music Concert">
+                        <div class="card-body">
+                            <div class="event-date">
+                                <i class="fas fa-calendar me-2"></i>January 25, 2025 - 9:00 PM
+                            </div>
+                            <span class="event-category">Music</span>
+                            <h3 class="card-title">Andalusian Musical Heritage</h3>
+                            <p class="card-text">Experience the refined elegance of Andalusian classical music performed by the renowned Marrakech Conservatory ensemble in an intimate palace setting.</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Bahia Palace Gardens
+                                </small>
+                                <small class="text-success fw-bold">
+                                    <i class="fas fa-ticket-alt me-1"></i>90 MAD
+                                </small>
+                            </div>
+                            <a href="event-details.html?id=9" class="btn btn-primary w-100">
+                                <i class="fas fa-eye me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="text-center mt-5">
+                <button class="btn btn-secondary" id="loadMoreBtn">
+                    <i class="fas fa-plus-circle me-2"></i>Load More Events
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-5 bg-indigo text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h3>Never Miss a Cultural Event</h3>
+                    <p class="mb-0">Subscribe to our newsletter and get notified about upcoming cultural events, exclusive previews, and special offers.</p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Enter your email">
+                        <button class="btn btn-terracotta" type="button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>
+                        <i class="fas fa-mosque text-ochre me-2"></i>
+                        Marrakech Cultural Scene
+                    </h5>
+                    <p>Connecting culture enthusiasts with the vibrant artistic heartbeat of Marrakech. Discover, participate, and celebrate the rich cultural heritage of Morocco's red city.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Explore</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="events.html">All Events</a></li>
+                        <li><a href="category.html?cat=music">Music</a></li>
+                        <li><a href="category.html?cat=exhibition">Art Exhibitions</a></li>
+                        <li><a href="category.html?cat=theater">Theater</a></li>
+                        <li><a href="category.html?cat=workshop">Workshops</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Community</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="submit-event.html">Submit Event</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Guidelines</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5>Stay Updated</h5>
+                    <p>Subscribe to our newsletter for the latest cultural events and artistic happenings in Marrakech.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Enter your email">
+                        <button class="btn btn-terracotta" type="button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Marrakech Cultural Scene. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="me-3">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
