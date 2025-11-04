@@ -100,6 +100,7 @@ UC2 ..> UC1 : <<extends>>
 UC3 ..> UC1 : <<extends>>
 @enduml
 
+```
 
 ## 🗂️ Site Map — Blog "Marrakech Cultural Scene"
 
