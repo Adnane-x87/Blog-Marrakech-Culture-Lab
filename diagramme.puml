@@ -23,23 +23,21 @@ rectangle "Marrakech Cultural Events Platform" {
   usecase "Approve / Reject posts" as UC11
 }
 
-' Connections for Yasmine
-Yasmine --> UC1
-Yasmine --> UC2
-Yasmine --> UC3
-Yasmine --> UC4
+' Connections for Yasmine (simple lines, no arrows)
+Yasmine -- UC1
+Yasmine -- UC2
+Yasmine -- UC3
+Yasmine -- UC4
 
-' Connections for Karim
-Karim --> UC7
-Karim --> UC9
+' Connections for Karim (simple lines, no arrows)
+Karim -- UC7
+Karim -- UC9
 
-' Connections for Sofia
-Sofia --> UC10
-Sofia --> UC11
+' Connections for Sofia (simple lines, no arrows)
+Sofia -- UC10
+Sofia -- UC11
 
-' Relationships between use cases
+' Relationships between use cases (these keep the directed arrows)
 UC2 ..> UC1 : <<extends>>
 UC3 ..> UC1 : <<extends>>
 @enduml
-
-
