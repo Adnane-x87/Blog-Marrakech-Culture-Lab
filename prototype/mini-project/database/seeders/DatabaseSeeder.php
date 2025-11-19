@@ -19,10 +19,9 @@ class DatabaseSeeder extends Seeder
 
         $articles = Article::factory(40)->recycle($users)->create();
 
-        $articles->each(function ($article) use ($tags) {
-            $article->tags()->attach(
-                $tags->random(rand(1, 4))->pluck('id')->toArray()
-            );
-        });
+      foreach ($articles as $article){
+        $randomTags = $tags->random(rand(1,4));
+        $article->tags()->attach($randomTags);
+      }
     }
 }
