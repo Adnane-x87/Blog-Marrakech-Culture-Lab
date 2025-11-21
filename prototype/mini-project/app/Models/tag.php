@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Tag extends Model
 {
     use HasFactory;
+    
+    protected $fillable=[
+        'name', 'slug'
+    ];
 
     public function articles(){
-        
-        return $this->belongsToMany(Article::class);
+        return $this->belongsToMany(Article::class, 'article_tag', 'article_id', 'tag_id');
     }
 }
