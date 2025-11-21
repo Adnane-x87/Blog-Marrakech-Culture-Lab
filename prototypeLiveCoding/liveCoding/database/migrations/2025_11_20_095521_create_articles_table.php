@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('slug',200)->unique();
             $table->text('excerpt')->nullable();
             $table->longText('content')->nullable();
+            $table->string('status')->default('draft');
             $table->timestamps();
         });
     }
