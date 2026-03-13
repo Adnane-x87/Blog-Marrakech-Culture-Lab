@@ -12,17 +12,44 @@
         </div>
     @endif
 
-    {{-- Filtre par catégorie --}}
-    <form method="GET" action="{{ route('articles.index') }}" style="margin-bottom:20px;">
-        <label for="category" style="font-weight:bold;">Filter by category :</label>
-        <select name="category" id="category" onchange="this.form.submit()" style="padding:5px; border-radius:5px;">
-            <option value="">All</option>
-            @foreach($categories as $cat)
-                <option value="{{ $cat->id }}" {{ $selectedCategory == $cat->id ? 'selected' : '' }}>
-                    {{ $cat->name }}
-                </option>
-            @endforeach
-        </select>
+    {{-- Filtre par catégorie et recherche --}}
+    <form method="GET" action="{{ route('articles.index') }}" style="margin-bottom:20px; display:flex; gap:15px; align-items:end;">
+        
+        {{-- Search Input --}}
+        <div style="flex:1;">
+            <label for="search" style="font-weight:bold; display:block; margin-bottom:5px;">Search :</label>
+            <input 
+                type="text" 
+                name="search" 
+                id="search" 
+                placeholder="Search by title, excerpt or content..."
+                value="{{ $search ?? '' }}"
+                style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px;"
+            >
+        </div>
+
+        {{-- Category Filter --}}
+        <div style="flex:0.5;">
+            <label for="category" style="font-weight:bold; display:block; margin-bottom:5px;">Filter by category :</label>
+            <select name="category" id="category" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px;">
+                <option value="">All</option>
+                @foreach($categories as $cat)
+                    <option value="{{ $cat->id }}" {{ $selectedCategory == $cat->id ? 'selected' : '' }}>
+                        {{ $cat->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        {{-- Buttons --}}
+        <div style="display:flex; gap:10px;">
+            <button type="submit" style="padding:8px 20px; background-color:#007bff; color:white; border:none; border-radius:5px; cursor:pointer;">
+                Search
+            </button>
+            <a href="{{ route('articles.index') }}" style="padding:8px 20px; background-color:#6c757d; color:white; border:none; border-radius:5px; text-decoration:none; display:inline-block;">
+                Reset
+            </a>
+        </div>
     </form>
 
     {{-- Tableau des articles --}}
@@ -75,4 +102,4 @@
     </div>
 
 </div>
-@endsectio
+@endsection
