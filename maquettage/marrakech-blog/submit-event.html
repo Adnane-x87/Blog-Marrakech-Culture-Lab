@@ -5,31 +5,908 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Your Cultural Event - Marrakech Cultural Scene</title>
     <meta name="description" content="Share your cultural event with Marrakech's vibrant artistic community. Submit music concerts, art exhibitions, theater performances, and workshops through our platform.">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --terracotta: #C65D3B;
+            --terracotta-dark: #A84B2F;
+            --ochre: #D4A373;
+            --ochre-light: #E9C496;
+            --indigo: #2E3A59;
+            --indigo-light: #3F4F75;
+            --cream: #FAF7F2;
+            --sand: #F5F1E8;
+            --charcoal: #2C2C2C;
+            --white: #FFFFFF;
+            --success: #28a745;
+
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-lifted: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--cream);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+        }
+
+        /* Custom Logo Styles */
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 4px rgba(198, 93, 59, 0.3));
+            transition: var(--transition-smooth);
+        }
+
+        .brand-logo:hover .logo-svg {
+            transform: rotate(5deg) scale(1.1);
+            filter: drop-shadow(0 4px 8px rgba(198, 93, 59, 0.4));
+        }
+
+        .logo-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-main {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--indigo);
+            letter-spacing: 0.5px;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--terracotta);
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(198, 93, 59, 0.1);
+            padding: 0.75rem 0;
+            transition: var(--transition-smooth);
+            z-index: 1000;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--indigo) !important;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.25rem;
+            transition: var(--transition-smooth);
+            font-size: 0.9rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--terracotta);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: var(--terracotta) !important;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--shadow-soft);
+            border-radius: 12px;
+            padding: 0.5rem;
+            background: var(--white);
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-item {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: var(--transition-smooth);
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item:hover {
+            background: var(--cream);
+            color: var(--terracotta);
+            transform: translateX(5px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 50%, rgba(198, 93, 59, 0.8) 100%);
+            padding: 10rem 0 6rem;
+            margin-top: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--white);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .page-header p {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* Guidelines Section */
+        .guidelines-section {
+            background: var(--sand);
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .guidelines-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .guidelines-card h5 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--indigo);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .guidelines-card h5 i {
+            color: var(--terracotta);
+            font-size: 1.25rem;
+        }
+
+        .guideline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .guideline-item i {
+            color: var(--success);
+            margin-top: 0.25rem;
+        }
+
+        /* Form Container */
+        .form-section-main {
+            padding: 4rem 0;
+        }
+
+        .submission-form-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-lifted);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+        }
+
+        .form-header h2 {
+            font-size: 2.5rem;
+            color: var(--indigo);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: #888;
+            margin: 0;
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--indigo);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--ochre) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1rem;
+        }
+
+        /* Form Controls */
+        .form-label {
+            font-weight: 500;
+            color: var(--indigo);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-control, .form-select {
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            background: var(--white);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--terracotta);
+            box-shadow: 0 0 0 4px rgba(198, 93, 59, 0.1);
+            background: var(--white);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-text {
+            color: #888;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        /* File Upload */
+        .file-upload-wrapper {
+            position: relative;
+            border: 2px dashed rgba(198, 93, 59, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            background: rgba(198, 93, 59, 0.02);
+        }
+
+        .file-upload-wrapper:hover {
+            border-color: var(--terracotta);
+            background: rgba(198, 93, 59, 0.05);
+        }
+
+        .file-upload-wrapper i {
+            font-size: 3rem;
+            color: var(--terracotta);
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .file-upload-wrapper p {
+            color: #666;
+            margin: 0;
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Image Preview */
+        .image-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .preview-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-item .remove-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 30px;
+            height: 30px;
+            background: var(--terracotta);
+            border: none;
+            border-radius: 50%;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 0.875rem;
+        }
+
+        .preview-item .remove-btn:hover {
+            transform: scale(1.1);
+            background: var(--terracotta-dark);
+        }
+
+        /* Checkbox Styling */
+        .form-check {
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-check-input {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-left: -2rem;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--terracotta);
+            border-color: var(--terracotta);
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 4px rgba(198, 93, 59, 0.1);
+        }
+
+        .form-check-label {
+            color: #555;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        /* Terms Section */
+        .terms-section {
+            background: var(--sand);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .terms-section h5 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--indigo);
+            margin-bottom: 1.5rem;
+        }
+
+        .terms-section a {
+            color: var(--terracotta);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .terms-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            background: var(--terracotta);
+            border: 2px solid var(--terracotta);
+            color: var(--white);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            background: var(--terracotta-dark);
+            border-color: var(--terracotta-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(198, 93, 59, 0.4);
+            color: var(--white);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Support Cards */
+        .support-section {
+            padding: 4rem 0;
+            background: var(--sand);
+        }
+
+        .support-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            height: 100%;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .support-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .support-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .support-icon::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255,255,255,0.3) 50%,
+                transparent 70%
+            );
+            transform: rotate(45deg) translateY(-100%);
+            transition: transform 0.6s;
+        }
+
+        .support-card:hover .support-icon::after {
+            transform: rotate(45deg) translateY(100%);
+        }
+
+        .support-card h5 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--indigo);
+            margin-bottom: 1rem;
+        }
+
+        .support-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-support {
+            background: transparent;
+            border: 2px solid;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-support:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--indigo);
+            color: rgba(255,255,255,0.8);
+            padding: 5rem 0 2rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--terracotta), var(--ochre), var(--terracotta));
+        }
+
+        .footer h5 {
+            color: var(--white);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+        }
+
+        .footer p {
+            line-height: 1.8;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a::before {
+            content: '→';
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: var(--transition-smooth);
+            color: var(--ochre);
+        }
+
+        .footer-links a:hover {
+            color: var(--ochre);
+            transform: translateX(5px);
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: var(--terracotta);
+            transform: translateY(-3px);
+            color: var(--white);
+        }
+
+        .newsletter-form {
+            position: relative;
+        }
+
+        .newsletter-form .form-control {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            border-radius: 50px;
+            padding-right: 50px;
+        }
+
+        .newsletter-form .form-control::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .newsletter-form .form-control:focus {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--ochre);
+            box-shadow: none;
+            color: var(--white);
+        }
+
+        .newsletter-form button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--terracotta);
+            border: none;
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .newsletter-form button:hover {
+            background: var(--ochre);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-bottom a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--ochre);
+        }
+
+        /* Success Modal */
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .modal-header {
+            border-bottom: none;
+            padding: 2rem 2rem 0;
+        }
+
+        .modal-body {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--success) 0%, #34ce57 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--white);
+            font-size: 3rem;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 8rem 0 4rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .submission-form-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-header h2 {
+                font-size: 1.75rem;
+            }
+
+            .btn-submit {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .logo-main {
+                font-size: 1.1rem;
+            }
+
+            .logo-sub {
+                display: none;
+            }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="fas fa-mosque text-terracotta me-2"></i>
-                Marrakech Cultural Scene
+            <a class="brand-logo" href="index.html">
+                <div class="logo-icon">
+                    <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="48" fill="none" stroke="#D4A373" stroke-width="1" opacity="0.5"/>
+                        <circle cx="50" cy="50" r="44" fill="none" stroke="#C65D3B" stroke-width="2"/>
+                        <path d="M50 10 L60 35 L85 35 L65 50 L75 75 L50 60 L25 75 L35 50 L15 35 L40 35 Z" 
+                              fill="#C65D3B" opacity="0.9"/>
+                        <circle cx="50" cy="50" r="12" fill="#2E3A59"/>
+                        <circle cx="50" cy="50" r="6" fill="#D4A373"/>
+                        <path d="M20 20 L25 25 M80 20 L75 25 M20 80 L25 75 M80 80 L75 75" 
+                              stroke="#D4A373" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M30 70 Q30 55 40 55 Q50 55 50 70" fill="none" stroke="#2E3A59" stroke-width="2" opacity="0.6"/>
+                        <path d="M50 70 Q50 55 60 55 Q70 55 70 70" fill="none" stroke="#2E3A59" stroke-width="2" opacity="0.6"/>
+                    </svg>
+                </div>
+                <div class="logo-text-wrapper">
+                    <span class="logo-main">Marrakech</span>
+                    <span class="logo-sub">Cultural Scene</span>
+                </div>
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">
                             <i class="fas fa-home me-1"></i>Home
@@ -55,10 +932,10 @@
                             <i class="fas fa-th-large me-1"></i>Categories
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="category.html?cat=music">Music</a></li>
-                            <li><a class="dropdown-item" href="category.html?cat=exhibition">Art Exhibitions</a></li>
-                            <li><a class="dropdown-item" href="category.html?cat=theater">Theater</a></li>
-                            <li><a class="dropdown-item" href="category.html?cat=workshop">Workshops</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=music"><i class="fas fa-music me-2" style="color: var(--terracotta)"></i>Music</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=exhibition"><i class="fas fa-palette me-2" style="color: var(--terracotta)"></i>Art Exhibitions</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=theater"><i class="fas fa-theater-masks me-2" style="color: var(--terracotta)"></i>Theater</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=workshop"><i class="fas fa-hands me-2" style="color: var(--terracotta)"></i>Workshops</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -67,39 +944,50 @@
     </nav>
 
     <!-- Page Header -->
-    <section class="py-5 mt-5" style="background: linear-gradient(135deg, var(--deep-indigo), var(--terracotta-orange)); color: white;">
+    <section class="page-header">
         <div class="container">
-            <div class="text-center">
-                <h1 class="display-4 mb-3">Share Your Cultural Event</h1>
-                <p class="lead">Join Marrakech's vibrant cultural community and showcase your artistic vision</p>
+            <div class="page-header-content">
+                <h1>Share Your Cultural Event</h1>
+                <p>Join Marrakech's vibrant cultural community and showcase your artistic vision to thousands of culture enthusiasts</p>
             </div>
         </div>
     </section>
 
-    <!-- Submission Guidelines -->
-    <section class="py-4 bg-cream">
+    <!-- Guidelines Section -->
+    <section class="guidelines-section">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <div class="guidelines-alert bg-white rounded shadow-sm p-4">
-                        <h5 class="mb-3">
-                            <i class="fas fa-info-circle text-terracotta me-2"></i>
-                            Submission Guidelines
-                        </h5>
+                    <div class="guidelines-card reveal">
+                        <h5><i class="fas fa-info-circle"></i>Submission Guidelines</h5>
                         <div class="row">
                             <div class="col-md-6">
-                                <ul class="list-unstyled small">
-                                    <li><i class="fas fa-check text-success me-2"></i>All events must be cultural in nature</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Events should be open to the public</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Provide accurate venue and timing information</li>
-                                </ul>
+                                <div class="guideline-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>All events must be cultural in nature</span>
+                                </div>
+                                <div class="guideline-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Events should be open to the public</span>
+                                </div>
+                                <div class="guideline-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Provide accurate venue and timing information</span>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <ul class="list-unstyled small">
-                                    <li><i class="fas fa-check text-success me-2"></i>Include high-quality event images</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Review typically takes 24-48 hours</li>
-                                    <li><i class="fas fa-check text-success me-2"></i>Free submission for cultural events</li>
-                                </ul>
+                                <div class="guideline-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Include high-quality event images</span>
+                                </div>
+                                <div class="guideline-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Review typically takes 24-48 hours</span>
+                                </div>
+                                <div class="guideline-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Free submission for cultural events</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -108,30 +996,33 @@
         </div>
     </section>
 
-    <!-- Event Submission Form -->
-    <section class="py-5">
+    <!-- Form Section -->
+    <section class="form-section-main">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <div class="submission-form bg-white rounded shadow-lg p-5">
-                        <h2 class="mb-4">Event Details</h2>
-                        
-                        <form id="eventSubmissionForm" data-form-type="event-submission">
+                    <div class="submission-form-container reveal">
+                        <div class="form-header">
+                            <h2>Event Details</h2>
+                            <p>Fill out the form below to submit your event for review</p>
+                        </div>
+
+                        <form id="eventSubmissionForm">
                             <!-- Basic Information -->
-                            <div class="form-section mb-5">
-                                <h4 class="section-title text-terracotta mb-3">
-                                    <i class="fas fa-info-circle me-2"></i>Basic Information
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-info-circle"></i>Basic Information
                                 </h4>
-                                
+
                                 <div class="row">
                                     <div class="col-md-8 mb-3">
                                         <label for="eventTitle" class="form-label">Event Title *</label>
-                                        <input type="text" class="form-control" id="eventTitle" name="eventTitle" required placeholder="Enter your event title">
+                                        <input type="text" class="form-control" id="eventTitle" required placeholder="Enter your event title">
                                     </div>
-                                    
+
                                     <div class="col-md-4 mb-3">
                                         <label for="eventCategory" class="form-label">Category *</label>
-                                        <select class="form-select" id="eventCategory" name="eventCategory" required>
+                                        <select class="form-select" id="eventCategory" required>
                                             <option value="">Choose category</option>
                                             <option value="music">Music</option>
                                             <option value="exhibition">Art Exhibition</option>
@@ -142,69 +1033,69 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="eventDescription" class="form-label">Event Description *</label>
-                                    <textarea class="form-control" id="eventDescription" name="eventDescription" rows="4" required placeholder="Provide a detailed description of your event, including what attendees can expect..."></textarea>
+                                    <textarea class="form-control" id="eventDescription" rows="4" required placeholder="Provide a detailed description of your event, including what attendees can expect..."></textarea>
                                     <div class="form-text">Minimum 100 characters. Be specific about the cultural aspects and artistic value.</div>
                                 </div>
                             </div>
 
                             <!-- Date & Time -->
-                            <div class="form-section mb-5">
-                                <h4 class="section-title text-terracotta mb-3">
-                                    <i class="fas fa-calendar-alt me-2"></i>Date & Time
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-calendar-alt"></i>Date & Time
                                 </h4>
-                                
+
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <label for="eventDate" class="form-label">Event Date *</label>
-                                        <input type="date" class="form-control" id="eventDate" name="eventDate" required>
+                                        <input type="date" class="form-control" id="eventDate" required>
                                     </div>
-                                    
+
                                     <div class="col-md-4 mb-3">
                                         <label for="startTime" class="form-label">Start Time *</label>
-                                        <input type="time" class="form-control" id="startTime" name="startTime" required>
+                                        <input type="time" class="form-control" id="startTime" required>
                                     </div>
-                                    
+
                                     <div class="col-md-4 mb-3">
                                         <label for="endTime" class="form-label">End Time</label>
-                                        <input type="time" class="form-control" id="endTime" name="endTime">
+                                        <input type="time" class="form-control" id="endTime">
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="multiDay" name="multiDay">
+                                            <input class="form-check-input" type="checkbox" id="multiDay">
                                             <label class="form-check-label" for="multiDay">
                                                 Multi-day event
                                             </label>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-6 mb-3" id="endDateContainer" style="display: none;">
                                         <label for="endDate" class="form-label">End Date</label>
-                                        <input type="date" class="form-control" id="endDate" name="endDate">
+                                        <input type="date" class="form-control" id="endDate">
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Location & Venue -->
-                            <div class="form-section mb-5">
-                                <h4 class="section-title text-terracotta mb-3">
-                                    <i class="fas fa-map-marker-alt me-2"></i>Location & Venue
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-map-marker-alt"></i>Location & Venue
                                 </h4>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="venueName" class="form-label">Venue Name *</label>
-                                        <input type="text" class="form-control" id="venueName" name="venueName" required placeholder="Name of the venue">
+                                        <input type="text" class="form-control" id="venueName" required placeholder="Name of the venue">
                                     </div>
-                                    
+
                                     <div class="col-md-6 mb-3">
                                         <label for="venueType" class="form-label">Venue Type</label>
-                                        <select class="form-select" id="venueType" name="venueType">
+                                        <select class="form-select" id="venueType">
                                             <option value="">Select venue type</option>
                                             <option value="gallery">Art Gallery</option>
                                             <option value="theater">Theater</option>
@@ -216,21 +1107,21 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="venueAddress" class="form-label">Address *</label>
-                                    <input type="text" class="form-control" id="venueAddress" name="venueAddress" required placeholder="Full address including neighborhood (e.g., Medina, Gueliz, Hivernage)">
+                                    <input type="text" class="form-control" id="venueAddress" required placeholder="Full address including neighborhood (e.g., Medina, Gueliz, Hivernage)">
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="capacity" class="form-label">Venue Capacity</label>
-                                        <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Maximum number of attendees">
+                                        <input type="number" class="form-control" id="capacity" placeholder="Maximum number of attendees">
                                     </div>
-                                    
+
                                     <div class="col-md-6 mb-3">
                                         <div class="form-check mt-4">
-                                            <input class="form-check-input" type="checkbox" id="wheelchairAccessible" name="wheelchairAccessible">
+                                            <input class="form-check-input" type="checkbox" id="wheelchairAccessible">
                                             <label class="form-check-label" for="wheelchairAccessible">
                                                 Wheelchair accessible
                                             </label>
@@ -240,15 +1131,15 @@
                             </div>
 
                             <!-- Ticketing & Pricing -->
-                            <div class="form-section mb-5">
-                                <h4 class="section-title text-terracotta mb-3">
-                                    <i class="fas fa-ticket-alt me-2"></i>Ticketing & Pricing
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-ticket-alt"></i>Ticketing & Pricing
                                 </h4>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="ticketType" class="form-label">Ticket Type *</label>
-                                        <select class="form-select" id="ticketType" name="ticketType" required>
+                                        <select class="form-select" id="ticketType" required>
                                             <option value="">Select ticket type</option>
                                             <option value="free">Free Entry</option>
                                             <option value="paid">Paid Entry</option>
@@ -256,88 +1147,94 @@
                                             <option value="invitation">Invitation Only</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="col-md-6 mb-3" id="priceContainer" style="display: none;">
                                         <label for="ticketPrice" class="form-label">Ticket Price (MAD)</label>
-                                        <input type="number" class="form-control" id="ticketPrice" name="ticketPrice" placeholder="Price in Moroccan Dirhams">
+                                        <input type="number" class="form-control" id="ticketPrice" placeholder="Price in Moroccan Dirhams">
                                     </div>
                                 </div>
-                                
+
                                 <div class="mb-3" id="ticketInfoContainer">
                                     <label for="ticketInfo" class="form-label">Ticketing Information</label>
-                                    <textarea class="form-control" id="ticketInfo" name="ticketInfo" rows="2" placeholder="Where to buy tickets, booking information, contact details..."></textarea>
+                                    <textarea class="form-control" id="ticketInfo" rows="2" placeholder="Where to buy tickets, booking information, contact details..."></textarea>
                                 </div>
                             </div>
 
                             <!-- Event Media -->
-                            <div class="form-section mb-5">
-                                <h4 class="section-title text-terracotta mb-3">
-                                    <i class="fas fa-images me-2"></i>Event Media
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-images"></i>Event Media
                                 </h4>
-                                
+
                                 <div class="mb-3">
-                                    <label for="eventImage" class="form-label">Event Image *</label>
-                                    <input type="file" class="form-control" id="eventImage" name="eventImage" accept="image/*" required>
-                                    <div class="form-text">Upload a high-quality image representing your event. Recommended size: 1200x800 pixels.</div>
+                                    <label class="form-label">Event Image *</label>
+                                    <div class="file-upload-wrapper" id="mainImageUpload">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Click to upload or drag and drop</p>
+                                        <small class="text-muted">Recommended size: 1200x800 pixels (JPG, PNG)</small>
+                                        <input type="file" id="eventImage" accept="image/*" required>
+                                    </div>
+                                    <div class="image-preview-container" id="mainImagePreview" style="display: none;"></div>
                                 </div>
-                                
-                                <div class="mb-3" id="imagePreview" style="display: none;">
-                                    <!-- Image preview will be inserted here by JavaScript -->
-                                </div>
-                                
+
                                 <div class="mb-3">
-                                    <label for="additionalImages" class="form-label">Additional Images</label>
-                                    <input type="file" class="form-control" id="additionalImages" name="additionalImages" accept="image/*" multiple>
-                                    <div class="form-text">Optional: Upload additional images (gallery, venue, artists, etc.)</div>
+                                    <label class="form-label">Additional Images</label>
+                                    <div class="file-upload-wrapper" id="additionalUpload">
+                                        <i class="fas fa-images"></i>
+                                        <p>Add more images (optional)</p>
+                                        <small class="text-muted">Gallery, venue, artists, etc.</small>
+                                        <input type="file" id="additionalImages" accept="image/*" multiple>
+                                    </div>
+                                    <div class="image-preview-container" id="additionalPreview" style="display: none;"></div>
                                 </div>
                             </div>
 
                             <!-- Organizer Information -->
-                            <div class="form-section mb-5">
-                                <h4 class="section-title text-terracotta mb-3">
-                                    <i class="fas fa-user-tie me-2"></i>Organizer Information
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-user-tie"></i>Organizer Information
                                 </h4>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="organizerName" class="form-label">Organizer Name *</label>
-                                        <input type="text" class="form-control" id="organizerName" name="organizerName" required placeholder="Individual name or organization">
+                                        <input type="text" class="form-control" id="organizerName" required placeholder="Individual name or organization">
                                     </div>
-                                    
+
                                     <div class="col-md-6 mb-3">
                                         <label for="organizerEmail" class="form-label">Contact Email *</label>
-                                        <input type="email" class="form-control" id="organizerEmail" name="organizerEmail" required placeholder="contact@example.com">
+                                        <input type="email" class="form-control" id="organizerEmail" required placeholder="contact@example.com">
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="organizerPhone" class="form-label">Phone Number</label>
-                                        <input type="tel" class="form-control" id="organizerPhone" name="organizerPhone" placeholder="+212 6XX XXX XXX">
+                                        <input type="tel" class="form-control" id="organizerPhone" placeholder="+212 6XX XXX XXX">
                                     </div>
-                                    
+
                                     <div class="col-md-6 mb-3">
                                         <label for="organizerWebsite" class="form-label">Website/Social Media</label>
-                                        <input type="url" class="form-control" id="organizerWebsite" name="organizerWebsite" placeholder="https://www.example.com">
+                                        <input type="url" class="form-control" id="organizerWebsite" placeholder="https://www.example.com">
                                     </div>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="organizerBio" class="form-label">Organizer Bio</label>
-                                    <textarea class="form-control" id="organizerBio" name="organizerBio" rows="3" placeholder="Brief description of the organizer, their background, and experience in cultural events..."></textarea>
+                                    <textarea class="form-control" id="organizerBio" rows="3" placeholder="Brief description of the organizer, their background, and experience in cultural events..."></textarea>
                                 </div>
                             </div>
 
                             <!-- Additional Information -->
-                            <div class="form-section mb-5">
-                                <h4 class="section-title text-terracotta mb-3">
-                                    <i class="fas fa-plus-circle me-2"></i>Additional Information
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-plus-circle"></i>Additional Information
                                 </h4>
-                                
+
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="language" class="form-label">Event Language</label>
-                                        <select class="form-select" id="language" name="language">
+                                        <select class="form-select" id="language">
                                             <option value="">Select language</option>
                                             <option value="arabic">Arabic</option>
                                             <option value="french">French</option>
@@ -346,10 +1243,10 @@
                                             <option value="multilingual">Multilingual</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="col-md-6 mb-3">
                                         <label for="ageGroup" class="form-label">Target Age Group</label>
-                                        <select class="form-select" id="ageGroup" name="ageGroup">
+                                        <select class="form-select" id="ageGroup">
                                             <option value="">All ages</option>
                                             <option value="children">Children (0-12)</option>
                                             <option value="teens">Teenagers (13-17)</option>
@@ -359,21 +1256,21 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="specialRequirements" class="form-label">Special Requirements or Notes</label>
-                                    <textarea class="form-control" id="specialRequirements" name="specialRequirements" rows="3" placeholder="Any special requirements, dress code, materials needed, cultural considerations..."></textarea>
+                                    <textarea class="form-control" id="specialRequirements" rows="3" placeholder="Any special requirements, dress code, materials needed, cultural considerations..."></textarea>
                                 </div>
-                                
+
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" id="photographyAllowed" name="photographyAllowed" checked>
+                                    <input class="form-check-input" type="checkbox" id="photographyAllowed" checked>
                                     <label class="form-check-label" for="photographyAllowed">
                                         Photography allowed during event
                                     </label>
                                 </div>
-                                
+
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" id="culturalSensitive" name="culturalSensitive">
+                                    <input class="form-check-input" type="checkbox" id="culturalSensitive">
                                     <label class="form-check-label" for="culturalSensitive">
                                         This event involves culturally sensitive content
                                     </label>
@@ -381,29 +1278,27 @@
                             </div>
 
                             <!-- Terms and Submission -->
-                            <div class="form-section">
-                                <div class="submission-terms bg-cream rounded p-4 mb-4">
-                                    <h5>Submission Terms</h5>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="agreeTerms" name="agreeTerms" required>
-                                        <label class="form-check-label" for="agreeTerms">
-                                            I agree to the <a href="#" class="text-terracotta">Terms of Service</a> and confirm that this event information is accurate and that I have the authority to submit this event for publication.
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="form-check mt-2">
-                                        <input class="form-check-input" type="checkbox" id="agreeReview" name="agreeReview" required>
-                                        <label class="form-check-label" for="agreeReview">
-                                            I understand that my event will be reviewed by the Marrakech Cultural Scene team before publication and may be edited for clarity or cultural appropriateness.
-                                        </label>
-                                    </div>
+                            <div class="terms-section">
+                                <h5>Submission Terms</h5>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                                    <label class="form-check-label" for="agreeTerms">
+                                        I agree to the <a href="#">Terms of Service</a> and confirm that this event information is accurate and that I have the authority to submit this event for publication.
+                                    </label>
                                 </div>
-                                
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg">
-                                        <i class="fas fa-paper-plane me-2"></i>Submit Event for Review
-                                    </button>
+
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="agreeReview" required>
+                                    <label class="form-check-label" for="agreeReview">
+                                        I understand that my event will be reviewed by the Marrakech Cultural Scene team before publication and may be edited for clarity or cultural appropriateness.
+                                    </label>
                                 </div>
+                            </div>
+
+                            <div class="text-center mt-5">
+                                <button type="submit" class="btn btn-submit" id="submitBtn">
+                                    <i class="fas fa-paper-plane"></i>Submit Event for Review
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -413,68 +1308,93 @@
     </section>
 
     <!-- Support Section -->
-    <section class="py-5 bg-cream">
+    <section class="support-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <div class="support-card bg-white rounded shadow p-4 text-center">
-                        <i class="fas fa-headset text-terracotta fa-3x mb-3"></i>
+            <div class="row g-4">
+                <div class="col-lg-4 reveal">
+                    <div class="support-card">
+                        <div class="support-icon" style="background: linear-gradient(135deg, var(--terracotta) 0%, var(--ochre) 100%);">
+                            <i class="fas fa-headset"></i>
+                        </div>
                         <h5>Need Help?</h5>
-                        <p class="small text-muted">Our team is here to assist you with event submission questions.</p>
-                        <a href="#" class="btn btn-outline-terracotta btn-sm">Contact Support</a>
+                        <p>Our team is here to assist you with event submission questions and technical support.</p>
+                        <a href="#" class="btn-support" style="border-color: var(--terracotta); color: var(--terracotta);">
+                            Contact Support
+                        </a>
                     </div>
                 </div>
-                
-                <div class="col-lg-4 mb-4">
-                    <div class="support-card bg-white rounded shadow p-4 text-center">
-                        <i class="fas fa-book text-ochre fa-3x mb-3"></i>
+
+                <div class="col-lg-4 reveal" style="transition-delay: 0.1s;">
+                    <div class="support-card">
+                        <div class="support-icon" style="background: linear-gradient(135deg, var(--ochre) 0%, #E9C496 100%);">
+                            <i class="fas fa-book"></i>
+                        </div>
                         <h5>Submission Guide</h5>
-                        <p class="small text-muted">Read our comprehensive guide for successful event submissions.</p>
-                        <a href="#" class="btn btn-outline-ochre btn-sm">View Guide</a>
+                        <p>Read our comprehensive guide for successful event submissions and best practices.</p>
+                        <a href="#" class="btn-support" style="border-color: var(--ochre); color: var(--ochre);">
+                            View Guide
+                        </a>
                     </div>
                 </div>
-                
-                <div class="col-lg-4 mb-4">
-                    <div class="support-card bg-white rounded shadow p-4 text-center">
-                        <i class="fas fa-users text-indigo fa-3x mb-3"></i>
+
+                <div class="col-lg-4 reveal" style="transition-delay: 0.2s;">
+                    <div class="support-card">
+                        <div class="support-icon" style="background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);">
+                            <i class="fas fa-users"></i>
+                        </div>
                         <h5>Community</h5>
-                        <p class="small text-muted">Join our organizer community for tips and networking opportunities.</p>
-                        <a href="#" class="btn btn-outline-indigo btn-sm">Join Community</a>
+                        <p>Join our organizer community for tips, networking, and collaboration opportunities.</p>
+                        <a href="#" class="btn-support" style="border-color: var(--indigo); color: var(--indigo);">
+                            Join Community
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3>Event Submitted!</h3>
+                    <p class="text-muted">Thank you for submitting your event. Our team will review it within 24-48 hours and notify you once it's published.</p>
+                    <button type="button" class="btn btn-submit mt-3" data-bs-dismiss="modal" onclick="window.location.href='events.html'">
+                        <i class="fas fa-calendar-alt me-2"></i>View All Events
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 mb-4">
+                <div class="col-lg-4 mb-4 reveal">
                     <h5>
-                        <i class="fas fa-mosque text-ochre me-2"></i>
+                        <i class="fas fa-mosque me-2" style="color: var(--ochre)"></i>
                         Marrakech Cultural Scene
                     </h5>
                     <p>Connecting culture enthusiasts with the vibrant artistic heartbeat of Marrakech. Discover, participate, and celebrate the rich cultural heritage of Morocco's red city.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
+
+                <div class="col-lg-2 col-md-6 mb-4 reveal" style="transition-delay: 0.1s;">
                     <h5>Explore</h5>
-                    <ul class="list-unstyled">
+                    <ul class="footer-links">
                         <li><a href="events.html">All Events</a></li>
                         <li><a href="category.html?cat=music">Music</a></li>
                         <li><a href="category.html?cat=exhibition">Art Exhibitions</a></li>
@@ -482,10 +1402,10 @@
                         <li><a href="category.html?cat=workshop">Workshops</a></li>
                     </ul>
                 </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
+
+                <div class="col-lg-2 col-md-6 mb-4 reveal" style="transition-delay: 0.2s;">
                     <h5>Community</h5>
-                    <ul class="list-unstyled">
+                    <ul class="footer-links">
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="submit-event.html">Submit Event</a></li>
                         <li><a href="#">Contact</a></li>
@@ -493,28 +1413,28 @@
                         <li><a href="#">Guidelines</a></li>
                     </ul>
                 </div>
-                
-                <div class="col-lg-4 mb-4">
+
+                <div class="col-lg-4 mb-4 reveal" style="transition-delay: 0.3s;">
                     <h5>Stay Updated</h5>
                     <p>Subscribe to our newsletter for the latest cultural events and artistic happenings in Marrakech.</p>
-                    <div class="input-group">
+                    <form class="newsletter-form">
                         <input type="email" class="form-control" placeholder="Enter your email">
-                        <button class="btn btn-terracotta" type="button">
+                        <button type="submit" aria-label="Subscribe">
                             <i class="fas fa-paper-plane"></i>
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
-            
-            <hr class="my-4">
-            
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; 2024 Marrakech Cultural Scene. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="me-3">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2025 Marrakech Cultural Scene. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -522,31 +1442,143 @@
 
     <!-- Bootstrap 5 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script src="js/main.js"></script>
-    
+
     <script>
-        // Form-specific JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            // Multi-day event toggle
-            const multiDayCheckbox = document.getElementById('multiDay');
-            const endDateContainer = document.getElementById('endDateContainer');
-            
-            multiDayCheckbox.addEventListener('change', function() {
-                endDateContainer.style.display = this.checked ? 'block' : 'none';
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
             });
-            
-            // Ticket type change handler
-            const ticketTypeSelect = document.getElementById('ticketType');
-            const priceContainer = document.getElementById('priceContainer');
-            
-            ticketTypeSelect.addEventListener('change', function() {
-                priceContainer.style.display = this.value === 'paid' ? 'block' : 'none';
-            });
-            
-            // Initialize additional features
-            initializeImageUpload();
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Multi-day event toggle
+        const multiDayCheckbox = document.getElementById('multiDay');
+        const endDateContainer = document.getElementById('endDateContainer');
+
+        multiDayCheckbox.addEventListener('change', function() {
+            endDateContainer.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Ticket type change handler
+        const ticketTypeSelect = document.getElementById('ticketType');
+        const priceContainer = document.getElementById('priceContainer');
+
+        ticketTypeSelect.addEventListener('change', function() {
+            priceContainer.style.display = this.value === 'paid' ? 'block' : 'none';
+        });
+
+        // Image upload preview
+        function handleImageUpload(input, previewContainer) {
+            const files = input.files;
+            const preview = document.getElementById(previewContainer);
+
+            if (files.length > 0) {
+                preview.style.display = 'grid';
+                preview.innerHTML = '';
+
+                Array.from(files).forEach((file, index) => {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const div = document.createElement('div');
+                        div.className = 'preview-item';
+                        div.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview">
+                            <button type="button" class="remove-btn" onclick="removeImage(this, '${input.id}')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        preview.appendChild(div);
+                    }
+
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        function removeImage(btn, inputId) {
+            const item = btn.parentElement;
+            item.remove();
+
+            // Check if preview is empty
+            const preview = item.parentElement;
+            if (preview.children.length === 0) {
+                preview.style.display = 'none';
+                document.getElementById(inputId).value = '';
+            }
+        }
+
+        // Main image upload
+        document.getElementById('eventImage').addEventListener('change', function() {
+            handleImageUpload(this, 'mainImagePreview');
+        });
+
+        // Additional images upload
+        document.getElementById('additionalImages').addEventListener('change', function() {
+            handleImageUpload(this, 'additionalPreview');
+        });
+
+        // Form submission
+        document.getElementById('eventSubmissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>Submitting...';
+
+            // Simulate form submission
+            setTimeout(() => {
+                const modal = new bootstrap.Modal(document.getElementById('successModal'));
+                modal.show();
+
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i>Submit Event for Review';
+
+                // Reset form
+                this.reset();
+                document.getElementById('mainImagePreview').style.display = 'none';
+                document.getElementById('additionalPreview').style.display = 'none';
+                endDateContainer.style.display = 'none';
+                priceContainer.style.display = 'none';
+            }, 2000);
+        });
+
+        // Newsletter form handling
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = this.querySelector('input');
+            if (input.value) {
+                const btn = this.querySelector('button');
+                const originalIcon = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                btn.style.background = '#28a745';
+                input.value = '';
+
+                setTimeout(() => {
+                    btn.innerHTML = originalIcon;
+                    btn.style.background = '';
+                }, 2000);
+            }
         });
     </script>
 </body>

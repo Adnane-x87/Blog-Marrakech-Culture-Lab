@@ -5,31 +5,1166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traditional Moroccan Music Concert - Event Details</title>
     <meta name="description" content="Join us for an enchanting traditional Moroccan music concert featuring master musicians performing with oud, qanun, and percussion instruments.">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --terracotta: #C65D3B;
+            --terracotta-dark: #A84B2F;
+            --ochre: #D4A373;
+            --ochre-light: #E9C496;
+            --indigo: #2E3A59;
+            --indigo-light: #3F4F75;
+            --cream: #FAF7F2;
+            --sand: #F5F1E8;
+            --charcoal: #2C2C2C;
+            --white: #FFFFFF;
+
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-lifted: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--cream);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+        }
+
+        /* Custom Logo Styles */
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 4px rgba(198, 93, 59, 0.3));
+            transition: var(--transition-smooth);
+        }
+
+        .brand-logo:hover .logo-svg {
+            transform: rotate(5deg) scale(1.1);
+            filter: drop-shadow(0 4px 8px rgba(198, 93, 59, 0.4));
+        }
+
+        .logo-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-main {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--indigo);
+            letter-spacing: 0.5px;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--terracotta);
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(198, 93, 59, 0.1);
+            padding: 0.75rem 0;
+            transition: var(--transition-smooth);
+            z-index: 1000;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--indigo) !important;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.25rem;
+            transition: var(--transition-smooth);
+            font-size: 0.9rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--terracotta);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: var(--terracotta) !important;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--shadow-soft);
+            border-radius: 12px;
+            padding: 0.5rem;
+            background: var(--white);
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-item {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: var(--transition-smooth);
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item:hover {
+            background: var(--cream);
+            color: var(--terracotta);
+            transform: translateX(5px);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb-section {
+            background: linear-gradient(135deg, var(--sand) 0%, var(--cream) 100%);
+            padding: 1.5rem 0;
+            margin-top: 76px;
+        }
+
+        .breadcrumb {
+            background: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .breadcrumb-item a {
+            color: var(--terracotta);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--terracotta-dark);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--indigo);
+            font-weight: 500;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: '›';
+            color: var(--ochre);
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        /* Event Hero */
+        .event-hero {
+            position: relative;
+            height: 60vh;
+            min-height: 500px;
+            overflow: hidden;
+            background: var(--indigo);
+        }
+
+        .event-hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+
+        .event-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(46, 58, 89, 0.3) 0%,
+                rgba(46, 58, 89, 0.6) 50%,
+                rgba(46, 58, 89, 0.95) 100%
+            );
+        }
+
+        .event-hero-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 0;
+            z-index: 2;
+        }
+
+        .event-category-badge {
+            display: inline-block;
+            background: var(--terracotta);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .event-hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--white);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .event-hero-meta {
+            display: flex;
+            gap: 2rem;
+            color: rgba(255,255,255,0.9);
+            flex-wrap: wrap;
+        }
+
+        .event-hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-hero-meta i {
+            color: var(--ochre);
+        }
+
+        /* Event Info Card */
+        .event-info-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lifted);
+            position: sticky;
+            top: 100px;
+            z-index: 100;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .event-info-card .event-category {
+            display: inline-block;
+            color: var(--terracotta);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-info-card h1 {
+            font-size: 1.75rem;
+            color: var(--indigo);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .event-meta-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .event-meta-item:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .event-meta-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(198, 93, 59, 0.1) 0%, rgba(212, 163, 115, 0.1) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--terracotta);
+            font-size: 1.25rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .event-meta-content strong {
+            color: var(--indigo);
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .event-meta-content small {
+            color: #888;
+            font-size: 0.875rem;
+        }
+
+        .seats-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .seats-indicator i {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .event-actions {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid rgba(0,0,0,0.05);
+        }
+
+        .btn-reserve {
+            background: var(--terracotta);
+            border: 2px solid var(--terracotta);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            width: 100%;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-reserve::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-reserve:hover::before {
+            left: 100%;
+        }
+
+        .btn-reserve:hover {
+            background: var(--terracotta-dark);
+            border-color: var(--terracotta-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(198, 93, 59, 0.3);
+            color: var(--white);
+        }
+
+        .btn-action {
+            background: transparent;
+            border: 2px solid rgba(0,0,0,0.1);
+            color: var(--indigo);
+            padding: 0.75rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .btn-action:hover {
+            border-color: var(--terracotta);
+            color: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        .btn-action.active {
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            color: var(--white);
+        }
+
+        /* Organizer Info */
+        .organizer-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .organizer-section h5 {
+            font-size: 1rem;
+            color: var(--indigo);
+            margin-bottom: 1rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+        }
+
+        .organizer-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .organizer-avatar {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--ochre) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .organizer-info strong {
+            color: var(--indigo);
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .organizer-info small {
+            color: #888;
+            font-size: 0.875rem;
+        }
+
+        .organizer-info .rating {
+            color: var(--ochre);
+            font-size: 0.875rem;
+        }
+
+        /* Gallery */
+        .gallery-section {
+            margin-top: 2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0);
+            transition: background 0.3s;
+        }
+
+        .gallery-item:hover::after {
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            color: var(--indigo);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .content-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--terracotta);
+        }
+
+        .content-section .lead {
+            font-size: 1.25rem;
+            color: var(--terracotta);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .content-section h4 {
+            font-size: 1.25rem;
+            color: var(--indigo);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .feature-list li:hover {
+            padding-left: 10px;
+            color: var(--terracotta);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list i {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, rgba(198, 93, 59, 0.1) 0%, rgba(212, 163, 115, 0.1) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--terracotta);
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        /* Musician Cards */
+        .musician-card {
+            background: var(--cream);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: var(--transition-smooth);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .musician-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-soft);
+            background: var(--white);
+        }
+
+        .musician-card h6 {
+            font-size: 1.1rem;
+            color: var(--indigo);
+            margin-bottom: 0.5rem;
+        }
+
+        .musician-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Alert Box */
+        .alert-custom {
+            background: linear-gradient(135deg, rgba(212, 163, 115, 0.1) 0%, rgba(198, 93, 59, 0.05) 100%);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .alert-custom h6 {
+            color: var(--terracotta);
+            font-family: var(--font-sans);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert-custom ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .alert-custom li {
+            color: #555;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Sidebar Cards */
+        .sidebar-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .sidebar-card h5, .sidebar-card h6 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--indigo);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-card h5 {
+            font-size: 1.1rem;
+        }
+
+        .sidebar-card h6 {
+            font-size: 1rem;
+            color: var(--terracotta);
+        }
+
+        .sidebar-card p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .venue-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .venue-detail i {
+            color: var(--terracotta);
+            margin-top: 0.25rem;
+        }
+
+        .venue-detail small {
+            color: #666;
+        }
+
+        .weather-widget {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, rgba(212, 163, 115, 0.1) 0%, rgba(198, 93, 59, 0.05) 100%);
+            border-radius: 15px;
+            padding: 1rem;
+        }
+
+        .weather-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--ochre) 0%, var(--terracotta) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .weather-info strong {
+            font-size: 1.25rem;
+            color: var(--indigo);
+            display: block;
+        }
+
+        .weather-info small {
+            color: #888;
+        }
+
+        /* Similar Events */
+        .similar-event {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .similar-event:hover {
+            background: var(--cream);
+            transform: translateX(5px);
+        }
+
+        .similar-event-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .similar-event-info h6 {
+            font-size: 0.95rem;
+            color: var(--indigo);
+            margin-bottom: 0.25rem;
+            font-family: var(--font-sans);
+        }
+
+        .similar-event-info small {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .comments-section h3 {
+            font-size: 2rem;
+            color: var(--indigo);
+            margin-bottom: 2rem;
+        }
+
+        .add-comment {
+            background: var(--cream);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .add-comment h5 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--indigo);
+            margin-bottom: 1rem;
+        }
+
+        .form-control {
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            font-family: var(--font-sans);
+        }
+
+        .form-control:focus {
+            border-color: var(--terracotta);
+            box-shadow: 0 0 0 3px rgba(198, 93, 59, 0.1);
+        }
+
+        .rating-input {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .rating-input i {
+            color: #ddd;
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: color 0.2s;
+        }
+
+        .rating-input i:hover,
+        .rating-input i.active {
+            color: var(--ochre);
+        }
+
+        .comment {
+            background: var(--white);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .comment:hover {
+            box-shadow: var(--shadow-soft);
+            transform: translateY(-2px);
+        }
+
+        .commenter-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .commenter-name {
+            font-weight: 600;
+            color: var(--indigo);
+        }
+
+        .comment-date {
+            color: #888;
+            font-size: 0.875rem;
+        }
+
+        .comment-rating {
+            color: var(--ochre);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-text {
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--indigo);
+            color: rgba(255,255,255,0.8);
+            padding: 5rem 0 2rem;
+            position: relative;
+            margin-top: 4rem;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--terracotta), var(--ochre), var(--terracotta));
+        }
+
+        .footer h5 {
+            color: var(--white);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+        }
+
+        .footer p {
+            line-height: 1.8;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a::before {
+            content: '→';
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: var(--transition-smooth);
+            color: var(--ochre);
+        }
+
+        .footer-links a:hover {
+            color: var(--ochre);
+            transform: translateX(5px);
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: var(--terracotta);
+            transform: translateY(-3px);
+            color: var(--white);
+        }
+
+        .newsletter-form {
+            position: relative;
+        }
+
+        .newsletter-form .form-control {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            border-radius: 50px;
+            padding-right: 50px;
+        }
+
+        .newsletter-form .form-control::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .newsletter-form .form-control:focus {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--ochre);
+            box-shadow: none;
+            color: var(--white);
+        }
+
+        .newsletter-form button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--terracotta);
+            border: none;
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .newsletter-form button:hover {
+            background: var(--ochre);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-bottom a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--ochre);
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .event-info-card {
+                position: relative;
+                top: 0;
+                margin-bottom: 2rem;
+            }
+
+            .event-hero {
+                height: 50vh;
+            }
+
+            .content-section,
+            .comments-section {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .event-hero-title {
+                font-size: 1.75rem;
+            }
+
+            .event-hero-meta {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .logo-main {
+                font-size: 1.1rem;
+            }
+
+            .logo-sub {
+                display: none;
+            }
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="fas fa-mosque text-terracotta me-2"></i>
-                Marrakech Cultural Scene
+            <a class="brand-logo" href="index.html">
+                <div class="logo-icon">
+                    <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="48" fill="none" stroke="#D4A373" stroke-width="1" opacity="0.5"/>
+                        <circle cx="50" cy="50" r="44" fill="none" stroke="#C65D3B" stroke-width="2"/>
+                        <path d="M50 10 L60 35 L85 35 L65 50 L75 75 L50 60 L25 75 L35 50 L15 35 L40 35 Z" 
+                              fill="#C65D3B" opacity="0.9"/>
+                        <circle cx="50" cy="50" r="12" fill="#2E3A59"/>
+                        <circle cx="50" cy="50" r="6" fill="#D4A373"/>
+                        <path d="M20 20 L25 25 M80 20 L75 25 M20 80 L25 75 M80 80 L75 75" 
+                              stroke="#D4A373" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M30 70 Q30 55 40 55 Q50 55 50 70" fill="none" stroke="#2E3A59" stroke-width="2" opacity="0.6"/>
+                        <path d="M50 70 Q50 55 60 55 Q70 55 70 70" fill="none" stroke="#2E3A59" stroke-width="2" opacity="0.6"/>
+                    </svg>
+                </div>
+                <div class="logo-text-wrapper">
+                    <span class="logo-main">Marrakech</span>
+                    <span class="logo-sub">Cultural Scene</span>
+                </div>
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">
                             <i class="fas fa-home me-1"></i>Home
@@ -55,10 +1190,10 @@
                             <i class="fas fa-th-large me-1"></i>Categories
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="category.html?cat=music">Music</a></li>
-                            <li><a class="dropdown-item" href="category.html?cat=exhibition">Art Exhibitions</a></li>
-                            <li><a class="dropdown-item" href="category.html?cat=theater">Theater</a></li>
-                            <li><a class="dropdown-item" href="category.html?cat=workshop">Workshops</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=music"><i class="fas fa-music me-2" style="color: var(--terracotta)"></i>Music</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=exhibition"><i class="fas fa-palette me-2" style="color: var(--terracotta)"></i>Art Exhibitions</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=theater"><i class="fas fa-theater-masks me-2" style="color: var(--terracotta)"></i>Theater</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=workshop"><i class="fas fa-hands me-2" style="color: var(--terracotta)"></i>Workshops</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -67,7 +1202,7 @@
     </nav>
 
     <!-- Breadcrumb -->
-    <section class="py-3 mt-5 bg-cream">
+    <section class="breadcrumb-section">
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">
@@ -80,302 +1215,319 @@
         </div>
     </section>
 
+    <!-- Event Hero -->
+    <section class="event-hero">
+        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1920&q=80" alt="Traditional Moroccan Music Concert" class="event-hero-image">
+        <div class="event-hero-overlay"></div>
+        <div class="event-hero-content">
+            <div class="container">
+                <span class="event-category-badge">Music Concert</span>
+                <h1 class="event-hero-title">Traditional Moroccan Music Concert</h1>
+                <div class="event-hero-meta">
+                    <span><i class="fas fa-calendar"></i> December 15, 2025</span>
+                    <span><i class="fas fa-clock"></i> 8:00 PM - 10:30 PM</span>
+                    <span><i class="fas fa-map-marker-alt"></i> Marrakech Cultural Center</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Event Details -->
     <section class="py-5">
         <div class="container">
             <div class="row">
-                <!-- Event Image and Gallery -->
-                <div class="col-lg-8 mb-4">
-                    <div class="event-detail-image">
-                        <img src="images/music_concert_6.jpeg" alt="Traditional Moroccan Music Concert" class="img-fluid rounded shadow-lg w-100">
+                <!-- Main Content -->
+                <div class="col-lg-8 order-2 order-lg-1">
+                    <!-- Gallery -->
+                    <div class="gallery-section mb-4 reveal">
+                        <div class="gallery-grid">
+                            <div class="gallery-item">
+                                <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80" alt="Concert Gallery 1">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80" alt="Concert Gallery 2">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=400&q=80" alt="Cultural Setting">
+                            </div>
+                        </div>
                     </div>
-                    
-                    <!-- Event Gallery -->
-                    <div class="row mt-3">
-                        <div class="col-4">
-                            <img src="images/music_concert_8.jpg" alt="Concert Gallery 1" class="img-fluid rounded">
+
+                    <!-- About Event -->
+                    <div class="content-section reveal">
+                        <h2>About This Event</h2>
+                        <p class="lead">Experience the enchanting sounds of traditional Moroccan music in an authentic cultural setting that celebrates Morocco's rich musical heritage.</p>
+
+                        <p>Join us for an unforgettable evening of traditional Moroccan music featuring master musicians from across Morocco. This concert will showcase the diverse musical traditions of the region, including classical Andalusian melodies, Berber rhythms, and Gnawa spiritual music.</p>
+
+                        <h4>What to Expect</h4>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-music"></i>Live performances on traditional instruments including oud, qanun, violin, and percussion</li>
+                            <li><i class="fas fa-microphone"></i>Vocal performances in Arabic and Berber languages</li>
+                            <li><i class="fas fa-book"></i>Brief introductions to each musical tradition and its cultural significance</li>
+                            <li><i class="fas fa-coffee"></i>Traditional Moroccan tea served during intermission</li>
+                            <li><i class="fas fa-camera"></i>Meet and greet with the musicians after the performance</li>
+                        </ul>
+
+                        <h4>Featured Musicians</h4>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="musician-card">
+                                    <h6>Master Ahmed Benali</h6>
+                                    <p>Oud virtuoso with 30+ years of experience in Andalusian classical music</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="musician-card">
+                                    <h6>Fatima Amellal</h6>
+                                    <p>Renowned vocalist specializing in traditional Amazigh (Berber) songs</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <img src="images/music_concert_9.jpg" alt="Concert Gallery 2" class="img-fluid rounded">
+
+                        <h4>Important Information</h4>
+                        <div class="alert-custom">
+                            <h6><i class="fas fa-info-circle"></i>Dress Code & Guidelines</h6>
+                            <ul>
+                                <li>Respectful attire recommended (traditional Moroccan dress welcomed)</li>
+                                <li>Doors open at 7:30 PM, performance begins promptly at 8:00 PM</li>
+                                <li>Photography allowed without flash during designated times</li>
+                                <li>No outside food or beverages permitted</li>
+                            </ul>
                         </div>
-                        <div class="col-4">
-                            <img src="images/cultural_workshop_9.jpg" alt="Cultural Setting" class="img-fluid rounded">
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="comments-section reveal">
+                        <h3>Comments & Reviews</h3>
+
+                        <!-- Add Comment Form -->
+                        <div class="add-comment">
+                            <h5>Share Your Thoughts</h5>
+                            <form id="commentForm">
+                                <div class="mb-3">
+                                    <textarea class="form-control" rows="3" placeholder="Write your comment or question about this event..."></textarea>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span style="color: #666; font-size: 0.9rem;">Rate this event:</span>
+                                        <div class="rating-input">
+                                            <i class="fas fa-star" data-rating="1"></i>
+                                            <i class="fas fa-star" data-rating="2"></i>
+                                            <i class="fas fa-star" data-rating="3"></i>
+                                            <i class="fas fa-star" data-rating="4"></i>
+                                            <i class="fas fa-star" data-rating="5"></i>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-reserve" style="width: auto; padding: 0.75rem 2rem;">
+                                        <i class="fas fa-paper-plane me-2"></i>Post Comment
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Comments List -->
+                        <div class="comments-list">
+                            <div class="comment">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="commenter-avatar bg-terracotta">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="comment-header">
+                                            <div>
+                                                <div class="commenter-name">Sarah Johnson</div>
+                                                <div class="comment-rating">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <div class="comment-date">2 days ago</div>
+                                        </div>
+                                        <p class="comment-text">I attended last year's concert and it was absolutely magical! The acoustics in the Cultural Center are perfect for traditional music. Can't wait for this year's performance.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="comment">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="commenter-avatar bg-indigo">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="comment-header">
+                                            <div>
+                                                <div class="commenter-name">Ahmed Benali</div>
+                                                <div class="comment-rating">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <div class="comment-date">1 week ago</div>
+                                        </div>
+                                        <p class="comment-text">Will there be English translations for the musical introductions? I'd love to learn more about the cultural significance of each piece.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Event Information -->
-                <div class="col-lg-4">
-                    <div class="event-info-card bg-white rounded shadow-lg p-4 sticky-top">
+                <!-- Sidebar -->
+                <div class="col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0">
+                    <div class="event-info-card reveal">
                         <span class="event-category">Music Concert</span>
-                        <h1 class="h3 my-3">Traditional Moroccan Music Concert</h1>
-                        
-                        <div class="event-meta mb-4">
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-calendar text-terracotta me-3"></i>
-                                <div>
-                                    <strong>December 15, 2024</strong><br>
-                                    <small class="text-muted">8:00 PM - 10:30 PM</small>
-                                </div>
+                        <h1>Traditional Moroccan Music Concert</h1>
+
+                        <div class="event-meta-item">
+                            <div class="event-meta-icon">
+                                <i class="fas fa-calendar"></i>
                             </div>
-                            
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-map-marker-alt text-terracotta me-3"></i>
-                                <div>
-                                    <strong>Marrakech Cultural Center</strong><br>
-                                    <small class="text-muted">Avenue Mohammed V, Medina</small>
-                                </div>
+                            <div class="event-meta-content">
+                                <strong>December 15, 2025</strong>
+                                <small>8:00 PM - 10:30 PM</small>
                             </div>
-                            
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-ticket-alt text-terracotta me-3"></i>
-                                <div>
-                                    <strong>50 MAD</strong><br>
-                                    <small class="text-muted">General Admission</small>
-                                </div>
+                        </div>
+
+                        <div class="event-meta-item">
+                            <div class="event-meta-icon">
+                                <i class="fas fa-map-marker-alt"></i>
                             </div>
-                            
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="fas fa-users text-terracotta me-3"></i>
-                                <div>
-                                    <strong>Available Seats: 120</strong><br>
-                                    <small class="text-success">45 spots remaining</small>
+                            <div class="event-meta-content">
+                                <strong>Marrakech Cultural Center</strong>
+                                <small>Avenue Mohammed V, Medina</small>
+                            </div>
+                        </div>
+
+                        <div class="event-meta-item">
+                            <div class="event-meta-icon">
+                                <i class="fas fa-ticket-alt"></i>
+                            </div>
+                            <div class="event-meta-content">
+                                <strong>50 MAD</strong>
+                                <small>General Admission</small>
+                            </div>
+                        </div>
+
+                        <div class="event-meta-item">
+                            <div class="event-meta-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="event-meta-content">
+                                <strong>120 Available Seats</strong>
+                                <div class="seats-indicator">
+                                    <i class="fas fa-circle" style="font-size: 8px;"></i>
+                                    45 spots remaining
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="event-actions">
-                            <button class="btn btn-primary w-100 mb-3">
+                            <button class="btn btn-reserve" onclick="alert('Reservation system coming soon!')">
                                 <i class="fas fa-shopping-cart me-2"></i>Reserve Your Seat
                             </button>
-                            <div class="row">
+                            <div class="row g-2">
                                 <div class="col-6">
-                                    <button class="btn btn-outline-primary w-100">
-                                        <i class="fas fa-heart me-2"></i>Save
+                                    <button class="btn btn-action" id="saveBtn" onclick="toggleSave(this)">
+                                        <i class="fas fa-heart"></i>
+                                        <span>Save</span>
                                     </button>
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-outline-primary w-100">
-                                        <i class="fas fa-share-alt me-2"></i>Share
+                                    <button class="btn btn-action" onclick="shareEvent()">
+                                        <i class="fas fa-share-alt"></i>
+                                        <span>Share</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Organizer Info -->
-                        <div class="organizer-info mt-4 pt-4 border-top">
+                        <div class="organizer-section">
                             <h5>Organized by</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="organizer-avatar bg-terracotta text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                            <div class="organizer-card">
+                                <div class="organizer-avatar">
                                     <i class="fas fa-user"></i>
                                 </div>
-                                <div>
-                                    <strong>Marrakech Cultural Center</strong><br>
-                                    <small class="text-muted">
-                                        <i class="fas fa-star text-ochre"></i>
+                                <div class="organizer-info">
+                                    <strong>Marrakech Cultural Center</strong>
+                                    <small class="rating">
+                                        <i class="fas fa-star"></i>
                                         4.8 (127 reviews)
                                     </small>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-outline-secondary btn-sm mt-2">View Profile</a>
+                            <a href="#" class="btn btn-action mt-3" style="width: 100%;">
+                                View Profile
+                            </a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Event Description -->
-    <section class="py-5 bg-cream">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h2>About This Event</h2>
-                    <p class="lead">Experience the enchanting sounds of traditional Moroccan music in an authentic cultural setting that celebrates Morocco's rich musical heritage.</p>
-                    
-                    <p>Join us for an unforgettable evening of traditional Moroccan music featuring master musicians from across Morocco. This concert will showcase the diverse musical traditions of the region, including classical Andalusian melodies, Berber rhythms, and Gnawa spiritual music.</p>
-                    
-                    <h4>What to Expect</h4>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-music text-terracotta me-2"></i>Live performances on traditional instruments including oud, qanun, violin, and percussion</li>
-                        <li class="mb-2"><i class="fas fa-microphone text-terracotta me-2"></i>Vocal performances in Arabic and Berber languages</li>
-                        <li class="mb-2"><i class="fas fa-book text-terracotta me-2"></i>Brief introductions to each musical tradition and its cultural significance</li>
-                        <li class="mb-2"><i class="fas fa-coffee text-terracotta me-2"></i>Traditional Moroccan tea served during intermission</li>
-                        <li class="mb-2"><i class="fas fa-camera text-terracotta me-2"></i>Meet and greet with the musicians after the performance</li>
-                    </ul>
-                    
-                    <h4>Featured Musicians</h4>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="musician-card bg-white p-3 rounded">
-                                <h6>Master Ahmed Benali</h6>
-                                <p class="mb-0 small text-muted">Oud virtuoso with 30+ years of experience in Andalusian classical music</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="musician-card bg-white p-3 rounded">
-                                <h6>Fatima Amellal</h6>
-                                <p class="mb-0 small text-muted">Renowned vocalist specializing in traditional Amazigh (Berber) songs</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <h4>Important Information</h4>
-                    <div class="alert alert-info">
-                        <h6 class="alert-heading">Dress Code & Guidelines</h6>
-                        <ul class="mb-0 small">
-                            <li>Respectful attire recommended (traditional Moroccan dress welcomed)</li>
-                            <li>Doors open at 7:30 PM, performance begins promptly at 8:00 PM</li>
-                            <li>Photography allowed without flash during designated times</li>
-                            <li>No outside food or beverages permitted</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4">
-                    <div class="venue-info bg-white rounded shadow p-4 mb-4">
+                    <!-- Venue Info -->
+                    <div class="sidebar-card reveal" style="transition-delay: 0.1s;">
                         <h5>Venue Information</h5>
                         <h6>Marrakech Cultural Center</h6>
-                        <p class="text-muted mb-3">A historic venue in the heart of the medina, featuring traditional Moroccan architecture and excellent acoustics for musical performances.</p>
-                        
-                        <div class="venue-details">
-                            <div class="mb-2">
-                                <i class="fas fa-map-marker-alt text-terracotta me-2"></i>
-                                <small>Avenue Mohammed V, Medina, Marrakech</small>
-                            </div>
-                            <div class="mb-2">
-                                <i class="fas fa-phone text-terracotta me-2"></i>
-                                <small>+212 524 123 456</small>
-                            </div>
-                            <div class="mb-2">
-                                <i class="fas fa-parking text-terracotta me-2"></i>
-                                <small>Parking available nearby</small>
-                            </div>
-                            <div class="mb-3">
-                                <i class="fas fa-wheelchair text-terracotta me-2"></i>
-                                <small>Wheelchair accessible</small>
-                            </div>
+                        <p>A historic venue in the heart of the medina, featuring traditional Moroccan architecture and excellent acoustics for musical performances.</p>
+
+                        <div class="venue-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <small>Avenue Mohammed V, Medina, Marrakech</small>
                         </div>
-                        
-                        <button class="btn btn-outline-primary btn-sm w-100">
+                        <div class="venue-detail">
+                            <i class="fas fa-phone"></i>
+                            <small>+212 524 123 456</small>
+                        </div>
+                        <div class="venue-detail">
+                            <i class="fas fa-parking"></i>
+                            <small>Parking available nearby</small>
+                        </div>
+                        <div class="venue-detail">
+                            <i class="fas fa-wheelchair"></i>
+                            <small>Wheelchair accessible</small>
+                        </div>
+
+                        <button class="btn btn-action mt-3" style="width: 100%;" onclick="alert('Opening map...')">
                             <i class="fas fa-directions me-2"></i>Get Directions
                         </button>
                     </div>
-                    
+
                     <!-- Weather Widget -->
-                    <div class="weather-widget bg-white rounded shadow p-4 mb-4">
+                    <div class="sidebar-card reveal" style="transition-delay: 0.2s;">
                         <h6>Weather Forecast</h6>
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-sun text-ochre fa-2x me-3"></i>
-                            <div>
-                                <strong>22°C</strong><br>
-                                <small class="text-muted">Clear evening</small>
+                        <div class="weather-widget">
+                            <div class="weather-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="weather-info">
+                                <strong>22°C</strong>
+                                <small>Clear evening</small>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Similar Events -->
-                    <div class="similar-events bg-white rounded shadow p-4">
+                    <div class="sidebar-card reveal" style="transition-delay: 0.3s;">
                         <h6>You Might Also Like</h6>
-                        <div class="similar-event mb-3">
-                            <img src="images/theater_performance_6.jpg" alt="Theater Performance" class="similar-event-img">
+                        <a href="#" class="similar-event">
+                            <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=200&q=80" alt="Theater Performance" class="similar-event-img">
                             <div class="similar-event-info">
                                 <h6>Desert Rhythms Dance</h6>
-                                <small class="text-muted">January 20, 2025</small>
+                                <small>January 20, 2025</small>
                             </div>
-                        </div>
-                        <div class="similar-event">
-                            <img src="images/art_exhibition_2.jpg" alt="Art Exhibition" class="similar-event-img">
+                        </a>
+                        <a href="#" class="similar-event">
+                            <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=200&q=80" alt="Art Exhibition" class="similar-event-img">
                             <div class="similar-event-info">
                                 <h6>Sculptures of the Atlas</h6>
-                                <small class="text-muted">January 10, 2025</small>
+                                <small>January 10, 2025</small>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comments Section -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h3>Comments & Reviews</h3>
-                    
-                    <!-- Add Comment Form -->
-                    <div class="add-comment bg-cream rounded p-4 mb-4">
-                        <h5>Share Your Thoughts</h5>
-                        <form>
-                            <div class="mb-3">
-                                <textarea class="form-control" rows="3" placeholder="Write your comment or question about this event..."></textarea>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="rating">
-                                    <span class="me-2">Rate this event:</span>
-                                    <i class="fas fa-star text-ochre"></i>
-                                    <i class="fas fa-star text-ochre"></i>
-                                    <i class="fas fa-star text-ochre"></i>
-                                    <i class="fas fa-star text-ochre"></i>
-                                    <i class="far fa-star text-ochre"></i>
-                                </div>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-paper-plane me-2"></i>Post Comment
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    <!-- Comments List -->
-                    <div class="comments-list">
-                        <div class="comment bg-white rounded shadow-sm p-4 mb-3">
-                            <div class="d-flex align-items-start">
-                                <div class="commenter-avatar bg-terracotta text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <div>
-                                            <strong>Sarah Johnson</strong>
-                                            <div class="rating-small">
-                                                <i class="fas fa-star text-ochre"></i>
-                                                <i class="fas fa-star text-ochre"></i>
-                                                <i class="fas fa-star text-ochre"></i>
-                                                <i class="fas fa-star text-ochre"></i>
-                                                <i class="fas fa-star text-ochre"></i>
-                                            </div>
-                                        </div>
-                                        <small class="text-muted">2 days ago</small>
-                                    </div>
-                                    <p class="mb-0">I attended last year's concert and it was absolutely magical! The acoustics in the Cultural Center are perfect for traditional music. Can't wait for this year's performance.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="comment bg-white rounded shadow-sm p-4 mb-3">
-                            <div class="d-flex align-items-start">
-                                <div class="commenter-avatar bg-indigo text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <div>
-                                            <strong>Ahmed Benali</strong>
-                                            <div class="rating-small">
-                                                <i class="fas fa-star text-ochre"></i>
-                                                <i class="fas fa-star text-ochre"></i>
-                                                <i class="fas fa-star text-ochre"></i>
-                                                <i class="fas fa-star text-ochre"></i>
-                                                <i class="far fa-star text-ochre"></i>
-                                            </div>
-                                        </div>
-                                        <small class="text-muted">1 week ago</small>
-                                    </div>
-                                    <p class="mb-0">Will there be English translations for the musical introductions? I'd love to learn more about the cultural significance of each piece.</p>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -386,31 +1538,23 @@
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 mb-4">
+                <div class="col-lg-4 mb-4 reveal">
                     <h5>
-                        <i class="fas fa-mosque text-ochre me-2"></i>
+                        <i class="fas fa-mosque me-2" style="color: var(--ochre)"></i>
                         Marrakech Cultural Scene
                     </h5>
                     <p>Connecting culture enthusiasts with the vibrant artistic heartbeat of Marrakech. Discover, participate, and celebrate the rich cultural heritage of Morocco's red city.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
+
+                <div class="col-lg-2 col-md-6 mb-4 reveal" style="transition-delay: 0.1s;">
                     <h5>Explore</h5>
-                    <ul class="list-unstyled">
+                    <ul class="footer-links">
                         <li><a href="events.html">All Events</a></li>
                         <li><a href="category.html?cat=music">Music</a></li>
                         <li><a href="category.html?cat=exhibition">Art Exhibitions</a></li>
@@ -418,10 +1562,10 @@
                         <li><a href="category.html?cat=workshop">Workshops</a></li>
                     </ul>
                 </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
+
+                <div class="col-lg-2 col-md-6 mb-4 reveal" style="transition-delay: 0.2s;">
                     <h5>Community</h5>
-                    <ul class="list-unstyled">
+                    <ul class="footer-links">
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="submit-event.html">Submit Event</a></li>
                         <li><a href="#">Contact</a></li>
@@ -429,28 +1573,28 @@
                         <li><a href="#">Guidelines</a></li>
                     </ul>
                 </div>
-                
-                <div class="col-lg-4 mb-4">
+
+                <div class="col-lg-4 mb-4 reveal" style="transition-delay: 0.3s;">
                     <h5>Stay Updated</h5>
                     <p>Subscribe to our newsletter for the latest cultural events and artistic happenings in Marrakech.</p>
-                    <div class="input-group">
+                    <form class="newsletter-form">
                         <input type="email" class="form-control" placeholder="Enter your email">
-                        <button class="btn btn-terracotta" type="button">
+                        <button type="submit" aria-label="Subscribe">
                             <i class="fas fa-paper-plane"></i>
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
-            
-            <hr class="my-4">
-            
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; 2024 Marrakech Cultural Scene. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="me-3">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2025 Marrakech Cultural Scene. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -458,32 +1602,113 @@
 
     <!-- Bootstrap 5 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script src="js/main.js"></script>
-    
-    <style>
-        .similar-event {
-            display: flex;
-            align-items: center;
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Save button toggle
+        function toggleSave(btn) {
+            btn.classList.toggle('active');
+            const icon = btn.querySelector('i');
+            const text = btn.querySelector('span');
+
+            if (btn.classList.contains('active')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                text.textContent = 'Saved';
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                text.textContent = 'Save';
+            }
         }
-        
-        .similar-event-img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-right: 1rem;
+
+        // Share functionality
+        function shareEvent() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Traditional Moroccan Music Concert',
+                    text: 'Join me at this amazing cultural event in Marrakech!',
+                    url: window.location.href
+                });
+            } else {
+                alert('Share URL copied to clipboard!');
+            }
         }
-        
-        .similar-event-info h6 {
-            margin-bottom: 0.25rem;
-            font-size: 0.9rem;
-        }
-        
-        .rating-small {
-            font-size: 0.8rem;
-        }
-    </style>
+
+        // Rating interaction
+        document.querySelectorAll('.rating-input i').forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.getAttribute('data-rating');
+                document.querySelectorAll('.rating-input i').forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Comment form submission
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your review! It will be posted after moderation.');
+            this.reset();
+            document.querySelectorAll('.rating-input i').forEach(s => s.classList.remove('active'));
+        });
+
+        // Newsletter form handling
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = this.querySelector('input');
+            if (input.value) {
+                const btn = this.querySelector('button');
+                const originalIcon = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                btn.style.background = '#28a745';
+                input.value = '';
+
+                setTimeout(() => {
+                    btn.innerHTML = originalIcon;
+                    btn.style.background = '';
+                }, 2000);
+            }
+        });
+
+        // Parallax effect for hero image
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImage = document.querySelector('.event-hero-image');
+            if (heroImage && scrolled < window.innerHeight) {
+                heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
 </body>
 </html>

@@ -5,31 +5,1146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Events in Marrakech - Cultural Scene</title>
     <meta name="description" content="Discover traditional and contemporary music events in Marrakech. From Gnawa rhythms to Andalusian melodies, explore Morocco's rich musical heritage.">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --terracotta: #C65D3B;
+            --terracotta-dark: #A84B2F;
+            --ochre: #D4A373;
+            --ochre-light: #E9C496;
+            --indigo: #2E3A59;
+            --indigo-light: #3F4F75;
+            --cream: #FAF7F2;
+            --sand: #F5F1E8;
+            --charcoal: #2C2C2C;
+            --white: #FFFFFF;
+
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-lifted: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--cream);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+        }
+
+        /* Custom Logo Styles - Matching Index */
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 4px rgba(198, 93, 59, 0.3));
+            transition: var(--transition-smooth);
+        }
+
+        .brand-logo:hover .logo-svg {
+            transform: rotate(5deg) scale(1.1);
+            filter: drop-shadow(0 4px 8px rgba(198, 93, 59, 0.4));
+        }
+
+        .logo-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-main {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--indigo);
+            letter-spacing: 0.5px;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--terracotta);
+            font-weight: 600;
+        }
+
+        /* Navigation - Matching Index Exactly */
+        .navbar {
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(198, 93, 59, 0.1);
+            padding: 0.75rem 0;
+            transition: var(--transition-smooth);
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--indigo) !important;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.25rem;
+            transition: var(--transition-smooth);
+            font-size: 0.9rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--terracotta);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: var(--terracotta) !important;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--shadow-soft);
+            border-radius: 12px;
+            padding: 0.5rem;
+            background: var(--white);
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-item {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: var(--transition-smooth);
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item:hover {
+            background: var(--cream);
+            color: var(--terracotta);
+            transform: translateX(5px);
+        }
+
+        /* Category Header Section - Styled like Hero */
+        .category-hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);
+            overflow: hidden;
+            margin-top: 76px;
+        }
+
+        .category-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .category-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(198, 93, 59, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .category-hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 4rem 0;
+        }
+
+        .category-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(212, 163, 115, 0.2);
+            color: var(--ochre-light);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .category-icon-large {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--ochre) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(198, 93, 59, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-icon-large::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+            transform: rotate(45deg) translateY(-100%);
+            transition: transform 0.6s;
+        }
+
+        .category-hero:hover .category-icon-large::after {
+            transform: rotate(45deg) translateY(100%);
+        }
+
+        .category-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--white);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .category-description {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .category-stats {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .category-stats h3 {
+            font-size: 3rem;
+            color: var(--ochre);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-serif);
+        }
+
+        /* Breadcrumb Styling */
+        .breadcrumb-section {
+            background: var(--sand);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .breadcrumb {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-item a {
+            color: var(--terracotta);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--terracotta-dark);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--indigo);
+            font-weight: 500;
+        }
+
+        /* Section Styling */
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--indigo);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--terracotta);
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 1.5rem auto 0;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: var(--white);
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 76px;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: var(--indigo);
+            margin-bottom: 0.5rem;
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-select-custom {
+            background: var(--cream);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+            color: var(--charcoal);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23C65D3B' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .form-select-custom:focus {
+            border-color: var(--terracotta);
+            box-shadow: 0 0 0 0.2rem rgba(198, 93, 59, 0.25);
+            outline: none;
+        }
+
+        /* Event Cards - Matching Index Style */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .event-card-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .event-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .event-card:hover .event-card-image img {
+            transform: scale(1.1);
+        }
+
+        .event-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--terracotta);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        .event-date-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--white);
+            color: var(--indigo);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 2;
+            min-width: 60px;
+        }
+
+        .event-date-badge .day {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+            font-family: var(--font-serif);
+        }
+
+        .event-date-badge .month {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--terracotta);
+            font-weight: 600;
+        }
+
+        .event-card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-category {
+            display: inline-block;
+            color: var(--terracotta);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-card-title {
+            font-size: 1.5rem;
+            color: var(--indigo);
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+
+        .event-card:hover .event-card-title {
+            color: var(--terracotta);
+        }
+
+        .event-card-text {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .musical-elements {
+            margin-bottom: 1rem;
+        }
+
+        .badge-music {
+            background: rgba(212, 163, 115, 0.2);
+            color: var(--indigo);
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .event-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            margin-top: auto;
+        }
+
+        .event-location {
+            color: #888;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-price {
+            color: var(--terracotta);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .btn-view-details {
+            background: transparent;
+            color: var(--terracotta);
+            border: 2px solid var(--terracotta);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .btn-view-details:hover {
+            background: var(--terracotta);
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        /* Venues Section */
+        .bg-sand {
+            background: var(--sand);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-sand::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(198, 93, 59, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .venue-card {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .venue-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--terracotta), var(--ochre));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .venue-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .venue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .venue-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--ochre) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .venue-icon::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+            transform: rotate(45deg) translateY(-100%);
+            transition: transform 0.6s;
+        }
+
+        .venue-card:hover .venue-icon::after {
+            transform: rotate(45deg) translateY(100%);
+        }
+
+        .venue-card h5 {
+            color: var(--indigo);
+            margin-bottom: 0.75rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+        }
+
+        .venue-card p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Calendar Section */
+        .calendar-preview {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+            padding: 2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .calendar-month h5 {
+            color: var(--indigo);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-event {
+            display: flex;
+            align-items: center;
+            padding: 1.25rem;
+            background: var(--cream);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
+        }
+
+        .calendar-event:hover {
+            border-color: var(--ochre);
+            transform: translateX(5px);
+        }
+
+        .event-date-box {
+            min-width: 60px;
+            padding: 0.75rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-right: 1rem;
+            font-family: var(--font-serif);
+        }
+
+        .event-date-box.bg-terracotta {
+            background: var(--terracotta);
+            color: var(--white);
+        }
+
+        .event-date-box.bg-indigo {
+            background: var(--indigo);
+            color: var(--white);
+        }
+
+        .event-date-box .day {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+            display: block;
+        }
+
+        .event-date-box .month {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .calendar-event h6 {
+            color: var(--indigo);
+            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+        }
+
+        .calendar-event small {
+            color: #888;
+        }
+
+        .badge-price {
+            background: rgba(212, 163, 115, 0.2);
+            color: var(--terracotta);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border: 1px solid rgba(198, 93, 59, 0.2);
+        }
+
+        /* Newsletter Box */
+        .music-newsletter {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-newsletter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .music-newsletter h5 {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+        }
+
+        .music-newsletter p {
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-terracotta {
+            background: var(--terracotta);
+            border: 2px solid var(--terracotta);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .btn-terracotta:hover {
+            background: var(--terracotta-dark);
+            border-color: var(--terracotta-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(198, 93, 59, 0.4);
+            color: var(--white);
+        }
+
+        .music-tips {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .music-tips h6 {
+            color: var(--indigo);
+            margin-bottom: 1rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+        }
+
+        .music-tips ul {
+            padding-left: 1.2rem;
+            margin: 0;
+        }
+
+        .music-tips li {
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Load More Button */
+        .btn-secondary-custom {
+            background: transparent;
+            border: 2px solid var(--terracotta);
+            color: var(--terracotta);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary-custom:hover {
+            background: var(--terracotta);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(198, 93, 59, 0.3);
+        }
+
+        /* Footer - Matching Index */
+        .footer {
+            background: var(--indigo);
+            color: rgba(255,255,255,0.8);
+            padding: 5rem 0 2rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--terracotta), var(--ochre), var(--terracotta));
+        }
+
+        .footer h5 {
+            color: var(--white);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+        }
+
+        .footer p {
+            line-height: 1.8;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a::before {
+            content: '→';
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: var(--transition-smooth);
+            color: var(--ochre);
+        }
+
+        .footer-links a:hover {
+            color: var(--ochre);
+            transform: translateX(5px);
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: var(--terracotta);
+            transform: translateY(-3px);
+            color: var(--white);
+        }
+
+        .newsletter-form {
+            position: relative;
+        }
+
+        .newsletter-form .form-control {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            border-radius: 50px;
+            padding-right: 50px;
+        }
+
+        .newsletter-form .form-control::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .newsletter-form .form-control:focus {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--ochre);
+            box-shadow: none;
+            color: var(--white);
+        }
+
+        .newsletter-form button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--terracotta);
+            border: none;
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .newsletter-form button:hover {
+            background: var(--ochre);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-bottom a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--ochre);
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .category-hero {
+                min-height: auto;
+                padding: 3rem 0;
+            }
+
+            .category-title {
+                font-size: 2rem;
+            }
+
+            .category-icon-large {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .filter-section {
+                position: relative;
+                top: 0;
+            }
+
+            .calendar-event {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .event-date-box {
+                margin-right: 0;
+            }
+
+            .logo-main {
+                font-size: 1.1rem;
+            }
+
+            .logo-sub {
+                display: none;
+            }
+        }
+
+        /* Fade in animation for filtered items */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <!-- Navigation - Exactly Matching Index -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="fas fa-mosque text-terracotta me-2"></i>
-                Marrakech Cultural Scene
+            <a class="brand-logo" href="index.html">
+                <div class="logo-icon">
+                    <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Decorative outer ring with Moroccan pattern -->
+                        <circle cx="50" cy="50" r="48" fill="none" stroke="#D4A373" stroke-width="1" opacity="0.5"/>
+                        <circle cx="50" cy="50" r="44" fill="none" stroke="#C65D3B" stroke-width="2"/>
+
+                        <!-- Inner geometric pattern -->
+                        <path d="M50 10 L60 35 L85 35 L65 50 L75 75 L50 60 L25 75 L35 50 L15 35 L40 35 Z" 
+                              fill="#C65D3B" opacity="0.9"/>
+
+                        <!-- Center element -->
+                        <circle cx="50" cy="50" r="12" fill="#2E3A59"/>
+                        <circle cx="50" cy="50" r="6" fill="#D4A373"/>
+
+                        <!-- Decorative corner elements -->
+                        <path d="M20 20 L25 25 M80 20 L75 25 M20 80 L25 75 M80 80 L75 75" 
+                              stroke="#D4A373" stroke-width="2" stroke-linecap="round"/>
+
+                        <!-- Arches representing Moroccan architecture -->
+                        <path d="M30 70 Q30 55 40 55 Q50 55 50 70" fill="none" stroke="#2E3A59" stroke-width="2" opacity="0.6"/>
+                        <path d="M50 70 Q50 55 60 55 Q70 55 70 70" fill="none" stroke="#2E3A59" stroke-width="2" opacity="0.6"/>
+                    </svg>
+                </div>
+                <div class="logo-text-wrapper">
+                    <span class="logo-main">Marrakech</span>
+                    <span class="logo-sub">Cultural Scene</span>
+                </div>
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">
                             <i class="fas fa-home me-1"></i>Home
@@ -55,10 +1170,10 @@
                             <i class="fas fa-th-large me-1"></i>Categories
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item active" href="category.html?cat=music">Music</a></li>
-                            <li><a class="dropdown-item" href="category.html?cat=exhibition">Art Exhibitions</a></li>
-                            <li><a class="dropdown-item" href="category.html?cat=theater">Theater</a></li>
-                            <li><a class="dropdown-item" href="category.html?cat=workshop">Workshops</a></li>
+                            <li><a class="dropdown-item active" href="category.html?cat=music"><i class="fas fa-music me-2" style="color: var(--terracotta)"></i>Music</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=exhibition"><i class="fas fa-palette me-2" style="color: var(--terracotta)"></i>Art Exhibitions</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=theater"><i class="fas fa-theater-masks me-2" style="color: var(--terracotta)"></i>Theater</a></li>
+                            <li><a class="dropdown-item" href="category.html?cat=workshop"><i class="fas fa-hands me-2" style="color: var(--terracotta)"></i>Workshops</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -66,11 +1181,44 @@
         </div>
     </nav>
 
+    <!-- Category Hero Section -->
+    <section class="category-hero">
+        <div class="container">
+            <div class="category-hero-content">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <span class="category-badge">
+                            <i class="fas fa-music me-2"></i> Category
+                        </span>
+                        <div class="category-icon-large">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h1 class="category-title">Music Events</h1>
+                        <p class="category-description">
+                            From the spiritual rhythms of Gnawa music to the refined elegance of Andalusian classical traditions, 
+                            Marrakech's music scene offers an extraordinary journey through Morocco's diverse cultural heritage. 
+                            Experience authentic performances in historic venues and discover both traditional and contemporary 
+                            interpretations of Moroccan musical artistry.
+                        </p>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="category-stats reveal">
+                            <h3>15</h3>
+                            <p class="mb-0">Upcoming Events</p>
+                            <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
+                            <small>Next event in 3 days</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Breadcrumb -->
-    <section class="py-3 mt-5 bg-cream">
+    <section class="breadcrumb-section">
         <div class="container">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
+                <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                     <li class="breadcrumb-item"><a href="events.html">Events</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Music</li>
@@ -79,378 +1227,371 @@
         </div>
     </section>
 
-    <!-- Category Header -->
-    <section class="py-5" style="background: linear-gradient(135deg, var(--terracotta-orange), var(--ochre-yellow)); color: white;">
+    <!-- Filter Section -->
+    <section class="filter-section">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-end">
                 <div class="col-lg-8">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="category-icon bg-white text-terracotta rounded-circle d-flex align-items-center justify-content-center me-4" style="width: 80px; height: 80px;">
-                            <i class="fas fa-music fa-2x"></i>
-                        </div>
-                        <div>
-                            <h1 class="display-4 mb-2">Music Events</h1>
-                            <p class="lead mb-0">Discover the rhythmic soul of Morocco through traditional and contemporary musical experiences</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-lg-end">
-                    <div class="category-stats">
-                        <div class="stat-item">
-                            <h3 class="mb-0">15</h3>
-                            <small>Upcoming Events</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Category Description -->
-    <section class="py-4 bg-cream">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <p class="mb-0">From the spiritual rhythms of Gnawa music to the refined elegance of Andalusian classical traditions, Marrakech's music scene offers an extraordinary journey through Morocco's diverse cultural heritage. Experience authentic performances in historic venues and discover both traditional and contemporary interpretations of Moroccan musical artistry.</p>
+                    <p class="mb-0 text-muted">Discover traditional and contemporary music events happening throughout Marrakech</p>
                 </div>
                 <div class="col-lg-4">
-                    <div class="quick-filters">
-                        <label class="form-label">Quick Filter:</label>
-                        <select class="form-select form-select-sm" id="musicTypeFilter">
-                            <option value="">All Music Types</option>
-                            <option value="traditional">Traditional</option>
-                            <option value="gnawa">Gnawa</option>
-                            <option value="andalusian">Andalusian</option>
-                            <option value="berber">Berber</option>
-                            <option value="contemporary">Contemporary</option>
-                        </select>
-                    </div>
+                    <label class="filter-label">Filter by Music Type</label>
+                    <select class="form-select-custom w-100" id="musicTypeFilter">
+                        <option value="">All Music Types</option>
+                        <option value="traditional">Traditional</option>
+                        <option value="gnawa">Gnawa</option>
+                        <option value="andalusian">Andalusian</option>
+                        <option value="berber">Berber</option>
+                        <option value="contemporary">Contemporary</option>
+                    </select>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Music Events Grid -->
-    <section class="py-5">
+    <section class="section-padding">
         <div class="container">
-            <div class="row" id="musicEventsGrid">
-                <!-- Traditional Moroccan Music Concert -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="event-card" data-category="music" data-type="traditional" data-date="2024-12-15">
-                        <img src="images/music_concert_6.jpeg" alt="Traditional Moroccan Music Concert">
-                        <div class="card-body">
-                            <div class="event-date">
-                                <i class="fas fa-calendar me-2"></i>December 15, 2024 - 8:00 PM
-                            </div>
-                            <span class="event-category">Traditional Music</span>
-                            <h3 class="card-title">Traditional Moroccan Music Concert</h3>
-                            <p class="card-text">Experience the enchanting sounds of traditional Moroccan music featuring oud, qanun, and percussion instruments performed by master musicians.</p>
-                            <div class="musical-elements mb-3">
-                                <small class="badge bg-ochre me-1">Oud</small>
-                                <small class="badge bg-ochre me-1">Qanun</small>
-                                <small class="badge bg-ochre me-1">Percussion</small>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <small class="text-muted">
-                                    <i class="fas fa-map-marker-alt me-1"></i>Cultural Center
-                                </small>
-                                <small class="text-success fw-bold">
-                                    <i class="fas fa-ticket-alt me-1"></i>50 MAD
-                                </small>
-                            </div>
-                            <a href="event-details.html?id=1" class="btn btn-primary w-100">
-                                <i class="fas fa-eye me-2"></i>View Details
-                            </a>
+            <div class="events-grid" id="musicEventsGrid">
+                <!-- Event 1: Traditional -->
+                <div class="event-card reveal" data-category="music" data-type="traditional" data-date="2025-04-15">
+                    <div class="event-card-image">
+                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80" alt="Traditional Moroccan Music Concert">
+                        <span class="event-badge">Featured</span>
+                        <div class="event-date-badge">
+                            <span class="day">15</span>
+                            <span class="month">Apr</span>
                         </div>
+                    </div>
+                    <div class="event-card-body">
+                        <span class="event-category">Traditional Music</span>
+                        <h3 class="event-card-title">Traditional Moroccan Music Concert</h3>
+                        <p class="event-card-text">Experience the enchanting sounds of traditional Moroccan music featuring oud, qanun, and percussion instruments performed by master musicians.</p>
+                        <div class="musical-elements">
+                            <span class="badge-music">Oud</span>
+                            <span class="badge-music">Qanun</span>
+                            <span class="badge-music">Percussion</span>
+                        </div>
+                        <div class="event-meta">
+                            <span class="event-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Cultural Center
+                            </span>
+                            <span class="event-price">50 MAD</span>
+                        </div>
+                        <a href="event-details.html?id=1" class="btn-view-details">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Gnawa Music Festival -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="event-card" data-category="music" data-type="gnawa" data-date="2025-01-05">
-                        <img src="images/music_concert_8.jpg" alt="Gnawa Music Festival">
-                        <div class="card-body">
-                            <div class="event-date">
-                                <i class="fas fa-calendar me-2"></i>January 5, 2025 - 7:00 PM
-                            </div>
-                            <span class="event-category">Gnawa Music</span>
-                            <h3 class="card-title">Gnawa Music Festival</h3>
-                            <p class="card-text">Immerse yourself in the spiritual rhythms of Gnawa music with traditional masters performing healing ceremonies and hypnotic musical journeys.</p>
-                            <div class="musical-elements mb-3">
-                                <small class="badge bg-ochre me-1">Krakebs</small>
-                                <small class="badge bg-ochre me-1">Sintir</small>
-                                <small class="badge bg-ochre me-1">Qrqaba</small>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <small class="text-muted">
-                                    <i class="fas fa-map-marker-alt me-1"></i>Palmery Garden
-                                </small>
-                                <small class="text-success fw-bold">
-                                    <i class="fas fa-ticket-alt me-1"></i>100 MAD
-                                </small>
-                            </div>
-                            <a href="event-details.html?id=5" class="btn btn-primary w-100">
-                                <i class="fas fa-eye me-2"></i>View Details
-                            </a>
+                <!-- Event 2: Gnawa -->
+                <div class="event-card reveal" data-category="music" data-type="gnawa" data-date="2025-01-05" style="transition-delay: 0.1s;">
+                    <div class="event-card-image">
+                        <img src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=800&q=80" alt="Gnawa Music Festival">
+                        <span class="event-badge" style="background: var(--indigo);">Popular</span>
+                        <div class="event-date-badge">
+                            <span class="day">05</span>
+                            <span class="month">Jan</span>
                         </div>
+                    </div>
+                    <div class="event-card-body">
+                        <span class="event-category">Gnawa Music</span>
+                        <h3 class="event-card-title">Gnawa Music Festival</h3>
+                        <p class="event-card-text">Immerse yourself in the spiritual rhythms of Gnawa music with traditional masters performing healing ceremonies and hypnotic musical journeys.</p>
+                        <div class="musical-elements">
+                            <span class="badge-music">Krakebs</span>
+                            <span class="badge-music">Sintir</span>
+                            <span class="badge-music">Qrqaba</span>
+                        </div>
+                        <div class="event-meta">
+                            <span class="event-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Palmery Garden
+                            </span>
+                            <span class="event-price">100 MAD</span>
+                        </div>
+                        <a href="event-details.html?id=5" class="btn-view-details">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Andalusian Music Concert -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="event-card" data-category="music" data-type="andalusian" data-date="2025-01-25">
-                        <img src="images/music_concert_9.jpg" alt="Andalusian Music Concert">
-                        <div class="card-body">
-                            <div class="event-date">
-                                <i class="fas fa-calendar me-2"></i>January 25, 2025 - 9:00 PM
-                            </div>
-                            <span class="event-category">Andalusian Music</span>
-                            <h3 class="card-title">Andalusian Musical Heritage</h3>
-                            <p class="card-text">Experience the refined elegance of Andalusian classical music performed by the renowned Marrakech Conservatory ensemble in an intimate palace setting.</p>
-                            <div class="musical-elements mb-3">
-                                <small class="badge bg-ochre me-1">Violin</small>
-                                <small class="badge bg-ochre me-1">Oud</small>
-                                <small class="badge bg-ochre me-1">Vocals</small>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <small class="text-muted">
-                                    <i class="fas fa-map-marker-alt me-1"></i>Bahia Palace
-                                </small>
-                                <small class="text-success fw-bold">
-                                    <i class="fas fa-ticket-alt me-1"></i>90 MAD
-                                </small>
-                            </div>
-                            <a href="event-details.html?id=9" class="btn btn-primary w-100">
-                                <i class="fas fa-eye me-2"></i>View Details
-                            </a>
+                <!-- Event 3: Andalusian -->
+                <div class="event-card reveal" data-category="music" data-type="andalusian" data-date="2025-01-25" style="transition-delay: 0.2s;">
+                    <div class="event-card-image">
+                        <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=800&q=80" alt="Andalusian Music Concert">
+                        <span class="event-badge" style="background: var(--ochre); color: var(--indigo);">Classical</span>
+                        <div class="event-date-badge">
+                            <span class="day">25</span>
+                            <span class="month">Jan</span>
                         </div>
+                    </div>
+                    <div class="event-card-body">
+                        <span class="event-category">Andalusian Music</span>
+                        <h3 class="event-card-title">Andalusian Musical Heritage</h3>
+                        <p class="event-card-text">Experience the refined elegance of Andalusian classical music performed by the renowned Marrakech Conservatory ensemble in an intimate palace setting.</p>
+                        <div class="musical-elements">
+                            <span class="badge-music">Violin</span>
+                            <span class="badge-music">Oud</span>
+                            <span class="badge-music">Vocals</span>
+                        </div>
+                        <div class="event-meta">
+                            <span class="event-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Bahia Palace
+                            </span>
+                            <span class="event-price">90 MAD</span>
+                        </div>
+                        <a href="event-details.html?id=9" class="btn-view-details">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Berber Music Evening -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="event-card" data-category="music" data-type="berber" data-date="2025-02-01">
-                        <img src="images/cultural_workshop_9.jpg" alt="Berber Music Evening">
-                        <div class="card-body">
-                            <div class="event-date">
-                                <i class="fas fa-calendar me-2"></i>February 1, 2025 - 8:30 PM
-                            </div>
-                            <span class="event-category">Berber Music</span>
-                            <h3 class="card-title">Atlas Mountain Melodies</h3>
-                            <p class="card-text">Discover the ancient musical traditions of the Atlas Mountains with authentic Berber songs and instrumental performances by village musicians.</p>
-                            <div class="musical-elements mb-3">
-                                <small class="badge bg-ochre me-1">Bendir</small>
-                                <small class="badge bg-ochre me-1">Flute</small>
-                                <small class="badge bg-ochre me-1">Amazigh Vocals</small>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <small class="text-muted">
-                                    <i class="fas fa-map-marker-alt me-1"></i>Mountain Heritage Center
-                                </small>
-                                <small class="text-success fw-bold">
-                                    <i class="fas fa-ticket-alt me-1"></i>65 MAD
-                                </small>
-                            </div>
-                            <a href="event-details.html?id=10" class="btn btn-primary w-100">
-                                <i class="fas fa-eye me-2"></i>View Details
-                            </a>
+                <!-- Event 4: Berber -->
+                <div class="event-card reveal" data-category="music" data-type="berber" data-date="2025-02-01">
+                    <div class="event-card-image">
+                        <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80" alt="Berber Music Evening">
+                        <span class="event-badge">Heritage</span>
+                        <div class="event-date-badge">
+                            <span class="day">01</span>
+                            <span class="month">Feb</span>
                         </div>
+                    </div>
+                    <div class="event-card-body">
+                        <span class="event-category">Berber Music</span>
+                        <h3 class="event-card-title">Atlas Mountain Melodies</h3>
+                        <p class="event-card-text">Discover the ancient musical traditions of the Atlas Mountains with authentic Berber songs and instrumental performances by village musicians.</p>
+                        <div class="musical-elements">
+                            <span class="badge-music">Bendir</span>
+                            <span class="badge-music">Flute</span>
+                            <span class="badge-music">Amazigh Vocals</span>
+                        </div>
+                        <div class="event-meta">
+                            <span class="event-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Mountain Heritage Center
+                            </span>
+                            <span class="event-price">65 MAD</span>
+                        </div>
+                        <a href="event-details.html?id=10" class="btn-view-details">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Contemporary Fusion Concert -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="event-card" data-category="music" data-type="contemporary" data-date="2025-02-10">
-                        <img src="images/theater_performance_7.jpg" alt="Contemporary Fusion Concert">
-                        <div class="card-body">
-                            <div class="event-date">
-                                <i class="fas fa-calendar me-2"></i>February 10, 2025 - 7:30 PM
-                            </div>
-                            <span class="event-category">Contemporary Fusion</span>
-                            <h3 class="card-title">Morocco Meets Jazz</h3>
-                            <p class="card-text">An innovative fusion performance blending traditional Moroccan instruments with contemporary jazz, creating a unique musical dialogue between cultures.</p>
-                            <div class="musical-elements mb-3">
-                                <small class="badge bg-ochre me-1">Jazz Fusion</small>
-                                <small class="badge bg-ochre me-1">Oud</small>
-                                <small class="badge bg-ochre me-1">Saxophone</small>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <small class="text-muted">
-                                    <i class="fas fa-map-marker-alt me-1"></i>Modern Arts Center
-                                </small>
-                                <small class="text-success fw-bold">
-                                    <i class="fas fa-ticket-alt me-1"></i>120 MAD
-                                </small>
-                            </div>
-                            <a href="event-details.html?id=11" class="btn btn-primary w-100">
-                                <i class="fas fa-eye me-2"></i>View Details
-                            </a>
+                <!-- Event 5: Contemporary -->
+                <div class="event-card reveal" data-category="music" data-type="contemporary" data-date="2025-02-10" style="transition-delay: 0.1s;">
+                    <div class="event-card-image">
+                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80" alt="Contemporary Fusion Concert">
+                        <span class="event-badge" style="background: var(--indigo);">Fusion</span>
+                        <div class="event-date-badge">
+                            <span class="day">10</span>
+                            <span class="month">Feb</span>
                         </div>
+                    </div>
+                    <div class="event-card-body">
+                        <span class="event-category">Contemporary Fusion</span>
+                        <h3 class="event-card-title">Morocco Meets Jazz</h3>
+                        <p class="event-card-text">An innovative fusion performance blending traditional Moroccan instruments with contemporary jazz, creating a unique musical dialogue between cultures.</p>
+                        <div class="musical-elements">
+                            <span class="badge-music">Jazz Fusion</span>
+                            <span class="badge-music">Oud</span>
+                            <span class="badge-music">Saxophone</span>
+                        </div>
+                        <div class="event-meta">
+                            <span class="event-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Modern Arts Center
+                            </span>
+                            <span class="event-price">120 MAD</span>
+                        </div>
+                        <a href="event-details.html?id=11" class="btn-view-details">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Traditional Vocal Workshop -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="event-card" data-category="music" data-type="traditional" data-date="2025-02-15">
-                        <img src="images/cultural_workshop_1.jpg" alt="Traditional Vocal Workshop">
-                        <div class="card-body">
-                            <div class="event-date">
-                                <i class="fas fa-calendar me-2"></i>February 15, 2025 - 3:00 PM
-                            </div>
-                            <span class="event-category">Music Workshop</span>
-                            <h3 class="card-title">Moroccan Vocal Traditions</h3>
-                            <p class="card-text">Learn traditional Moroccan vocal techniques and songs in this interactive workshop led by renowned vocalist Fatima Amellal.</p>
-                            <div class="musical-elements mb-3">
-                                <small class="badge bg-ochre me-1">Vocal Training</small>
-                                <small class="badge bg-ochre me-1">Traditional Songs</small>
-                                <small class="badge bg-ochre me-1">Interactive</small>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <small class="text-muted">
-                                    <i class="fas fa-map-marker-alt me-1"></i>Music Academy
-                                </small>
-                                <small class="text-success fw-bold">
-                                    <i class="fas fa-ticket-alt me-1"></i>85 MAD
-                                </small>
-                            </div>
-                            <a href="event-details.html?id=12" class="btn btn-primary w-100">
-                                <i class="fas fa-eye me-2"></i>View Details
-                            </a>
+                <!-- Event 6: Workshop -->
+                <div class="event-card reveal" data-category="music" data-type="traditional" data-date="2025-02-15" style="transition-delay: 0.2s;">
+                    <div class="event-card-image">
+                        <img src="https://images.unsplash.com/photo-1516280440614-6697288d5d38?w=800&q=80" alt="Traditional Vocal Workshop">
+                        <span class="event-badge" style="background: var(--ochre); color: var(--indigo);">Workshop</span>
+                        <div class="event-date-badge">
+                            <span class="day">15</span>
+                            <span class="month">Feb</span>
                         </div>
+                    </div>
+                    <div class="event-card-body">
+                        <span class="event-category">Music Workshop</span>
+                        <h3 class="event-card-title">Moroccan Vocal Traditions</h3>
+                        <p class="event-card-text">Learn traditional Moroccan vocal techniques and songs in this interactive workshop led by renowned vocalist Fatima Amellal.</p>
+                        <div class="musical-elements">
+                            <span class="badge-music">Vocal Training</span>
+                            <span class="badge-music">Traditional Songs</span>
+                            <span class="badge-music">Interactive</span>
+                        </div>
+                        <div class="event-meta">
+                            <span class="event-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Music Academy
+                            </span>
+                            <span class="event-price">85 MAD</span>
+                        </div>
+                        <a href="event-details.html?id=12" class="btn-view-details">
+                            View Details <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Load More Button -->
-            <div class="text-center mt-5">
-                <button class="btn btn-secondary" id="loadMoreMusicBtn">
+            <div class="text-center mt-5 reveal">
+                <button class="btn-secondary-custom" id="loadMoreMusicBtn">
                     <i class="fas fa-plus-circle me-2"></i>Load More Music Events
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- Music Venues Section -->
-    <section class="py-5 bg-cream">
+    <!-- Venues Section -->
+    <section class="section-padding bg-sand">
         <div class="container">
-            <div class="section-title">
+            <div class="section-title reveal">
                 <h2>Popular Music Venues</h2>
                 <p>Discover the best locations in Marrakech for experiencing traditional and contemporary music</p>
             </div>
-            
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="venue-card bg-white rounded shadow p-4 text-center">
-                        <i class="fas fa-building text-terracotta fa-3x mb-3"></i>
+
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 reveal">
+                    <div class="venue-card">
+                        <div class="venue-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
                         <h5>Cultural Center</h5>
-                        <p class="small text-muted">Historic venue with excellent acoustics for traditional performances</p>
+                        <p>Historic venue with excellent acoustics for traditional performances</p>
                     </div>
                 </div>
-                
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="venue-card bg-white rounded shadow p-4 text-center">
-                        <i class="fas fa-tree text-terracotta fa-3x mb-3"></i>
+
+                <div class="col-lg-3 col-md-6 reveal" style="transition-delay: 0.1s;">
+                    <div class="venue-card">
+                        <div class="venue-icon" style="background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);">
+                            <i class="fas fa-tree"></i>
+                        </div>
                         <h5>Palmery Gardens</h5>
-                        <p class="small text-muted">Outdoor venue surrounded by palm trees, perfect for Gnawa ceremonies</p>
+                        <p>Outdoor venue surrounded by palm trees, perfect for Gnawa ceremonies</p>
                     </div>
                 </div>
-                
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="venue-card bg-white rounded shadow p-4 text-center">
-                        <i class="fas fa-crown text-terracotta fa-3x mb-3"></i>
+
+                <div class="col-lg-3 col-md-6 reveal" style="transition-delay: 0.2s;">
+                    <div class="venue-card">
+                        <div class="venue-icon" style="background: linear-gradient(135deg, var(--ochre) 0%, var(--terracotta) 100%);">
+                            <i class="fas fa-crown"></i>
+                        </div>
                         <h5>Bahia Palace</h5>
-                        <p class="small text-muted">Royal palace gardens providing an elegant setting for classical music</p>
+                        <p>Royal palace gardens providing an elegant setting for classical music</p>
                     </div>
                 </div>
-                
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="venue-card bg-white rounded shadow p-4 text-center">
-                        <i class="fas fa-mountain text-terracotta fa-3x mb-3"></i>
+
+                <div class="col-lg-3 col-md-6 reveal" style="transition-delay: 0.3s;">
+                    <div class="venue-card">
+                        <div class="venue-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
                         <h5>Atlas Heritage Center</h5>
-                        <p class="small text-muted">Showcasing Berber musical traditions in an authentic mountain setting</p>
+                        <p>Showcasing Berber musical traditions in an authentic mountain setting</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Music Calendar -->
-    <section class="py-5">
+    <!-- Calendar & Sidebar Section -->
+    <section class="section-padding">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h3>Upcoming Music Events Calendar</h3>
-                    <div class="calendar-preview bg-white rounded shadow p-4">
+            <div class="row g-4">
+                <!-- Calendar -->
+                <div class="col-lg-8 reveal">
+                    <h3 class="mb-4" style="color: var(--indigo); font-family: var(--font-serif);">Upcoming Music Events Calendar</h3>
+                    <div class="calendar-preview">
                         <div class="calendar-month">
-                            <h5 class="text-center mb-4">December 2024</h5>
-                            <div class="calendar-events">
-                                <div class="calendar-event d-flex align-items-center mb-3 p-3 rounded" style="background-color: var(--cream-white);">
-                                    <div class="event-date-box bg-terracotta text-white rounded text-center me-3" style="width: 60px; padding: 0.5rem;">
-                                        <div class="h6 mb-0">15</div>
-                                        <small>DEC</small>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-1">Traditional Moroccan Music Concert</h6>
-                                        <small class="text-muted">8:00 PM - Cultural Center</small>
-                                    </div>
-                                    <div>
-                                        <span class="badge bg-ochre">50 MAD</span>
-                                    </div>
+                            <h5>December 2024 - February 2025</h5>
+                            
+                            <div class="calendar-event">
+                                <div class="event-date-box bg-terracotta">
+                                    <span class="day">15</span>
+                                    <span class="month">APR</span>
                                 </div>
-                                
-                                <div class="calendar-event d-flex align-items-center mb-3 p-3 rounded" style="background-color: var(--cream-white);">
-                                    <div class="event-date-box bg-indigo text-white rounded text-center me-3" style="width: 60px; padding: 0.5rem;">
-                                        <div class="h6 mb-0">05</div>
-                                        <small>JAN</small>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-1">Gnawa Music Festival</h6>
-                                        <small class="text-muted">7:00 PM - Palmery Gardens</small>
-                                    </div>
-                                    <div>
-                                        <span class="badge bg-ochre">100 MAD</span>
-                                    </div>
+                                <div class="flex-grow-1">
+                                    <h6>Traditional Moroccan Music Concert</h6>
+                                    <small><i class="fas fa-clock me-1"></i> 8:00 PM - Cultural Center</small>
                                 </div>
-                                
-                                <div class="calendar-event d-flex align-items-center p-3 rounded" style="background-color: var(--cream-white);">
-                                    <div class="event-date-box bg-terracotta text-white rounded text-center me-3" style="width: 60px; padding: 0.5rem;">
-                                        <div class="h6 mb-0">25</div>
-                                        <small>JAN</small>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-1">Andalusian Musical Heritage</h6>
-                                        <small class="text-muted">9:00 PM - Bahia Palace</small>
-                                    </div>
-                                    <div>
-                                        <span class="badge bg-ochre">90 MAD</span>
-                                    </div>
+                                <span class="badge-price">50 MAD</span>
+                            </div>
+
+                            <div class="calendar-event">
+                                <div class="event-date-box bg-indigo">
+                                    <span class="day">05</span>
+                                    <span class="month">JAN</span>
                                 </div>
+                                <div class="flex-grow-1">
+                                    <h6>Gnawa Music Festival</h6>
+                                    <small><i class="fas fa-clock me-1"></i> 7:00 PM - Palmery Gardens</small>
+                                </div>
+                                <span class="badge-price">100 MAD</span>
+                            </div>
+
+                            <div class="calendar-event">
+                                <div class="event-date-box bg-terracotta">
+                                    <span class="day">25</span>
+                                    <span class="month">JAN</span>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6>Andalusian Musical Heritage</h6>
+                                    <small><i class="fas fa-clock me-1"></i> 9:00 PM - Bahia Palace</small>
+                                </div>
+                                <span class="badge-price">90 MAD</span>
+                            </div>
+
+                            <div class="calendar-event">
+                                <div class="event-date-box bg-indigo">
+                                    <span class="day">01</span>
+                                    <span class="month">FEB</span>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6>Atlas Mountain Melodies</h6>
+                                    <small><i class="fas fa-clock me-1"></i> 8:30 PM - Mountain Heritage</small>
+                                </div>
+                                <span class="badge-price">65 MAD</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
+                <!-- Sidebar -->
                 <div class="col-lg-4">
-                    <div class="music-newsletter bg-indigo text-white rounded p-4">
-                        <h5>Music Newsletter</h5>
+                    <div class="music-newsletter reveal">
+                        <h5><i class="fas fa-envelope-open-text me-2"></i>Music Newsletter</h5>
                         <p>Get notified about new music events, artist spotlights, and exclusive concerts.</p>
-                        <form>
+                        <form class="newsletter-form">
                             <div class="mb-3">
                                 <input type="email" class="form-control" placeholder="Your email address">
                             </div>
-                            <button type="submit" class="btn btn-terracotta w-100">
-                                <i class="fas fa-music me-2"></i>Subscribe to Music Updates
+                            <button type="submit" class="btn-terracotta w-100">
+                                <i class="fas fa-music me-2"></i>Subscribe
                             </button>
                         </form>
                     </div>
-                    
-                    <div class="music-tips bg-white rounded shadow p-4 mt-4">
-                        <h6>Tips for Music Events</h6>
-                        <ul class="small mb-0">
+
+                    <div class="music-tips mt-4 reveal" style="transition-delay: 0.1s;">
+                        <h6><i class="fas fa-lightbulb me-2" style="color: var(--terracotta);"></i>Tips for Music Events</h6>
+                        <ul>
                             <li>Arrive 15 minutes early for traditional concerts</li>
-                            <li>Respectful silence during Gnawa ceremonies</li>
+                            <li>Maintain respectful silence during Gnawa ceremonies</li>
                             <li>Photography may be limited in sacred venues</li>
                             <li>Traditional dress is welcomed but not required</li>
+                            <li>Bring cash for tickets and refreshments</li>
                         </ul>
                     </div>
                 </div>
@@ -458,35 +1599,27 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer - Exactly Matching Index -->
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 mb-4">
+                <div class="col-lg-4 mb-4 reveal">
                     <h5>
-                        <i class="fas fa-mosque text-ochre me-2"></i>
+                        <i class="fas fa-mosque me-2" style="color: var(--ochre)"></i>
                         Marrakech Cultural Scene
                     </h5>
                     <p>Connecting culture enthusiasts with the vibrant artistic heartbeat of Marrakech. Discover, participate, and celebrate the rich cultural heritage of Morocco's red city.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
+
+                <div class="col-lg-2 col-md-6 mb-4 reveal" style="transition-delay: 0.1s;">
                     <h5>Explore</h5>
-                    <ul class="list-unstyled">
+                    <ul class="footer-links">
                         <li><a href="events.html">All Events</a></li>
                         <li><a href="category.html?cat=music">Music</a></li>
                         <li><a href="category.html?cat=exhibition">Art Exhibitions</a></li>
@@ -494,10 +1627,10 @@
                         <li><a href="category.html?cat=workshop">Workshops</a></li>
                     </ul>
                 </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
+
+                <div class="col-lg-2 col-md-6 mb-4 reveal" style="transition-delay: 0.2s;">
                     <h5>Community</h5>
-                    <ul class="list-unstyled">
+                    <ul class="footer-links">
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="submit-event.html">Submit Event</a></li>
                         <li><a href="#">Contact</a></li>
@@ -505,28 +1638,28 @@
                         <li><a href="#">Guidelines</a></li>
                     </ul>
                 </div>
-                
-                <div class="col-lg-4 mb-4">
+
+                <div class="col-lg-4 mb-4 reveal" style="transition-delay: 0.3s;">
                     <h5>Stay Updated</h5>
                     <p>Subscribe to our newsletter for the latest cultural events and artistic happenings in Marrakech.</p>
-                    <div class="input-group">
+                    <form class="newsletter-form">
                         <input type="email" class="form-control" placeholder="Enter your email">
-                        <button class="btn btn-terracotta" type="button">
+                        <button type="submit" aria-label="Subscribe">
                             <i class="fas fa-paper-plane"></i>
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
-            
-            <hr class="my-4">
-            
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; 2024 Marrakech Cultural Scene. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="me-3">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2025 Marrakech Cultural Scene. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" class="me-3">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -534,33 +1667,99 @@
 
     <!-- Bootstrap 5 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script src="js/main.js"></script>
-    
+
     <script>
-        // Category-specific JavaScript for music filtering
-        document.addEventListener('DOMContentLoaded', function() {
-            const musicTypeFilter = document.getElementById('musicTypeFilter');
-            const eventCards = document.querySelectorAll('.event-card');
-            
-            if (musicTypeFilter) {
-                musicTypeFilter.addEventListener('change', function() {
-                    const selectedType = this.value;
-                    
-                    eventCards.forEach(card => {
-                        const cardType = card.getAttribute('data-type');
-                        
-                        if (!selectedType || cardType === selectedType) {
-                            card.style.display = 'block';
-                            card.classList.add('fade-in');
-                        } else {
-                            card.style.display = 'none';
-                            card.classList.remove('fade-in');
-                        }
-                    });
-                });
+        // Navbar scroll effect - Matching Index
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Category-specific JavaScript for music filtering
+        const musicTypeFilter = document.getElementById('musicTypeFilter');
+        const eventCards = document.querySelectorAll('.event-card');
+        
+        if (musicTypeFilter) {
+            musicTypeFilter.addEventListener('change', function() {
+                const selectedType = this.value;
+                
+                eventCards.forEach(card => {
+                    const cardType = card.getAttribute('data-type');
+                    
+                    if (!selectedType || cardType === selectedType) {
+                        card.style.display = 'flex';
+                        card.classList.add('fade-in');
+                        setTimeout(() => card.classList.remove('fade-in'), 500);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Load More Button functionality
+        document.getElementById('loadMoreMusicBtn').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check me-2"></i>All Events Loaded';
+                this.disabled = true;
+                this.style.opacity = '0.6';
+            }, 1500);
+        });
+
+        // Newsletter form handling
+        document.querySelectorAll('.newsletter-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = this.querySelector('input');
+                if (input.value) {
+                    const btn = this.querySelector('button');
+                    const originalContent = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i>';
+                    btn.style.background = '#28a745';
+                    input.value = '';
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalContent;
+                        btn.style.background = '';
+                    }, 2000);
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>
