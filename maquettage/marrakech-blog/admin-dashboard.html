@@ -5,65 +5,706 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Marrakech Cultural Scene</title>
     <meta name="description" content="Administrative dashboard for managing cultural events, submissions, and platform overview.">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --terracotta: #C65D3B;
+            --terracotta-dark: #A84B2F;
+            --terracotta-light: rgba(198, 93, 59, 0.1);
+            --ochre: #D4A373;
+            --ochre-light: #E9C496;
+            --ochre-transparent: rgba(212, 163, 115, 0.2);
+            --indigo: #2E3A59;
+            --indigo-light: #3F4F75;
+            --indigo-transparent: rgba(46, 58, 89, 0.85);
+            --cream: #FAF7F2;
+            --sand: #F5F1E8;
+            --charcoal: #2C2C2C;
+            --white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-lifted: 0 20px 60px rgba(0,0,0,0.15);
+            --shadow-glow: 0 0 20px rgba(198, 93, 59, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%);
+            color: var(--charcoal);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+        }
+
+        /* Admin Navigation - Glassmorphism */
+        .admin-navbar {
+            background: rgba(46, 58, 89, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 163, 115, 0.2);
+            padding: 0.75rem 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .admin-navbar .navbar-brand {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--ochre-light) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition-smooth);
+        }
+
+        .admin-navbar .navbar-brand:hover {
+            color: var(--white) !important;
+            transform: translateY(-2px);
+        }
+
+        .admin-navbar .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .admin-navbar .nav-link:hover,
+        .admin-navbar .nav-link.active {
+            color: var(--ochre) !important;
+            background: rgba(212, 163, 115, 0.1);
+        }
+
+        .admin-navbar .badge {
+            background: var(--terracotta) !important;
+            font-size: 0.7rem;
+            padding: 0.35em 0.65em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .admin-navbar .dropdown-menu {
+            background: rgba(46, 58, 89, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .admin-navbar .dropdown-item {
+            color: rgba(255,255,255,0.8);
+            transition: var(--transition-smooth);
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .admin-navbar .dropdown-item:hover {
+            background: rgba(198, 93, 59, 0.2);
+            color: var(--ochre);
+            transform: translateX(5px);
+        }
+
+        /* Admin Header */
+        .admin-header {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);
+            padding: 3rem 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .admin-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .admin-header::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(198, 93, 59, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .admin-header h1 {
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .admin-header p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .current-time {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--ochre-light);
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--terracotta), var(--ochre));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .glass-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Stat Cards */
+        .stat-card {
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+            border-radius: 20px;
+            padding: 1.5rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: rotate(45deg) translateY(-100%);
+            transition: transform 0.6s;
+        }
+
+        .stat-card:hover::before {
+            transform: rotate(45deg) translateY(100%);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .stat-card.ochre {
+            background: linear-gradient(135deg, var(--ochre) 0%, #B8936B 100%);
+        }
+
+        .stat-card.indigo {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);
+        }
+
+        .stat-card.mixed {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--terracotta) 100%);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.8rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Activity Feed */
+        .activity-item {
+            background: rgba(255,255,255,0.6);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid transparent;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .activity-item:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateX(5px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .activity-item.success { border-left-color: #28a745; }
+        .activity-item.info { border-left-color: #17a2b8; }
+        .activity-item.warning { border-left-color: #ffc107; }
+        .activity-item.danger { border-left-color: #dc3545; }
+
+        .activity-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .activity-content h6 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--indigo);
+        }
+
+        .activity-content small {
+            color: #666;
+        }
+
+        /* Buttons */
+        .btn-admin {
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid transparent;
+        }
+
+        .btn-terracotta {
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            color: var(--white);
+        }
+
+        .btn-terracotta:hover {
+            background: var(--terracotta-dark);
+            border-color: var(--terracotta-dark);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(198, 93, 59, 0.3);
+        }
+
+        .btn-outline-terracotta {
+            background: transparent;
+            border-color: var(--terracotta);
+            color: var(--terracotta);
+        }
+
+        .btn-outline-terracotta:hover {
+            background: var(--terracotta);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-ochre {
+            background: var(--ochre);
+            border-color: var(--ochre);
+            color: var(--indigo);
+        }
+
+        .btn-ochre:hover {
+            background: var(--ochre-light);
+            border-color: var(--ochre-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 163, 115, 0.3);
+        }
+
+        /* Event Preview Cards */
+        .event-preview-card {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.25rem;
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-preview-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--terracotta);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .event-preview-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-soft);
+            background: rgba(255,255,255,0.9);
+        }
+
+        .event-preview-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .event-date-badge {
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--ochre) 100%);
+            color: var(--white);
+            border-radius: 12px;
+            padding: 0.75rem;
+            text-align: center;
+            min-width: 55px;
+            box-shadow: 0 4px 10px rgba(198, 93, 59, 0.3);
+        }
+
+        .event-date-badge .day {
+            display: block;
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .event-date-badge .month {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-approved {
+            background: rgba(40, 167, 69, 0.15);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.15);
+            color: #856404;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        /* Organizer List */
+        .organizer-item {
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .organizer-item:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateX(5px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .organizer-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .bg-terracotta { background: var(--terracotta); color: white; }
+        .bg-ochre { background: var(--ochre); color: var(--indigo); }
+        .bg-indigo { background: var(--indigo); color: white; }
+
+        /* Alerts */
+        .alert-moroccan {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 15px;
+            border-left: 4px solid;
+        }
+
+        .alert-moroccan.alert-warning {
+            border-left-color: #ffc107;
+            background: rgba(255, 243, 205, 0.8);
+        }
+
+        .alert-moroccan.alert-info {
+            border-left-color: #17a2b8;
+            background: rgba(209, 236, 241, 0.8);
+        }
+
+        .alert-heading {
+            font-family: var(--font-serif);
+            color: var(--indigo);
+            font-weight: 600;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--indigo);
+        }
+
+        .section-header i {
+            color: var(--terracotta);
+            font-size: 1.25rem;
+        }
+
+        .section-header h4, .section-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* Chart Placeholders */
+        .chart-container {
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.5);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(212, 163, 115, 0.05) 100%);
+        }
+
+        .chart-placeholder {
+            text-align: center;
+            color: #666;
+        }
+
+        .chart-placeholder i {
+            background: linear-gradient(135deg, var(--terracotta), var(--ochre));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .glass-card {
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Loading Animation */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 12px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
     <!-- Admin Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-indigo">
+    <nav class="navbar navbar-expand-lg admin-navbar fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="admin-dashboard.html">
-                <i class="fas fa-cog me-2"></i>
-                Admin Panel - Marrakech Cultural Scene
+                <svg width="35" height="35" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="#D4A373" stroke-width="2"/>
+                    <path d="M50 15 L60 40 L85 40 L65 55 L75 80 L50 65 L25 80 L35 55 L15 40 L40 40 Z" fill="#C65D3B" opacity="0.9"/>
+                    <circle cx="50" cy="50" r="10" fill="#2E3A59"/>
+                    <circle cx="50" cy="50" r="5" fill="#D4A373"/>
+                </svg>
+                <span>Marrakech Admin</span>
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="adminNavbar">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link active" href="admin-dashboard.html">
-                            <i class="fas fa-chart-pie me-1"></i>Dashboard
+                            <i class="fas fa-chart-pie me-2"></i>Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="admin-events.html">
-                            <i class="fas fa-calendar-alt me-1"></i>Manage Events
+                            <i class="fas fa-calendar-alt me-2"></i>Events
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="admin-approve.html">
-                            <i class="fas fa-check-circle me-1"></i>Approve Events
-                            <span class="badge bg-terracotta ms-1">5</span>
+                            <i class="fas fa-check-circle me-2"></i>Approvals
+                            <span class="badge rounded-pill">5</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="admin-delete.html">
-                            <i class="fas fa-trash me-1"></i>Remove Events
+                            <i class="fas fa-trash me-2"></i>Deleted
                         </a>
                     </li>
                 </ul>
-                
+
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminUserDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle me-1"></i>Admin User
+                            <i class="fas fa-user-circle me-2"></i>Admin
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
-                            <li><a class="dropdown-item" href="#">System Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="index.html">View Public Site</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="fas fa-external-link-alt me-2"></i>Public Site</a></li>
+                            <li><hr class="dropdown-divider" style="border-color: rgba(212,163,115,0.2);"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -71,17 +712,21 @@
         </div>
     </nav>
 
+    <!-- Spacer for fixed navbar -->
+    <div style="height: 76px;"></div>
+
     <!-- Admin Header -->
     <div class="admin-header">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <h1>Dashboard Overview</h1>
-                    <p class="mb-0">Manage Marrakech's cultural events and community engagement</p>
+                    <p>Manage Marrakech's cultural heartbeat</p>
                 </div>
-                <div class="col-md-6 text-md-end">
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
                     <div class="current-time">
-                        <small>Last updated: <span id="currentTime"></span></small>
+                        <i class="fas fa-clock"></i>
+                        <span id="currentTime">Loading...</span>
                     </div>
                 </div>
             </div>
@@ -90,48 +735,60 @@
 
     <!-- Dashboard Content -->
     <div class="container-fluid py-4">
-        <div class="row">
-            <!-- Statistics Cards -->
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="stat-card">
-                    <h3 class="stat-number">42</h3>
-                    <p>Active Events</p>
+                <div class="stat-card reveal">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Active Events</div>
                     <div class="stat-trend">
-                        <i class="fas fa-arrow-up me-1"></i>
-                        <small>+12% from last month</small>
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+12% this month</span>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="stat-card" style="background: linear-gradient(135deg, var(--ochre-yellow), var(--terracotta-orange));">
-                    <h3 class="stat-number">5</h3>
-                    <p>Pending Approvals</p>
+                <div class="stat-card ochre reveal" style="transition-delay: 0.1s;">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Pending Approvals</div>
                     <div class="stat-trend">
-                        <i class="fas fa-clock me-1"></i>
-                        <small>Requires attention</small>
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Needs attention</span>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="stat-card" style="background: linear-gradient(135deg, var(--deep-indigo), var(--ochre-yellow));">
-                    <h3 class="stat-number">1,247</h3>
-                    <p>Total Attendees</p>
+                <div class="stat-card indigo reveal" style="transition-delay: 0.2s;">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">1,247</div>
+                    <div class="stat-label">Total Attendees</div>
                     <div class="stat-trend">
-                        <i class="fas fa-arrow-up me-1"></i>
-                        <small>+8% from last week</small>
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+8% this week</span>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="stat-card" style="background: linear-gradient(135deg, var(--terracotta-orange), var(--deep-indigo));">
-                    <h3 class="stat-number">28</h3>
-                    <p>Active Organizers</p>
+                <div class="stat-card mixed reveal" style="transition-delay: 0.3s;">
+                    <div class="stat-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="stat-number">28</div>
+                    <div class="stat-label">Active Organizers</div>
                     <div class="stat-trend">
-                        <i class="fas fa-users me-1"></i>
-                        <small>Community growing</small>
+                        <i class="fas fa-chart-line"></i>
+                        <span>Growing</span>
                     </div>
                 </div>
             </div>
@@ -140,146 +797,146 @@
         <div class="row">
             <!-- Recent Activity -->
             <div class="col-lg-8 mb-4">
-                <div class="admin-content">
-                    <h4 class="mb-4">
-                        <i class="fas fa-clock text-terracotta me-2"></i>Recent Activity
-                    </h4>
-                    
+                <div class="glass-card reveal">
+                    <div class="section-header">
+                        <i class="fas fa-stream"></i>
+                        <h4>Recent Activity</h4>
+                    </div>
+
                     <div class="activity-feed">
-                        <div class="activity-item d-flex align-items-center mb-3 p-3 rounded" style="background-color: var(--cream-white);">
-                            <div class="activity-icon bg-success text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                        <div class="activity-item success">
+                            <div class="activity-icon bg-success text-white">
                                 <i class="fas fa-check"></i>
                             </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">Event Approved: "Traditional Moroccan Music Concert"</h6>
-                                <small class="text-muted">Approved by Admin User • 2 hours ago</small>
+                            <div class="activity-content">
+                                <h6>Event Approved: "Traditional Moroccan Music Concert"</h6>
+                                <small><i class="far fa-clock me-1"></i>Approved by Admin • 2 hours ago</small>
                             </div>
                         </div>
-                        
-                        <div class="activity-item d-flex align-items-center mb-3 p-3 rounded" style="background-color: var(--cream-white);">
-                            <div class="activity-icon bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+
+                        <div class="activity-item info">
+                            <div class="activity-icon bg-primary text-white">
                                 <i class="fas fa-plus"></i>
                             </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">New Event Submitted: "Berber Carpet Weaving Workshop"</h6>
-                                <small class="text-muted">Submitted by Artisan Guild • 4 hours ago</small>
+                            <div class="activity-content">
+                                <h6>New Event Submitted: "Berber Carpet Weaving Workshop"</h6>
+                                <small><i class="far fa-clock me-1"></i>Submitted by Artisan Guild • 4 hours ago</small>
                             </div>
                         </div>
-                        
-                        <div class="activity-item d-flex align-items-center mb-3 p-3 rounded" style="background-color: var(--cream-white);">
-                            <div class="activity-icon bg-warning text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+
+                        <div class="activity-item warning">
+                            <div class="activity-icon bg-warning text-white">
                                 <i class="fas fa-edit"></i>
                             </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">Event Updated: "Contemporary Art Exhibition"</h6>
-                                <small class="text-muted">Updated by Gallery Moderne • 6 hours ago</small>
+                            <div class="activity-content">
+                                <h6>Event Updated: "Contemporary Art Exhibition"</h6>
+                                <small><i class="far fa-clock me-1"></i>Updated by Gallery Moderne • 6 hours ago</small>
                             </div>
                         </div>
-                        
-                        <div class="activity-item d-flex align-items-center mb-3 p-3 rounded" style="background-color: var(--cream-white);">
-                            <div class="activity-icon bg-info text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                <i class="fas fa-users"></i>
+
+                        <div class="activity-item info">
+                            <div class="activity-icon bg-info text-white">
+                                <i class="fas fa-user-plus"></i>
                             </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">New Organizer Registered: "Atlas Heritage Center"</h6>
-                                <small class="text-muted">Registration completed • 1 day ago</small>
+                            <div class="activity-content">
+                                <h6>New Organizer: "Atlas Heritage Center" registered</h6>
+                                <small><i class="far fa-clock me-1"></i>Registration completed • 1 day ago</small>
                             </div>
                         </div>
-                        
-                        <div class="activity-item d-flex align-items-center p-3 rounded" style="background-color: var(--cream-white);">
-                            <div class="activity-icon bg-danger text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+
+                        <div class="activity-item danger">
+                            <div class="activity-icon bg-danger text-white">
                                 <i class="fas fa-trash"></i>
                             </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1">Event Cancelled: "Outdoor Festival"</h6>
-                                <small class="text-muted">Cancelled due to weather • 1 day ago</small>
+                            <div class="activity-content">
+                                <h6>Event Cancelled: "Outdoor Festival"</h6>
+                                <small><i class="far fa-clock me-1"></i>Cancelled due to weather • 1 day ago</small>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="text-center mt-4">
-                        <a href="#" class="btn btn-outline-primary">View All Activity</a>
+                        <a href="#" class="btn btn-outline-terracotta btn-admin">
+                            View All Activity <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Quick Actions & Alerts -->
+            <!-- Sidebar -->
             <div class="col-lg-4">
                 <!-- Quick Actions -->
-                <div class="admin-content mb-4">
-                    <h5 class="mb-3">
-                        <i class="fas fa-bolt text-ochre me-2"></i>Quick Actions
-                    </h5>
-                    
+                <div class="glass-card mb-4 reveal" style="transition-delay: 0.1s;">
+                    <div class="section-header">
+                        <i class="fas fa-bolt"></i>
+                        <h5>Quick Actions</h5>
+                    </div>
+
                     <div class="d-grid gap-2">
-                        <a href="admin-approve.html" class="btn btn-terracotta">
-                            <i class="fas fa-check-circle me-2"></i>Review Pending Events (5)
+                        <a href="admin-approve.html" class="btn btn-terracotta btn-admin">
+                            <i class="fas fa-check-circle"></i>Review Pending (5)
                         </a>
-                        <a href="admin-events.html" class="btn btn-outline-primary">
-                            <i class="fas fa-plus me-2"></i>Add New Event
+                        <a href="admin-events.html" class="btn btn-outline-terracotta btn-admin">
+                            <i class="fas fa-plus"></i>Add New Event
                         </a>
-                        <a href="#" class="btn btn-outline-secondary">
-                            <i class="fas fa-file-export me-2"></i>Export Events Data
+                        <a href="#" class="btn btn-outline-terracotta btn-admin">
+                            <i class="fas fa-file-export"></i>Export Data
                         </a>
-                        <a href="#" class="btn btn-outline-indigo">
-                            <i class="fas fa-envelope me-2"></i>Send Newsletter
+                        <a href="#" class="btn btn-ochre btn-admin">
+                            <i class="fas fa-envelope"></i>Send Newsletter
                         </a>
                     </div>
                 </div>
 
                 <!-- System Alerts -->
-                <div class="admin-content mb-4">
-                    <h5 class="mb-3">
-                        <i class="fas fa-exclamation-triangle text-warning me-2"></i>System Alerts
-                    </h5>
-                    
-                    <div class="alert alert-warning">
-                        <h6 class="alert-heading">Storage Usage</h6>
-                        <p class="mb-1 small">Image storage is at 78% capacity</p>
-                        <a href="#" class="alert-link small">Manage storage</a>
+                <div class="glass-card mb-4 reveal" style="transition-delay: 0.2s;">
+                    <div class="section-header">
+                        <i class="fas fa-bell"></i>
+                        <h5>System Alerts</h5>
                     </div>
-                    
-                    <div class="alert alert-info">
-                        <h6 class="alert-heading">Backup Status</h6>
-                        <p class="mb-1 small">Last backup completed 2 hours ago</p>
-                        <a href="#" class="alert-link small">View backup logs</a>
+
+                    <div class="alert alert-moroccan alert-warning mb-3">
+                        <h6 class="alert-heading"><i class="fas fa-hdd me-2"></i>Storage Usage</h6>
+                        <p class="mb-1 small">Image storage at 78% capacity</p>
+                        <a href="#" class="small" style="color: var(--terracotta);">Manage storage →</a>
+                    </div>
+
+                    <div class="alert alert-moroccan alert-info mb-0">
+                        <h6 class="alert-heading"><i class="fas fa-database me-2"></i>Backup Status</h6>
+                        <p class="mb-1 small">Last backup: 2 hours ago</p>
+                        <a href="#" class="small" style="color: var(--terracotta);">View logs →</a>
                     </div>
                 </div>
 
                 <!-- Top Organizers -->
-                <div class="admin-content">
-                    <h5 class="mb-3">
-                        <i class="fas fa-star text-ochre me-2"></i>Top Organizers
-                    </h5>
-                    
+                <div class="glass-card reveal" style="transition-delay: 0.3s;">
+                    <div class="section-header">
+                        <i class="fas fa-star"></i>
+                        <h5>Top Organizers</h5>
+                    </div>
+
                     <div class="organizer-list">
-                        <div class="organizer-item d-flex align-items-center mb-3">
-                            <div class="organizer-avatar bg-terracotta text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                MC
-                            </div>
+                        <div class="organizer-item">
+                            <div class="organizer-avatar bg-terracotta">MC</div>
                             <div class="flex-grow-1">
-                                <h6 class="mb-0">Marrakech Cultural Center</h6>
-                                <small class="text-muted">12 events this month</small>
+                                <h6 class="mb-1" style="font-size: 0.95rem; font-weight: 600;">Marrakech Cultural Center</h6>
+                                <small style="color: #666;"><i class="fas fa-calendar me-1"></i>12 events this month</small>
                             </div>
                         </div>
-                        
-                        <div class="organizer-item d-flex align-items-center mb-3">
-                            <div class="organizer-avatar bg-ochre text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                GM
-                            </div>
+
+                        <div class="organizer-item">
+                            <div class="organizer-avatar bg-ochre">GM</div>
                             <div class="flex-grow-1">
-                                <h6 class="mb-0">Gallery Moderne</h6>
-                                <small class="text-muted">8 events this month</small>
+                                <h6 class="mb-1" style="font-size: 0.95rem; font-weight: 600;">Gallery Moderne</h6>
+                                <small style="color: #666;"><i class="fas fa-calendar me-1"></i>8 events this month</small>
                             </div>
                         </div>
-                        
-                        <div class="organizer-item d-flex align-items-center">
-                            <div class="organizer-avatar bg-indigo text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                AG
-                            </div>
+
+                        <div class="organizer-item">
+                            <div class="organizer-avatar bg-indigo">AG</div>
                             <div class="flex-grow-1">
-                                <h6 class="mb-0">Artisan Guild</h6>
-                                <small class="text-muted">6 events this month</small>
+                                <h6 class="mb-1" style="font-size: 0.95rem; font-weight: 600;">Artisan Guild</h6>
+                                <small style="color: #666;"><i class="fas fa-calendar me-1"></i>6 events this month</small>
                             </div>
                         </div>
                     </div>
@@ -288,70 +945,73 @@
         </div>
 
         <!-- Event Calendar Preview -->
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12">
-                <div class="admin-content">
+                <div class="glass-card reveal">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h4>
-                            <i class="fas fa-calendar text-terracotta me-2"></i>Upcoming Events Calendar
-                        </h4>
-                        <a href="admin-events.html" class="btn btn-outline-primary">View Full Calendar</a>
+                        <div class="section-header mb-0">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h4>Upcoming Events</h4>
+                        </div>
+                        <a href="admin-events.html" class="btn btn-outline-terracotta btn-admin">
+                            Full Calendar <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-lg-4 mb-3">
-                            <div class="event-preview-card bg-cream rounded p-3">
-                                <div class="d-flex align-items-center mb-2">
-                                    <div class="event-date-badge bg-terracotta text-white rounded me-3 text-center" style="min-width: 50px; padding: 0.5rem;">
-                                        <div class="fw-bold">15</div>
-                                        <small>DEC</small>
+                            <div class="event-preview-card">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="event-date-badge me-3">
+                                        <span class="day">15</span>
+                                        <span class="month">APR</span>
                                     </div>
-                                    <div>
-                                        <h6 class="mb-1">Traditional Music Concert</h6>
-                                        <small class="text-muted">8:00 PM - Cultural Center</small>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1" style="font-weight: 600; color: var(--indigo);">Traditional Music Concert</h6>
+                                        <small style="color: #666;"><i class="far fa-clock me-1"></i>8:00 PM • Cultural Center</small>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-success">Approved</span>
-                                    <small class="text-muted">45 registered</small>
+                                    <span class="status-badge status-approved">Approved</span>
+                                    <small style="color: #666;"><i class="fas fa-users me-1"></i>45</small>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4 mb-3">
-                            <div class="event-preview-card bg-cream rounded p-3">
-                                <div class="d-flex align-items-center mb-2">
-                                    <div class="event-date-badge bg-ochre text-white rounded me-3 text-center" style="min-width: 50px; padding: 0.5rem;">
-                                        <div class="fw-bold">20</div>
-                                        <small>DEC</small>
+                            <div class="event-preview-card">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="event-date-badge me-3" style="background: linear-gradient(135deg, var(--ochre) 0%, #B8936B 100%);">
+                                        <span class="day">22</span>
+                                        <span class="month">APR</span>
                                     </div>
-                                    <div>
-                                        <h6 class="mb-1">Art Exhibition Opening</h6>
-                                        <small class="text-muted">6:00 PM - Gallery Moderne</small>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1" style="font-weight: 600; color: var(--indigo);">Art Exhibition Opening</h6>
+                                        <small style="color: #666;"><i class="far fa-clock me-1"></i>6:00 PM • Gallery Moderne</small>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-warning">Pending</span>
-                                    <small class="text-muted">12 registered</small>
+                                    <span class="status-badge status-pending">Pending</span>
+                                    <small style="color: #666;"><i class="fas fa-users me-1"></i>12</small>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4 mb-3">
-                            <div class="event-preview-card bg-cream rounded p-3">
-                                <div class="d-flex align-items-center mb-2">
-                                    <div class="event-date-badge bg-indigo text-white rounded me-3 text-center" style="min-width: 50px; padding: 0.5rem;">
-                                        <div class="fw-bold">25</div>
-                                        <small>DEC</small>
+                            <div class="event-preview-card">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="event-date-badge me-3" style="background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);">
+                                        <span class="day">01</span>
+                                        <span class="month">MAY</span>
                                     </div>
-                                    <div>
-                                        <h6 class="mb-1">Pottery Workshop</h6>
-                                        <small class="text-muted">2:00 PM - Artisan Quarter</small>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1" style="font-weight: 600; color: var(--indigo);">Pottery Workshop</h6>
+                                        <small style="color: #666;"><i class="far fa-clock me-1"></i>2:00 PM • Artisan Quarter</small>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-success">Approved</span>
-                                    <small class="text-muted">8 registered</small>
+                                    <span class="status-badge status-approved">Approved</span>
+                                    <small style="color: #666;"><i class="fas fa-users me-1"></i>8</small>
                                 </div>
                             </div>
                         </div>
@@ -363,28 +1023,30 @@
         <!-- Analytics Charts -->
         <div class="row mt-4">
             <div class="col-lg-6 mb-4">
-                <div class="admin-content">
-                    <h5 class="mb-3">
-                        <i class="fas fa-chart-bar text-terracotta me-2"></i>Event Categories Distribution
-                    </h5>
-                    <div class="chart-placeholder bg-cream rounded d-flex align-items-center justify-content-center" style="height: 300px;">
-                        <div class="text-center">
-                            <i class="fas fa-chart-pie fa-3x text-muted mb-3"></i>
-                            <p class="text-muted">Chart: Music (35%), Exhibitions (25%), Theater (20%), Workshops (20%)</p>
+                <div class="glass-card reveal">
+                    <div class="section-header">
+                        <i class="fas fa-chart-pie"></i>
+                        <h5>Event Categories</h5>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-pie fa-3x mb-3"></i>
+                            <p>Music (35%) • Exhibitions (25%)<br>Theater (20%) • Workshops (20%)</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-6 mb-4">
-                <div class="admin-content">
-                    <h5 class="mb-3">
-                        <i class="fas fa-chart-line text-ochre me-2"></i>Monthly Event Trends
-                    </h5>
-                    <div class="chart-placeholder bg-cream rounded d-flex align-items-center justify-content-center" style="height: 300px;">
-                        <div class="text-center">
-                            <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
-                            <p class="text-muted">Chart: Growth trend showing +15% increase in submissions</p>
+                <div class="glass-card reveal" style="transition-delay: 0.1s;">
+                    <div class="section-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h5>Monthly Trends</h5>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-line fa-3x mb-3"></i>
+                            <p>Growth: +15% increase in submissions<br>vs. previous month</p>
                         </div>
                     </div>
                 </div>
@@ -394,26 +1056,77 @@
 
     <!-- Bootstrap 5 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script src="js/main.js"></script>
-    
+
     <script>
-        // Dashboard-specific JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            // Update current time
-            function updateTime() {
-                const now = new Date();
-                document.getElementById('currentTime').textContent = now.toLocaleString();
-            }
-            
-            updateTime();
-            setInterval(updateTime, 60000); // Update every minute
-            
-            // Simulate real-time updates (in a real app, this would use WebSockets or polling)
-            setTimeout(() => {
-                updateStats();
-            }, 5000);
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentTime').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Counter animation for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/,/g, ''));
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+
+                updateCounter();
+            });
+        }
+
+        // Trigger counter animation when stats are visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            statsObserver.observe(card);
         });
     </script>
 </body>

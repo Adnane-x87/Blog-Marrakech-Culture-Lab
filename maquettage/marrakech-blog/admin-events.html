@@ -3,67 +3,706 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Events - Admin Panel</title>
+    <title>Manage Events - Marrakech Cultural Scene</title>
     <meta name="description" content="Manage and oversee all cultural events in the Marrakech Cultural Scene platform.">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --terracotta: #C65D3B;
+            --terracotta-dark: #A84B2F;
+            --terracotta-light: rgba(198, 93, 59, 0.1);
+            --ochre: #D4A373;
+            --ochre-light: #E9C496;
+            --ochre-transparent: rgba(212, 163, 115, 0.2);
+            --indigo: #2E3A59;
+            --indigo-light: #3F4F75;
+            --indigo-transparent: rgba(46, 58, 89, 0.85);
+            --cream: #FAF7F2;
+            --sand: #F5F1E8;
+            --charcoal: #2C2C2C;
+            --white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-lifted: 0 20px 60px rgba(0,0,0,0.15);
+            --shadow-glow: 0 0 20px rgba(198, 93, 59, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%);
+            color: var(--charcoal);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+        }
+
+        /* Admin Navigation - Glassmorphism */
+        .admin-navbar {
+            background: rgba(46, 58, 89, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 163, 115, 0.2);
+            padding: 0.75rem 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .admin-navbar .navbar-brand {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--ochre-light) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition-smooth);
+        }
+
+        .admin-navbar .navbar-brand:hover {
+            color: var(--white) !important;
+            transform: translateY(-2px);
+        }
+
+        .admin-navbar .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .admin-navbar .nav-link:hover,
+        .admin-navbar .nav-link.active {
+            color: var(--ochre) !important;
+            background: rgba(212, 163, 115, 0.1);
+        }
+
+        .admin-navbar .badge {
+            background: var(--terracotta) !important;
+            font-size: 0.7rem;
+            padding: 0.35em 0.65em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .admin-navbar .dropdown-menu {
+            background: rgba(46, 58, 89, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .admin-navbar .dropdown-item {
+            color: rgba(255,255,255,0.8);
+            transition: var(--transition-smooth);
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .admin-navbar .dropdown-item:hover {
+            background: rgba(198, 93, 59, 0.2);
+            color: var(--ochre);
+            transform: translateX(5px);
+        }
+
+        /* Admin Header */
+        .admin-header {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);
+            padding: 3rem 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .admin-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .admin-header::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(198, 93, 59, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .admin-header h1 {
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .admin-header p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--terracotta), var(--ochre));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .glass-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Buttons */
+        .btn-admin {
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid transparent;
+        }
+
+        .btn-terracotta {
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            color: var(--white);
+        }
+
+        .btn-terracotta:hover {
+            background: var(--terracotta-dark);
+            border-color: var(--terracotta-dark);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(198, 93, 59, 0.3);
+        }
+
+        .btn-outline-terracotta {
+            background: transparent;
+            border-color: var(--terracotta);
+            color: var(--terracotta);
+        }
+
+        .btn-outline-terracotta:hover {
+            background: var(--terracotta);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Form Controls */
+        .form-control, .form-select {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            transition: var(--transition-smooth);
+            font-family: var(--font-sans);
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: rgba(255,255,255,0.95);
+            border-color: var(--terracotta);
+            box-shadow: 0 0 0 0.2rem rgba(198, 93, 59, 0.15);
+        }
+
+        .input-group-text {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            border-right: none;
+            color: var(--terracotta);
+            border-radius: 12px 0 0 12px;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            background: rgba(46, 58, 89, 0.05);
+            border-bottom: 2px solid rgba(212, 163, 115, 0.2);
+            color: var(--indigo);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            padding: 1.25rem 1rem;
+        }
+
+        .table tbody td {
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+            vertical-align: middle;
+        }
+
+        .table tbody tr {
+            transition: var(--transition-smooth);
+        }
+
+        .table tbody tr:hover {
+            background: rgba(255,255,255,0.5);
+            transform: scale(1.002);
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Event Thumbnail */
+        .event-thumbnail {
+            width: 60px;
+            height: 45px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: var(--transition-smooth);
+        }
+
+        .table tbody tr:hover .event-thumbnail {
+            transform: scale(1.1);
+        }
+
+        /* Badges */
+        .badge-moroccan {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-music {
+            background: linear-gradient(135deg, var(--ochre) 0%, #B8936B 100%);
+            color: var(--white);
+        }
+
+        .badge-exhibition {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);
+            color: var(--white);
+        }
+
+        .badge-workshop {
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+            color: var(--white);
+        }
+
+        .badge-theater {
+            background: linear-gradient(135deg, #6f42c1 0%, #8B5CF6 100%);
+            color: var(--white);
+        }
+
+        .badge-festival {
+            background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            color: var(--white);
+        }
+
+        .badge-published {
+            background: rgba(40, 167, 69, 0.15);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .badge-pending {
+            background: rgba(255, 193, 7, 0.15);
+            color: #856404;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .badge-draft {
+            background: rgba(108, 117, 125, 0.15);
+            color: #495057;
+            border: 1px solid rgba(108, 117, 125, 0.3);
+        }
+
+        .badge-archived {
+            background: rgba(220, 53, 69, 0.15);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        /* Progress Bar */
+        .progress-moroccan {
+            height: 6px;
+            background: rgba(212, 163, 115, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-moroccan {
+            background: linear-gradient(90deg, var(--terracotta), var(--ochre));
+            border-radius: 10px;
+            transition: width 0.6s ease;
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid transparent;
+            transition: var(--transition-smooth);
+            margin: 0 0.2rem;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-edit {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+            border-color: rgba(13, 110, 253, 0.2);
+        }
+
+        .btn-edit:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .btn-view {
+            background: rgba(13, 202, 240, 0.1);
+            color: #0dcaf0;
+            border-color: rgba(13, 202, 240, 0.2);
+        }
+
+        .btn-view:hover {
+            background: #0dcaf0;
+            color: white;
+        }
+
+        .btn-duplicate {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+            border-color: rgba(255, 193, 7, 0.2);
+        }
+
+        .btn-duplicate:hover {
+            background: #ffc107;
+            color: white;
+        }
+
+        .btn-archive {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border-color: rgba(220, 53, 69, 0.2);
+        }
+
+        .btn-archive:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Pagination */
+        .pagination-moroccan .page-link {
+            border: none;
+            color: var(--indigo);
+            border-radius: 10px;
+            margin: 0 0.25rem;
+            transition: var(--transition-smooth);
+            font-weight: 500;
+        }
+
+        .pagination-moroccan .page-link:hover {
+            background: rgba(198, 93, 59, 0.1);
+            color: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        .pagination-moroccan .page-item.active .page-link {
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 10px rgba(198, 93, 59, 0.3);
+        }
+
+        /* Stats Summary */
+        .stats-summary {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .number {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--indigo);
+            display: block;
+        }
+
+        .stat-item .label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 30px;
+            background: rgba(212, 163, 115, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lifted);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);
+            color: white;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .modal-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            background: var(--cream);
+        }
+
+        .modal-footer {
+            border-top: 1px solid rgba(212, 163, 115, 0.2);
+            padding: 1.25rem 1.5rem;
+            background: var(--cream);
+        }
+
+        /* Checkbox Styling */
+        .form-check-input {
+            width: 1.2em;
+            height: 1.2em;
+            border: 2px solid rgba(212, 163, 115, 0.4);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--terracotta);
+            border-color: var(--terracotta);
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(198, 93, 59, 0.15);
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--indigo);
+        }
+
+        .section-header i {
+            color: var(--terracotta);
+            font-size: 1.25rem;
+        }
+
+        .section-header h4, .section-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .stats-summary {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .stat-divider {
+                display: none;
+            }
+
+            .table-container {
+                border-radius: 15px;
+            }
+
+            .btn-action {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Loading Animation */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 12px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
     <!-- Admin Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-indigo">
+    <nav class="navbar navbar-expand-lg admin-navbar fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="admin-dashboard.html">
-                <i class="fas fa-cog me-2"></i>
-                Admin Panel - Marrakech Cultural Scene
+                <svg width="35" height="35" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="#D4A373" stroke-width="2"/>
+                    <path d="M50 15 L60 40 L85 40 L65 55 L75 80 L50 65 L25 80 L35 55 L15 40 L40 40 Z" fill="#C65D3B" opacity="0.9"/>
+                    <circle cx="50" cy="50" r="10" fill="#2E3A59"/>
+                    <circle cx="50" cy="50" r="5" fill="#D4A373"/>
+                </svg>
+                <span>Marrakech Admin</span>
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="adminNavbar">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="admin-dashboard.html">
-                            <i class="fas fa-chart-pie me-1"></i>Dashboard
+                            <i class="fas fa-chart-pie me-2"></i>Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="admin-events.html">
-                            <i class="fas fa-calendar-alt me-1"></i>Manage Events
+                            <i class="fas fa-calendar-alt me-2"></i>Events
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="admin-approve.html">
-                            <i class="fas fa-check-circle me-1"></i>Approve Events
-                            <span class="badge bg-terracotta ms-1">5</span>
+                            <i class="fas fa-check-circle me-2"></i>Approvals
+                            <span class="badge rounded-pill">5</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="admin-delete.html">
-                            <i class="fas fa-trash me-1"></i>Remove Events
+                            <i class="fas fa-trash me-2"></i>Deleted
                         </a>
                     </li>
                 </ul>
-                
+
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminUserDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle me-1"></i>Admin User
+                            <i class="fas fa-user-circle me-2"></i>Admin
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
-                            <li><a class="dropdown-item" href="#">System Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="index.html">View Public Site</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="fas fa-external-link-alt me-2"></i>Public Site</a></li>
+                            <li><hr class="dropdown-divider" style="border-color: rgba(212,163,115,0.2);"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -71,17 +710,20 @@
         </div>
     </nav>
 
+    <!-- Spacer for fixed navbar -->
+    <div style="height: 76px;"></div>
+
     <!-- Admin Header -->
     <div class="admin-header">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <h1>Event Management</h1>
-                    <p class="mb-0">Oversee all cultural events and their publication status</p>
+                    <p>Oversee all cultural events and their publication status</p>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <button class="btn btn-terracotta" data-bs-toggle="modal" data-bs-target="#addEventModal">
-                        <i class="fas fa-plus me-2"></i>Add New Event
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <button class="btn btn-terracotta btn-admin" data-bs-toggle="modal" data-bs-target="#addEventModal">
+                        <i class="fas fa-plus"></i>Add New Event
                     </button>
                 </div>
             </div>
@@ -93,7 +735,7 @@
         <!-- Filter and Search Controls -->
         <div class="row mb-4">
             <div class="col-lg-8">
-                <div class="admin-content p-3">
+                <div class="glass-card reveal">
                     <div class="row align-items-center">
                         <div class="col-md-4 mb-2 mb-md-0">
                             <div class="input-group">
@@ -123,29 +765,41 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-outline-primary w-100" onclick="applyFilters()">
-                                <i class="fas fa-filter me-1"></i>Filter
+                            <button class="btn btn-outline-terracotta btn-admin w-100" onclick="applyFilters()">
+                                <i class="fas fa-filter"></i>Filter
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-4">
-                <div class="admin-content p-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-0">Total Events: <span class="text-terracotta">247</span></h6>
-                            <small class="text-muted">Published: 203 | Pending: 5 | Draft: 39</small>
+                <div class="glass-card reveal" style="transition-delay: 0.1s;">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="stats-summary">
+                            <div class="stat-item">
+                                <span class="number" style="color: var(--terracotta);">247</span>
+                                <span class="label">Total</span>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <span class="number" style="color: #28a745;">203</span>
+                                <span class="label">Published</span>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <span class="number" style="color: #ffc107;">5</span>
+                                <span class="label">Pending</span>
+                            </div>
                         </div>
                         <div class="dropdown">
-                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                <i class="fas fa-download me-1"></i>Export
+                            <button class="btn btn-outline-terracotta btn-admin dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-download"></i>Export
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-file-csv me-2"></i>Export as CSV</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-file-excel me-2"></i>Export as Excel</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-file-pdf me-2"></i>Export as PDF</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-file-csv me-2" style="color: var(--terracotta);"></i>Export as CSV</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-file-excel me-2" style="color: var(--terracotta);"></i>Export as Excel</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-file-pdf me-2" style="color: var(--terracotta);"></i>Export as PDF</a></li>
                             </ul>
                         </div>
                     </div>
@@ -156,21 +810,21 @@
         <!-- Events Table -->
         <div class="row">
             <div class="col-12">
-                <div class="admin-content">
+                <div class="table-container reveal" style="transition-delay: 0.2s;">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th width="40">
                                         <input type="checkbox" class="form-check-input" id="selectAll">
                                     </th>
                                     <th>Event</th>
                                     <th>Category</th>
-                                    <th>Date</th>
+                                    <th>Date & Time</th>
                                     <th>Organizer</th>
                                     <th>Status</th>
                                     <th>Attendees</th>
-                                    <th>Actions</th>
+                                    <th width="180">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -180,243 +834,249 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="images/music_concert_6.jpeg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=150&q=80" alt="Event" class="event-thumbnail me-3">
                                             <div>
-                                                <h6 class="mb-0">Traditional Moroccan Music Concert</h6>
-                                                <small class="text-muted">Marrakech Cultural Center</small>
+                                                <h6 style="font-weight: 600; color: var(--indigo); margin-bottom: 0.25rem;">Traditional Moroccan Music Concert</h6>
+                                                <small style="color: #666;"><i class="fas fa-map-marker-alt me-1" style="color: var(--terracotta);"></i>Cultural Center, Medina</small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="badge bg-ochre">Music</span></td>
+                                    <td><span class="badge-moroccan badge-music">Music</span></td>
                                     <td>
-                                        <div>Dec 15, 2024</div>
-                                        <small class="text-muted">8:00 PM</small>
+                                        <div style="font-weight: 500;">Dec 15, 2024</div>
+                                        <small style="color: #666;"><i class="far fa-clock me-1"></i>8:00 PM</small>
                                     </td>
-                                    <td>Cultural Center</td>
-                                    <td><span class="badge bg-success">Published</span></td>
                                     <td>
-                                        <div>45 / 120</div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar bg-terracotta" style="width: 38%;"></div>
+                                        <div style="font-weight: 500;">Cultural Center</div>
+                                        <small style="color: #666;">Marrakech</small>
+                                    </td>
+                                    <td><span class="badge-moroccan badge-published">Published</span></td>
+                                    <td>
+                                        <div style="font-weight: 500; margin-bottom: 0.25rem;">45 / 120</div>
+                                        <div class="progress-moroccan">
+                                            <div class="progress-bar-moroccan" style="width: 38%;"></div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-info" title="View">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
-                                                <i class="fas fa-archive"></i>
-                                            </button>
-                                        </div>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-action btn-view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-duplicate" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button class="btn-action btn-archive" title="Archive">
+                                            <i class="fas fa-archive"></i>
+                                        </button>
                                     </td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td>
                                         <input type="checkbox" class="form-check-input event-checkbox" value="2">
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="images/art_exhibition_1.jpeg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=150&q=80" alt="Event" class="event-thumbnail me-3">
                                             <div>
-                                                <h6 class="mb-0">Contemporary Art Exhibition</h6>
-                                                <small class="text-muted">Gallery Moderne</small>
+                                                <h6 style="font-weight: 600; color: var(--indigo); margin-bottom: 0.25rem;">Contemporary Art Exhibition</h6>
+                                                <small style="color: #666;"><i class="fas fa-map-marker-alt me-1" style="color: var(--terracotta);"></i>Gallery Moderne, Gueliz</small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="badge bg-indigo">Exhibition</span></td>
+                                    <td><span class="badge-moroccan badge-exhibition">Exhibition</span></td>
                                     <td>
-                                        <div>Dec 20, 2024</div>
-                                        <small class="text-muted">6:00 PM</small>
+                                        <div style="font-weight: 500;">Dec 20, 2024</div>
+                                        <small style="color: #666;"><i class="far fa-clock me-1"></i>6:00 PM</small>
                                     </td>
-                                    <td>Gallery Moderne</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
                                     <td>
-                                        <div>12 / 80</div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar bg-ochre" style="width: 15%;"></div>
+                                        <div style="font-weight: 500;">Gallery Moderne</div>
+                                        <small style="color: #666;">Private Gallery</small>
+                                    </td>
+                                    <td><span class="badge-moroccan badge-pending">Pending</span></td>
+                                    <td>
+                                        <div style="font-weight: 500; margin-bottom: 0.25rem;">12 / 80</div>
+                                        <div class="progress-moroccan">
+                                            <div class="progress-bar-moroccan" style="width: 15%;"></div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-info" title="View">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
-                                                <i class="fas fa-archive"></i>
-                                            </button>
-                                        </div>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-action btn-view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-duplicate" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button class="btn-action btn-archive" title="Archive">
+                                            <i class="fas fa-archive"></i>
+                                        </button>
                                     </td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td>
                                         <input type="checkbox" class="form-check-input event-checkbox" value="3">
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="images/cultural_workshop_1.jpg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=150&q=80" alt="Event" class="event-thumbnail me-3">
                                             <div>
-                                                <h6 class="mb-0">Traditional Pottery Workshop</h6>
-                                                <small class="text-muted">Artisan Quarter, Medina</small>
+                                                <h6 style="font-weight: 600; color: var(--indigo); margin-bottom: 0.25rem;">Traditional Pottery Workshop</h6>
+                                                <small style="color: #666;"><i class="fas fa-map-marker-alt me-1" style="color: var(--terracotta);"></i>Artisan Quarter, Mellah</small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="badge bg-terracotta">Workshop</span></td>
+                                    <td><span class="badge-moroccan badge-workshop">Workshop</span></td>
                                     <td>
-                                        <div>Dec 25, 2024</div>
-                                        <small class="text-muted">2:00 PM</small>
+                                        <div style="font-weight: 500;">Dec 25, 2024</div>
+                                        <small style="color: #666;"><i class="far fa-clock me-1"></i>2:00 PM</small>
                                     </td>
-                                    <td>Artisan Guild</td>
-                                    <td><span class="badge bg-success">Published</span></td>
                                     <td>
-                                        <div>8 / 15</div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar bg-terracotta" style="width: 53%;"></div>
+                                        <div style="font-weight: 500;">Artisan Guild</div>
+                                        <small style="color: #666;">Cooperative</small>
+                                    </td>
+                                    <td><span class="badge-moroccan badge-published">Published</span></td>
+                                    <td>
+                                        <div style="font-weight: 500; margin-bottom: 0.25rem;">8 / 15</div>
+                                        <div class="progress-moroccan">
+                                            <div class="progress-bar-moroccan" style="width: 53%;"></div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-info" title="View">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
-                                                <i class="fas fa-archive"></i>
-                                            </button>
-                                        </div>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-action btn-view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-duplicate" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button class="btn-action btn-archive" title="Archive">
+                                            <i class="fas fa-archive"></i>
+                                        </button>
                                     </td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td>
                                         <input type="checkbox" class="form-check-input event-checkbox" value="4">
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="images/theater_performance_0.jpg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=150&q=80" alt="Event" class="event-thumbnail me-3">
                                             <div>
-                                                <h6 class="mb-0">Tales of Marrakech</h6>
-                                                <small class="text-muted">Royal Theater Marrakech</small>
+                                                <h6 style="font-weight: 600; color: var(--indigo); margin-bottom: 0.25rem;">Tales of Marrakech</h6>
+                                                <small style="color: #666;"><i class="fas fa-map-marker-alt me-1" style="color: var(--terracotta);"></i>Royal Theater Marrakech</small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="badge bg-purple">Theater</span></td>
+                                    <td><span class="badge-moroccan badge-theater">Theater</span></td>
                                     <td>
-                                        <div>Dec 30, 2024</div>
-                                        <small class="text-muted">7:30 PM</small>
+                                        <div style="font-weight: 500;">Dec 30, 2024</div>
+                                        <small style="color: #666;"><i class="far fa-clock me-1"></i>7:30 PM</small>
                                     </td>
-                                    <td>Theater Company</td>
-                                    <td><span class="badge bg-success">Published</span></td>
                                     <td>
-                                        <div>67 / 150</div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar bg-indigo" style="width: 45%;"></div>
+                                        <div style="font-weight: 500;">Theater Company</div>
+                                        <small style="color: #666;">Professional</small>
+                                    </td>
+                                    <td><span class="badge-moroccan badge-published">Published</span></td>
+                                    <td>
+                                        <div style="font-weight: 500; margin-bottom: 0.25rem;">67 / 150</div>
+                                        <div class="progress-moroccan">
+                                            <div class="progress-bar-moroccan" style="width: 45%;"></div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-info" title="View">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
-                                                <i class="fas fa-archive"></i>
-                                            </button>
-                                        </div>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-action btn-view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-duplicate" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button class="btn-action btn-archive" title="Archive">
+                                            <i class="fas fa-archive"></i>
+                                        </button>
                                     </td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td>
                                         <input type="checkbox" class="form-check-input event-checkbox" value="5">
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="images/music_concert_8.jpg" alt="Event" class="rounded me-3" style="width: 50px; height: 40px; object-fit: cover;">
+                                            <img src="https://images.unsplash.com/photo-1493225255756-d9584f8606e5?w=150&q=80" alt="Event" class="event-thumbnail me-3">
                                             <div>
-                                                <h6 class="mb-0">Gnawa Music Festival</h6>
-                                                <small class="text-muted">Palmery Cultural Garden</small>
+                                                <h6 style="font-weight: 600; color: var(--indigo); margin-bottom: 0.25rem;">Gnawa Music Festival</h6>
+                                                <small style="color: #666;"><i class="fas fa-map-marker-alt me-1" style="color: var(--terracotta);"></i>Palmery Cultural Garden</small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="badge bg-ochre">Music</span></td>
+                                    <td><span class="badge-moroccan badge-festival">Festival</span></td>
                                     <td>
-                                        <div>Jan 5, 2025</div>
-                                        <small class="text-muted">7:00 PM</small>
+                                        <div style="font-weight: 500;">Jan 5, 2025</div>
+                                        <small style="color: #666;"><i class="far fa-clock me-1"></i>7:00 PM</small>
                                     </td>
-                                    <td>Cultural Foundation</td>
-                                    <td><span class="badge bg-secondary">Draft</span></td>
                                     <td>
-                                        <div>0 / 200</div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar bg-terracotta" style="width: 0%;"></div>
+                                        <div style="font-weight: 500;">Cultural Foundation</div>
+                                        <small style="color: #666;">Non-Profit</small>
+                                    </td>
+                                    <td><span class="badge-moroccan badge-draft">Draft</span></td>
+                                    <td>
+                                        <div style="font-weight: 500; margin-bottom: 0.25rem;">0 / 200</div>
+                                        <div class="progress-moroccan">
+                                            <div class="progress-bar-moroccan" style="width: 0%;"></div>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-sm btn-outline-primary" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-info" title="View">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-warning" title="Duplicate">
-                                                <i class="fas fa-copy"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger" title="Archive">
-                                                <i class="fas fa-archive"></i>
-                                            </button>
-                                        </div>
+                                        <button class="btn-action btn-edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-action btn-view" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-action btn-duplicate" title="Duplicate">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        <button class="btn-action btn-archive" title="Archive">
+                                            <i class="fas fa-archive"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    
-                    <!-- Bulk Actions -->
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div class="bulk-actions">
-                            <span class="me-3">Bulk Actions:</span>
-                            <button class="btn btn-sm btn-outline-success me-2" onclick="bulkPublish()">
-                                <i class="fas fa-check me-1"></i>Publish Selected
+
+                    <!-- Bulk Actions & Pagination -->
+                    <div class="d-flex justify-content-between align-items-center p-3" style="background: rgba(46, 58, 89, 0.03); border-top: 1px solid rgba(212, 163, 115, 0.2);">
+                        <div class="bulk-actions d-flex align-items-center gap-2">
+                            <span style="font-weight: 500; color: var(--indigo);">Bulk:</span>
+                            <button class="btn btn-sm btn-outline-success" onclick="bulkPublish()">
+                                <i class="fas fa-check me-1"></i>Publish
                             </button>
-                            <button class="btn btn-sm btn-outline-warning me-2" onclick="bulkArchive()">
-                                <i class="fas fa-archive me-1"></i>Archive Selected
+                            <button class="btn btn-sm btn-outline-warning" onclick="bulkArchive()">
+                                <i class="fas fa-archive me-1"></i>Archive
                             </button>
                             <button class="btn btn-sm btn-outline-danger" onclick="bulkDelete()">
-                                <i class="fas fa-trash me-1"></i>Delete Selected
+                                <i class="fas fa-trash me-1"></i>Delete
                             </button>
                         </div>
-                        
-                        <!-- Pagination -->
+
                         <nav aria-label="Events pagination">
-                            <ul class="pagination pagination-sm mb-0">
+                            <ul class="pagination pagination-moroccan mb-0">
                                 <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    <a class="page-link" href="#" tabindex="-1">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
                                 </li>
                                 <li class="page-item active">
                                     <a class="page-link" href="#">1</a>
@@ -428,7 +1088,9 @@
                                     <a class="page-link" href="#">3</a>
                                 </li>
                                 <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
+                                    <a class="page-link" href="#">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
                                 </li>
                             </ul>
                         </nav>
@@ -443,45 +1105,45 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add New Event</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Add New Cultural Event</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="addEventForm">
                         <div class="row">
                             <div class="col-md-8 mb-3">
-                                <label for="newEventTitle" class="form-label">Event Title</label>
-                                <input type="text" class="form-control" id="newEventTitle" required>
+                                <label for="newEventTitle" class="form-label" style="font-weight: 500; color: var(--indigo);">Event Title</label>
+                                <input type="text" class="form-control" id="newEventTitle" placeholder="Enter event title..." required>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="newEventCategory" class="form-label">Category</label>
+                                <label for="newEventCategory" class="form-label" style="font-weight: 500; color: var(--indigo);">Category</label>
                                 <select class="form-select" id="newEventCategory" required>
-                                    <option value="">Choose...</option>
-                                    <option value="music">Music</option>
-                                    <option value="exhibition">Art Exhibition</option>
-                                    <option value="theater">Theater</option>
-                                    <option value="workshop">Workshop</option>
-                                    <option value="festival">Festival</option>
+                                    <option value="">Select category...</option>
+                                    <option value="music">🎵 Music</option>
+                                    <option value="exhibition">🎨 Art Exhibition</option>
+                                    <option value="theater">🎭 Theater</option>
+                                    <option value="workshop">🖐️ Workshop</option>
+                                    <option value="festival">🎪 Festival</option>
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="mb-3">
-                            <label for="newEventDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="newEventDescription" rows="3" required></textarea>
+                            <label for="newEventDescription" class="form-label" style="font-weight: 500; color: var(--indigo);">Description</label>
+                            <textarea class="form-control" id="newEventDescription" rows="3" placeholder="Describe the cultural experience..." required></textarea>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                <label for="newEventDate" class="form-label">Date</label>
+                                <label for="newEventDate" class="form-label" style="font-weight: 500; color: var(--indigo);">Date</label>
                                 <input type="date" class="form-control" id="newEventDate" required>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="newEventTime" class="form-label">Time</label>
+                                <label for="newEventTime" class="form-label" style="font-weight: 500; color: var(--indigo);">Time</label>
                                 <input type="time" class="form-control" id="newEventTime" required>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="newEventStatus" class="form-label">Status</label>
+                                <label for="newEventStatus" class="form-label" style="font-weight: 500; color: var(--indigo);">Status</label>
                                 <select class="form-select" id="newEventStatus">
                                     <option value="draft">Draft</option>
                                     <option value="pending">Pending Review</option>
@@ -489,22 +1151,35 @@
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="newEventVenue" class="form-label">Venue</label>
-                                <input type="text" class="form-control" id="newEventVenue" required>
+                                <label for="newEventVenue" class="form-label" style="font-weight: 500; color: var(--indigo);">Venue</label>
+                                <input type="text" class="form-control" id="newEventVenue" placeholder="Venue name and location..." required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="newEventOrganizer" class="form-label">Organizer</label>
-                                <input type="text" class="form-control" id="newEventOrganizer" required>
+                                <label for="newEventOrganizer" class="form-label" style="font-weight: 500; color: var(--indigo);">Organizer</label>
+                                <input type="text" class="form-control" id="newEventOrganizer" placeholder="Organizing entity..." required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="newEventCapacity" class="form-label" style="font-weight: 500; color: var(--indigo);">Capacity</label>
+                                <input type="number" class="form-control" id="newEventCapacity" placeholder="Max attendees..." min="1">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="newEventImage" class="form-label" style="font-weight: 500; color: var(--indigo);">Event Image</label>
+                                <input type="file" class="form-control" id="newEventImage" accept="image/*">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="saveNewEvent()">Save Event</button>
+                    <button type="button" class="btn btn-outline-secondary btn-admin" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-terracotta btn-admin" onclick="saveNewEvent()">
+                        <i class="fas fa-save me-2"></i>Save Event
+                    </button>
                 </div>
             </div>
         </div>
@@ -512,99 +1187,121 @@
 
     <!-- Bootstrap 5 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script src="js/main.js"></script>
-    
+
     <script>
-        // Event Management JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            // Select All checkbox functionality
-            const selectAllCheckbox = document.getElementById('selectAll');
-            const eventCheckboxes = document.querySelectorAll('.event-checkbox');
-            
-            selectAllCheckbox.addEventListener('change', function() {
-                eventCheckboxes.forEach(checkbox => {
-                    checkbox.checked = this.checked;
-                });
-            });
-            
-            // Individual checkbox change
+        // Select All checkbox functionality
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const eventCheckboxes = document.querySelectorAll('.event-checkbox');
+
+        selectAllCheckbox.addEventListener('change', function() {
             eventCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const checkedBoxes = document.querySelectorAll('.event-checkbox:checked');
-                    selectAllCheckbox.checked = checkedBoxes.length === eventCheckboxes.length;
-                    selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < eventCheckboxes.length;
-                });
+                checkbox.checked = this.checked;
             });
         });
-        
+
+        // Individual checkbox change
+        eventCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const checkedBoxes = document.querySelectorAll('.event-checkbox:checked');
+                selectAllCheckbox.checked = checkedBoxes.length === eventCheckboxes.length;
+                selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < eventCheckboxes.length;
+            });
+        });
+
         function applyFilters() {
             const search = document.getElementById('eventSearch').value;
             const status = document.getElementById('statusFilter').value;
             const category = document.getElementById('categoryFilter').value;
-            
-            // In a real application, this would filter the table content
+
             console.log('Applying filters:', { search, status, category });
+            // Animation feedback
+            const btn = document.querySelector('button[onclick="applyFilters()"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>Filtering...';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-filter"></i>Filter';
+            }, 800);
         }
-        
+
         function bulkPublish() {
             const selectedEvents = document.querySelectorAll('.event-checkbox:checked');
             if (selectedEvents.length === 0) {
                 alert('Please select events to publish.');
                 return;
             }
-            
+
             if (confirm(`Publish ${selectedEvents.length} selected event(s)?`)) {
-                // Implementation for bulk publish
                 console.log('Publishing events:', Array.from(selectedEvents).map(cb => cb.value));
             }
         }
-        
+
         function bulkArchive() {
             const selectedEvents = document.querySelectorAll('.event-checkbox:checked');
             if (selectedEvents.length === 0) {
                 alert('Please select events to archive.');
                 return;
             }
-            
+
             if (confirm(`Archive ${selectedEvents.length} selected event(s)?`)) {
-                // Implementation for bulk archive
                 console.log('Archiving events:', Array.from(selectedEvents).map(cb => cb.value));
             }
         }
-        
+
         function bulkDelete() {
             const selectedEvents = document.querySelectorAll('.event-checkbox:checked');
             if (selectedEvents.length === 0) {
                 alert('Please select events to delete.');
                 return;
             }
-            
+
             if (confirm(`Permanently delete ${selectedEvents.length} selected event(s)? This action cannot be undone.`)) {
-                // Implementation for bulk delete
                 console.log('Deleting events:', Array.from(selectedEvents).map(cb => cb.value));
             }
         }
-        
+
         function saveNewEvent() {
             const form = document.getElementById('addEventForm');
             if (form.checkValidity()) {
-                // Implementation for saving new event
-                console.log('Saving new event...');
-                const modal = bootstrap.Modal.getInstance(document.getElementById('addEventModal'));
-                modal.hide();
-                showSuccessMessage('Event added successfully!');
+                const btn = document.querySelector('button[onclick="saveNewEvent()"]');
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+
+                setTimeout(() => {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addEventModal'));
+                    modal.hide();
+                    btn.innerHTML = '<i class="fas fa-save me-2"></i>Save Event';
+                    form.reset();
+                    alert('Event added successfully!');
+                }, 1200);
             } else {
                 form.reportValidity();
             }
         }
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Row hover effects
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = 'rgba(255,255,255,0.7)';
+            });
+            row.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+            });
+        });
     </script>
-    
-    <style>
-        .bg-purple {
-            background-color: #6f42c1 !important;
-        }
-    </style>
 </body>
 </html>

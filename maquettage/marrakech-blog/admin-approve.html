@@ -3,67 +3,676 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Approve Events - Admin Panel</title>
+    <title>Approve Events - Marrakech Cultural Scene</title>
     <meta name="description" content="Review and approve pending cultural event submissions for the Marrakech Cultural Scene platform.">
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --terracotta: #C65D3B;
+            --terracotta-dark: #A84B2F;
+            --terracotta-light: rgba(198, 93, 59, 0.1);
+            --ochre: #D4A373;
+            --ochre-light: #E9C496;
+            --ochre-transparent: rgba(212, 163, 115, 0.2);
+            --indigo: #2E3A59;
+            --indigo-light: #3F4F75;
+            --indigo-transparent: rgba(46, 58, 89, 0.85);
+            --cream: #FAF7F2;
+            --sand: #F5F1E8;
+            --charcoal: #2C2C2C;
+            --white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-lifted: 0 20px 60px rgba(0,0,0,0.15);
+            --shadow-glow: 0 0 20px rgba(198, 93, 59, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%);
+            color: var(--charcoal);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+        }
+
+        /* Admin Navigation - Glassmorphism */
+        .admin-navbar {
+            background: rgba(46, 58, 89, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 163, 115, 0.2);
+            padding: 0.75rem 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .admin-navbar .navbar-brand {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--ochre-light) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition-smooth);
+        }
+
+        .admin-navbar .navbar-brand:hover {
+            color: var(--white) !important;
+            transform: translateY(-2px);
+        }
+
+        .admin-navbar .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .admin-navbar .nav-link:hover,
+        .admin-navbar .nav-link.active {
+            color: var(--ochre) !important;
+            background: rgba(212, 163, 115, 0.1);
+        }
+
+        .admin-navbar .badge {
+            background: var(--terracotta) !important;
+            font-size: 0.7rem;
+            padding: 0.35em 0.65em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .admin-navbar .dropdown-menu {
+            background: rgba(46, 58, 89, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .admin-navbar .dropdown-item {
+            color: rgba(255,255,255,0.8);
+            transition: var(--transition-smooth);
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .admin-navbar .dropdown-item:hover {
+            background: rgba(198, 93, 59, 0.2);
+            color: var(--ochre);
+            transform: translateX(5px);
+        }
+
+        /* Admin Header */
+        .admin-header {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);
+            padding: 3rem 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .admin-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .admin-header::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(198, 93, 59, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .admin-header h1 {
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .admin-header p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .approval-stats {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--ochre-light);
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .approval-stats i {
+            color: var(--terracotta);
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--terracotta), var(--ochre));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .glass-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Guidelines Alert */
+        .guidelines-alert {
+            background: rgba(23, 162, 184, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(23, 162, 184, 0.2);
+            border-radius: 15px;
+            border-left: 4px solid #17a2b8;
+            padding: 1.5rem;
+        }
+
+        .guidelines-alert h6 {
+            color: var(--indigo);
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .guidelines-alert ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .guidelines-alert li {
+            padding: 0.35rem 0;
+            color: #555;
+            font-size: 0.9rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .guidelines-alert li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #17a2b8;
+            font-weight: bold;
+        }
+
+        /* Approval Cards */
+        .approval-card {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
+            border-left: 4px solid transparent;
+        }
+
+        .approval-card:hover {
+            background: rgba(255,255,255,0.95);
+            transform: translateX(5px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .approval-card.high-priority { border-left-color: #28a745; }
+        .approval-card.standard-priority { border-left-color: #17a2b8; }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: var(--transition-smooth);
+        }
+
+        .approval-card:hover .event-image {
+            transform: scale(1.02);
+        }
+
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-high {
+            background: rgba(40, 167, 69, 0.15);
+            color: #155724;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .priority-standard {
+            background: rgba(23, 162, 184, 0.15);
+            color: #0c5460;
+            border: 1px solid rgba(23, 162, 184, 0.3);
+        }
+
+        /* Badges */
+        .badge-moroccan {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-workshop {
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+            color: white;
+        }
+
+        .badge-music {
+            background: linear-gradient(135deg, var(--ochre) 0%, #B8936B 100%);
+            color: white;
+        }
+
+        .badge-exhibition {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-light) 100%);
+            color: white;
+        }
+
+        .badge-pending {
+            background: rgba(255, 193, 7, 0.15);
+            color: #856404;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        /* Event Meta */
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .event-meta-item i {
+            color: var(--terracotta);
+            width: 20px;
+        }
+
+        /* Review Checklist */
+        .review-checklist {
+            background: rgba(255,255,255,0.6);
+            border-radius: 15px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .review-checklist h6 {
+            color: var(--indigo);
+            margin-bottom: 1rem;
+            font-family: var(--font-serif);
+        }
+
+        .form-check-input {
+            width: 1.2em;
+            height: 1.2em;
+            border: 2px solid rgba(212, 163, 115, 0.4);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--terracotta);
+            border-color: var(--terracotta);
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(198, 93, 59, 0.15);
+        }
+
+        .form-check-label {
+            color: #555;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        /* Action Buttons */
+        .btn-admin {
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid transparent;
+        }
+
+        .btn-success-moroccan {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            border-color: #28a745;
+            color: white;
+        }
+
+        .btn-success-moroccan:hover {
+            background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+            border-color: #218838;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-warning-moroccan {
+            background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+            border-color: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning-moroccan:hover {
+            background: linear-gradient(135deg, #e0a800 0%, #d39e00 100%);
+            border-color: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-danger-moroccan {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            border-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger-moroccan:hover {
+            background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+            border-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-outline-moroccan {
+            background: transparent;
+            border-color: var(--terracotta);
+            color: var(--terracotta);
+        }
+
+        .btn-outline-moroccan:hover {
+            background: var(--terracotta);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Alert Notes */
+        .alert-note {
+            background: rgba(255, 243, 205, 0.8);
+            border: 1px solid rgba(255, 234, 167, 0.5);
+            border-radius: 12px;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .alert-note small {
+            color: #856404;
+        }
+
+        /* Summary Stats */
+        .summary-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: var(--transition-smooth);
+        }
+
+        .summary-stat:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .summary-stat h3 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-stat.pending h3 { color: #ffc107; }
+        .summary-stat.approved h3 { color: #28a745; }
+        .summary-stat.rejected h3 { color: #dc3545; }
+        .summary-stat.changes h3 { color: #17a2b8; }
+
+        /* Modal Styles */
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lifted);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+            color: #212529;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .modal-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            background: var(--cream);
+        }
+
+        .modal-footer {
+            border-top: 1px solid rgba(212, 163, 115, 0.2);
+            padding: 1.25rem 1.5rem;
+            background: var(--cream);
+        }
+
+        .form-control, .form-select {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: rgba(255,255,255,0.95);
+            border-color: var(--terracotta);
+            box-shadow: 0 0 0 0.2rem rgba(198, 93, 59, 0.15);
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--indigo);
+        }
+
+        .section-header i {
+            color: var(--terracotta);
+            font-size: 1.25rem;
+        }
+
+        .section-header h4, .section-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .approval-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .event-image {
+                height: 150px;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
     <!-- Admin Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-indigo">
+    <nav class="navbar navbar-expand-lg admin-navbar fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="admin-dashboard.html">
-                <i class="fas fa-cog me-2"></i>
-                Admin Panel - Marrakech Cultural Scene
+                <svg width="35" height="35" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="#D4A373" stroke-width="2"/>
+                    <path d="M50 15 L60 40 L85 40 L65 55 L75 80 L50 65 L25 80 L35 55 L15 40 L40 40 Z" fill="#C65D3B" opacity="0.9"/>
+                    <circle cx="50" cy="50" r="10" fill="#2E3A59"/>
+                    <circle cx="50" cy="50" r="5" fill="#D4A373"/>
+                </svg>
+                <span>Marrakech Admin</span>
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="adminNavbar">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="admin-dashboard.html">
-                            <i class="fas fa-chart-pie me-1"></i>Dashboard
+                            <i class="fas fa-chart-pie me-2"></i>Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="admin-events.html">
-                            <i class="fas fa-calendar-alt me-1"></i>Manage Events
+                            <i class="fas fa-calendar-alt me-2"></i>Events
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="admin-approve.html">
-                            <i class="fas fa-check-circle me-1"></i>Approve Events
-                            <span class="badge bg-terracotta ms-1">5</span>
+                            <i class="fas fa-check-circle me-2"></i>Approvals
+                            <span class="badge rounded-pill">5</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="admin-delete.html">
-                            <i class="fas fa-trash me-1"></i>Remove Events
+                            <i class="fas fa-trash me-2"></i>Deleted
                         </a>
                     </li>
                 </ul>
-                
+
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="adminUserDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle me-1"></i>Admin User
+                            <i class="fas fa-user-circle me-2"></i>Admin
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
-                            <li><a class="dropdown-item" href="#">System Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="index.html">View Public Site</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="fas fa-external-link-alt me-2"></i>Public Site</a></li>
+                            <li><hr class="dropdown-divider" style="border-color: rgba(212,163,115,0.2);"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -71,17 +680,24 @@
         </div>
     </nav>
 
+    <!-- Spacer for fixed navbar -->
+    <div style="height: 76px;"></div>
+
     <!-- Admin Header -->
     <div class="admin-header">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h1>Event Approval Queue</h1>
-                    <p class="mb-0">Review and approve pending cultural event submissions</p>
+                    <p>Review and approve pending cultural event submissions</p>
                 </div>
-                <div class="col-md-4 text-md-end">
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
                     <div class="approval-stats">
-                        <small class="text-white-50">Today: 3 approved • 1 rejected • 5 pending</small>
+                        <span><i class="fas fa-check-circle"></i>3 approved today</span>
+                        <span style="color: rgba(255,255,255,0.3);">|</span>
+                        <span><i class="fas fa-times-circle"></i>1 rejected</span>
+                        <span style="color: rgba(255,255,255,0.3);">|</span>
+                        <span><i class="fas fa-clock"></i>5 pending</span>
                     </div>
                 </div>
             </div>
@@ -93,27 +709,25 @@
         <!-- Review Guidelines -->
         <div class="row mb-4">
             <div class="col-12">
-                <div class="alert alert-info">
-                    <h6 class="alert-heading">
-                        <i class="fas fa-info-circle me-2"></i>Review Guidelines
-                    </h6>
+                <div class="guidelines-alert reveal">
+                    <h6><i class="fas fa-info-circle me-2" style="color: #17a2b8;"></i>Review Guidelines</h6>
                     <div class="row">
                         <div class="col-md-4">
-                            <ul class="mb-0 small">
+                            <ul>
                                 <li>Verify cultural relevance and authenticity</li>
                                 <li>Check venue and date information accuracy</li>
                                 <li>Ensure appropriate content and descriptions</li>
                             </ul>
                         </div>
                         <div class="col-md-4">
-                            <ul class="mb-0 small">
+                            <ul>
                                 <li>Validate organizer credentials and contact info</li>
                                 <li>Review image quality and appropriateness</li>
                                 <li>Check for duplicate or similar events</li>
                             </ul>
                         </div>
                         <div class="col-md-4">
-                            <ul class="mb-0 small">
+                            <ul>
                                 <li>Confirm compliance with community guidelines</li>
                                 <li>Assess educational and cultural value</li>
                                 <li>Verify pricing and accessibility information</li>
@@ -126,118 +740,125 @@
 
         <!-- Pending Events for Review -->
         <div class="row">
+            <div class="col-12">
+                <div class="section-header reveal">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h4>Pending Review (5)</h4>
+                </div>
+            </div>
+
             <!-- Event 1 - Berber Carpet Weaving Workshop -->
             <div class="col-12 mb-4">
-                <div class="admin-content">
-                    <div class="approval-card">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="images/cultural_workshop_7.jpg" alt="Berber Carpet Weaving Workshop" class="img-fluid rounded">
-                                <div class="mt-2 text-center">
-                                    <small class="text-muted">Submitted: 2 hours ago</small>
+                <div class="approval-card high-priority reveal">
+                    <div class="row">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" alt="Berber Carpet Weaving Workshop" class="event-image">
+                            <div class="mt-2 text-center">
+                                <small style="color: #666;"><i class="far fa-clock me-1"></i>Submitted: 2 hours ago</small>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+                                <div>
+                                    <h4 style="color: var(--indigo); margin-bottom: 0.5rem;">Berber Carpet Weaving Workshop</h4>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <span class="badge-moroccan badge-workshop">Workshop</span>
+                                        <span class="badge-moroccan badge-pending">Pending Review</span>
+                                    </div>
+                                </div>
+                                <div class="priority-badge priority-high">
+                                    <i class="fas fa-arrow-up"></i>High Priority
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <div>
-                                        <h4>Berber Carpet Weaving Workshop</h4>
-                                        <span class="badge bg-terracotta">Workshop</span>
-                                        <span class="badge bg-warning ms-2">Pending Review</span>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="event-meta-item">
+                                        <i class="far fa-calendar"></i>
+                                        <span>January 15, 2025 - 10:00 AM</span>
                                     </div>
-                                    <div class="priority-indicator">
-                                        <span class="badge bg-success">High Priority</span>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Traditional Crafts Center, Medina</span>
                                     </div>
-                                </div>
-                                
-                                <div class="event-details mb-3">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p><strong>Date:</strong> January 15, 2025 - 10:00 AM</p>
-                                            <p><strong>Venue:</strong> Traditional Crafts Center, Medina</p>
-                                            <p><strong>Organizer:</strong> Artisan Guild Marrakech</p>
-                                            <p><strong>Contact:</strong> guild@artisans-marrakech.ma</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p><strong>Category:</strong> Traditional Crafts Workshop</p>
-                                            <p><strong>Capacity:</strong> 12 participants</p>
-                                            <p><strong>Price:</strong> 150 MAD per person</p>
-                                            <p><strong>Language:</strong> Arabic, French, English</p>
-                                        </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-building"></i>
+                                        <span>Artisan Guild Marrakech</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>guild@artisans-marrakech.ma</span>
                                     </div>
                                 </div>
-                                
-                                <div class="event-description mb-3">
-                                    <h6>Description:</h6>
-                                    <p class="text-muted">Discover the intricate art of traditional Berber carpet weaving with authentic techniques passed down through generations of mountain artisans. This hands-on workshop will teach participants the fundamentals of geometric pattern creation, wool preparation, and traditional dyeing methods using natural materials.</p>
+                                <div class="col-md-6">
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-tag"></i>
+                                        <span>Traditional Crafts Workshop</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-users"></i>
+                                        <span>12 participants max</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-money-bill"></i>
+                                        <span>150 MAD per person</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-language"></i>
+                                        <span>Arabic, French, English</span>
+                                    </div>
                                 </div>
-                                
-                                <div class="review-checklist mb-3">
-                                    <h6>Review Checklist:</h6>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="cultural-relevance-1" checked>
-                                                <label class="form-check-label" for="cultural-relevance-1">
-                                                    Cultural relevance verified
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="venue-info-1" checked>
-                                                <label class="form-check-label" for="venue-info-1">
-                                                    Venue information accurate
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="organizer-verified-1" checked>
-                                                <label class="form-check-label" for="organizer-verified-1">
-                                                    Organizer credentials verified
-                                                </label>
-                                            </div>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.6); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+                                <h6 style="color: var(--indigo); font-family: var(--font-serif); margin-bottom: 0.5rem;">Description:</h6>
+                                <p style="color: #555; font-size: 0.95rem; margin: 0;">Discover the intricate art of traditional Berber carpet weaving with authentic techniques passed down through generations of mountain artisans. This hands-on workshop will teach participants the fundamentals of geometric pattern creation, wool preparation, and traditional dyeing methods using natural materials.</p>
+                            </div>
+
+                            <div class="review-checklist">
+                                <h6>Review Checklist:</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="cultural-relevance-1" checked>
+                                            <label class="form-check-label" for="cultural-relevance-1">Cultural relevance verified</label>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="content-appropriate-1" checked>
-                                                <label class="form-check-label" for="content-appropriate-1">
-                                                    Content appropriate
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="image-quality-1" checked>
-                                                <label class="form-check-label" for="image-quality-1">
-                                                    Image quality acceptable
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="guidelines-compliant-1">
-                                                <label class="form-check-label" for="guidelines-compliant-1">
-                                                    Guidelines compliant
-                                                </label>
-                                            </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="venue-info-1" checked>
+                                            <label class="form-check-label" for="venue-info-1">Venue information accurate</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="organizer-verified-1" checked>
+                                            <label class="form-check-label" for="organizer-verified-1">Organizer credentials verified</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="content-appropriate-1" checked>
+                                            <label class="form-check-label" for="content-appropriate-1">Content appropriate</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="image-quality-1" checked>
+                                            <label class="form-check-label" for="image-quality-1">Image quality acceptable</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="guidelines-compliant-1">
+                                            <label class="form-check-label" for="guidelines-compliant-1">Guidelines compliant</label>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div class="approval-actions">
-                                    <form class="d-inline" data-form-type="admin-approval">
-                                        <input type="hidden" name="event_id" value="workshop-001">
-                                        <input type="hidden" name="action" value="approve">
-                                        <button type="submit" class="btn btn-success me-2">
-                                            <i class="fas fa-check me-2"></i>Approve Event
-                                        </button>
-                                    </form>
-                                    
-                                    <button class="btn btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#requestChangesModal" data-event-id="workshop-001">
-                                        <i class="fas fa-edit me-2"></i>Request Changes
-                                    </button>
-                                    
-                                    <form class="d-inline" data-form-type="admin-approval">
-                                        <input type="hidden" name="event_id" value="workshop-001">
-                                        <input type="hidden" name="action" value="reject">
-                                        <button type="submit" class="btn btn-outline-danger">
-                                            <i class="fas fa-times me-2"></i>Reject Event
-                                        </button>
-                                    </form>
-                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2 flex-wrap mt-3 pt-3" style="border-top: 1px solid rgba(212,163,115,0.2);">
+                                <button class="btn btn-success-moroccan btn-admin" onclick="approveEvent('workshop-001')">
+                                    <i class="fas fa-check"></i>Approve Event
+                                </button>
+                                <button class="btn btn-warning-moroccan btn-admin" data-bs-toggle="modal" data-bs-target="#requestChangesModal" data-event-id="workshop-001" data-event-title="Berber Carpet Weaving Workshop">
+                                    <i class="fas fa-edit"></i>Request Changes
+                                </button>
+                                <button class="btn btn-danger-moroccan btn-admin" onclick="rejectEvent('workshop-001', 'Berber Carpet Weaving Workshop')">
+                                    <i class="fas fa-times"></i>Reject Event
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -246,69 +867,86 @@
 
             <!-- Event 2 - Jazz Fusion Concert -->
             <div class="col-12 mb-4">
-                <div class="admin-content">
-                    <div class="approval-card">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="images/theater_performance_7.jpg" alt="Jazz Fusion Concert" class="img-fluid rounded">
-                                <div class="mt-2 text-center">
-                                    <small class="text-muted">Submitted: 4 hours ago</small>
+                <div class="approval-card standard-priority reveal" style="transition-delay: 0.1s;">
+                    <div class="row">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80" alt="Jazz Fusion Concert" class="event-image">
+                            <div class="mt-2 text-center">
+                                <small style="color: #666;"><i class="far fa-clock me-1"></i>Submitted: 4 hours ago</small>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+                                <div>
+                                    <h4 style="color: var(--indigo); margin-bottom: 0.5rem;">Morocco Meets Jazz Fusion Concert</h4>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <span class="badge-moroccan badge-music">Music</span>
+                                        <span class="badge-moroccan badge-pending">Pending Review</span>
+                                    </div>
+                                </div>
+                                <div class="priority-badge priority-standard">
+                                    <i class="fas fa-minus"></i>Standard Priority
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <div>
-                                        <h4>Morocco Meets Jazz Fusion Concert</h4>
-                                        <span class="badge bg-ochre">Music</span>
-                                        <span class="badge bg-warning ms-2">Pending Review</span>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="event-meta-item">
+                                        <i class="far fa-calendar"></i>
+                                        <span>February 10, 2025 - 7:30 PM</span>
                                     </div>
-                                    <div class="priority-indicator">
-                                        <span class="badge bg-info">Standard Priority</span>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Modern Arts Center, Gueliz</span>
                                     </div>
-                                </div>
-                                
-                                <div class="event-details mb-3">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p><strong>Date:</strong> February 10, 2025 - 7:30 PM</p>
-                                            <p><strong>Venue:</strong> Modern Arts Center, Gueliz</p>
-                                            <p><strong>Organizer:</strong> Jazz Collective Marrakech</p>
-                                            <p><strong>Contact:</strong> contact@jazzmarrakech.com</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p><strong>Category:</strong> Contemporary Fusion Music</p>
-                                            <p><strong>Capacity:</strong> 200 seats</p>
-                                            <p><strong>Price:</strong> 120 MAD per person</p>
-                                            <p><strong>Language:</strong> Multilingual performance</p>
-                                        </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-building"></i>
+                                        <span>Jazz Collective Marrakech</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>contact@jazzmarrakech.com</span>
                                     </div>
                                 </div>
-                                
-                                <div class="event-description mb-3">
-                                    <h6>Description:</h6>
-                                    <p class="text-muted">An innovative fusion performance blending traditional Moroccan instruments with contemporary jazz, creating a unique musical dialogue between cultures. Features renowned oud player Mahmoud El Fassi and international jazz saxophonist Maria Rodriguez.</p>
-                                </div>
-                                
-                                <div class="review-notes mb-3">
-                                    <h6>Review Notes:</h6>
-                                    <div class="alert alert-warning">
-                                        <small><strong>Pending:</strong> Need to verify international artist credentials and work permits.</small>
+                                <div class="col-md-6">
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-tag"></i>
+                                        <span>Contemporary Fusion Music</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-users"></i>
+                                        <span>200 seats</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-money-bill"></i>
+                                        <span>120 MAD per person</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-language"></i>
+                                        <span>Multilingual performance</span>
                                     </div>
                                 </div>
-                                
-                                <div class="approval-actions">
-                                    <button class="btn btn-outline-success me-2" disabled>
-                                        <i class="fas fa-check me-2"></i>Approve Event
-                                    </button>
-                                    
-                                    <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#requestChangesModal" data-event-id="music-002">
-                                        <i class="fas fa-edit me-2"></i>Request Changes
-                                    </button>
-                                    
-                                    <button class="btn btn-outline-danger">
-                                        <i class="fas fa-times me-2"></i>Reject Event
-                                    </button>
-                                </div>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.6); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+                                <h6 style="color: var(--indigo); font-family: var(--font-serif); margin-bottom: 0.5rem;">Description:</h6>
+                                <p style="color: #555; font-size: 0.95rem; margin: 0;">An innovative fusion performance blending traditional Moroccan instruments with contemporary jazz, creating a unique musical dialogue between cultures. Features renowned oud player Mahmoud El Fassi and international jazz saxophonist Maria Rodriguez.</p>
+                            </div>
+
+                            <div class="alert-note">
+                                <small><i class="fas fa-exclamation-triangle me-2"></i><strong>Pending:</strong> Need to verify international artist credentials and work permits.</small>
+                            </div>
+
+                            <div class="d-flex gap-2 flex-wrap mt-3 pt-3" style="border-top: 1px solid rgba(212,163,115,0.2);">
+                                <button class="btn btn-success-moroccan btn-admin" disabled style="opacity: 0.6;">
+                                    <i class="fas fa-check"></i>Approve Event
+                                </button>
+                                <button class="btn btn-warning-moroccan btn-admin" data-bs-toggle="modal" data-bs-target="#requestChangesModal" data-event-id="music-002" data-event-title="Morocco Meets Jazz Fusion Concert">
+                                    <i class="fas fa-edit"></i>Request Changes
+                                </button>
+                                <button class="btn btn-danger-moroccan btn-admin" onclick="rejectEvent('music-002', 'Morocco Meets Jazz Fusion Concert')">
+                                    <i class="fas fa-times"></i>Reject Event
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -317,70 +955,82 @@
 
             <!-- Event 3 - Calligraphy Exhibition -->
             <div class="col-12 mb-4">
-                <div class="admin-content">
-                    <div class="approval-card">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="images/art_exhibition_3.jpg" alt="Arabic Calligraphy Exhibition" class="img-fluid rounded">
-                                <div class="mt-2 text-center">
-                                    <small class="text-muted">Submitted: 1 day ago</small>
+                <div class="approval-card high-priority reveal" style="transition-delay: 0.2s;">
+                    <div class="row">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&q=80" alt="Arabic Calligraphy Exhibition" class="event-image">
+                            <div class="mt-2 text-center">
+                                <small style="color: #666;"><i class="far fa-clock me-1"></i>Submitted: 1 day ago</small>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+                                <div>
+                                    <h4 style="color: var(--indigo); margin-bottom: 0.5rem;">The Art of Arabic Calligraphy</h4>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <span class="badge-moroccan badge-exhibition">Exhibition</span>
+                                        <span class="badge-moroccan badge-pending">Pending Review</span>
+                                    </div>
+                                </div>
+                                <div class="priority-badge priority-high">
+                                    <i class="fas fa-arrow-up"></i>High Priority
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <div>
-                                        <h4>The Art of Arabic Calligraphy</h4>
-                                        <span class="badge bg-indigo">Exhibition</span>
-                                        <span class="badge bg-warning ms-2">Pending Review</span>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="event-meta-item">
+                                        <i class="far fa-calendar"></i>
+                                        <span>February 1, 2025 - 5:00 PM</span>
                                     </div>
-                                    <div class="priority-indicator">
-                                        <span class="badge bg-success">High Priority</span>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Heritage Gallery, Medina</span>
                                     </div>
-                                </div>
-                                
-                                <div class="event-details mb-3">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p><strong>Date:</strong> February 1, 2025 - 5:00 PM</p>
-                                            <p><strong>Venue:</strong> Heritage Gallery, Medina</p>
-                                            <p><strong>Organizer:</strong> Calligraphy Masters Society</p>
-                                            <p><strong>Contact:</strong> masters@calligraphy-morocco.org</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p><strong>Category:</strong> Traditional Art Exhibition</p>
-                                            <p><strong>Duration:</strong> 3 weeks</p>
-                                            <p><strong>Price:</strong> Free Entry</p>
-                                            <p><strong>Language:</strong> Arabic, French</p>
-                                        </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-building"></i>
+                                        <span>Calligraphy Masters Society</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>masters@calligraphy-morocco.org</span>
                                     </div>
                                 </div>
-                                
-                                <div class="event-description mb-3">
-                                    <h6>Description:</h6>
-                                    <p class="text-muted">Explore the magnificent world of Arabic calligraphy through works by master calligraphers from Morocco and the Islamic world. The exhibition features traditional Quranic verses, poetry, and contemporary interpretations of this sacred art form.</p>
+                                <div class="col-md-6">
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-tag"></i>
+                                        <span>Traditional Art Exhibition</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>3 weeks duration</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-money-bill"></i>
+                                        <span>Free Entry</span>
+                                    </div>
+                                    <div class="event-meta-item">
+                                        <i class="fas fa-language"></i>
+                                        <span>Arabic, French</span>
+                                    </div>
                                 </div>
-                                
-                                <div class="approval-actions">
-                                    <form class="d-inline" data-form-type="admin-approval">
-                                        <input type="hidden" name="event_id" value="exhibition-003">
-                                        <input type="hidden" name="action" value="approve">
-                                        <button type="submit" class="btn btn-success me-2">
-                                            <i class="fas fa-check me-2"></i>Approve Event
-                                        </button>
-                                    </form>
-                                    
-                                    <button class="btn btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#requestChangesModal" data-event-id="exhibition-003">
-                                        <i class="fas fa-edit me-2"></i>Request Changes
-                                    </button>
-                                    
-                                    <form class="d-inline" data-form-type="admin-approval">
-                                        <input type="hidden" name="event_id" value="exhibition-003">
-                                        <input type="hidden" name="action" value="reject">
-                                        <button type="submit" class="btn btn-outline-danger">
-                                            <i class="fas fa-times me-2"></i>Reject Event
-                                        </button>
-                                    </form>
-                                </div>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.6); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+                                <h6 style="color: var(--indigo); font-family: var(--font-serif); margin-bottom: 0.5rem;">Description:</h6>
+                                <p style="color: #555; font-size: 0.95rem; margin: 0;">Explore the magnificent world of Arabic calligraphy through works by master calligraphers from Morocco and the Islamic world. The exhibition features traditional Quranic verses, poetry, and contemporary interpretations of this sacred art form.</p>
+                            </div>
+
+                            <div class="d-flex gap-2 flex-wrap mt-3 pt-3" style="border-top: 1px solid rgba(212,163,115,0.2);">
+                                <button class="btn btn-success-moroccan btn-admin" onclick="approveEvent('exhibition-003')">
+                                    <i class="fas fa-check"></i>Approve Event
+                                </button>
+                                <button class="btn btn-warning-moroccan btn-admin" data-bs-toggle="modal" data-bs-target="#requestChangesModal" data-event-id="exhibition-003" data-event-title="The Art of Arabic Calligraphy">
+                                    <i class="fas fa-edit"></i>Request Changes
+                                </button>
+                                <button class="btn btn-danger-moroccan btn-admin" onclick="rejectEvent('exhibition-003', 'The Art of Arabic Calligraphy')">
+                                    <i class="fas fa-times"></i>Reject Event
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -389,26 +1039,38 @@
         </div>
 
         <!-- Approval Summary -->
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12">
-                <div class="admin-content">
-                    <h5 class="mb-3">Approval Summary</h5>
+                <div class="glass-card reveal">
+                    <div class="section-header mb-4">
+                        <i class="fas fa-chart-pie"></i>
+                        <h4>Approval Summary</h4>
+                    </div>
+
                     <div class="row">
-                        <div class="col-md-3 text-center">
-                            <h3 class="text-warning">5</h3>
-                            <p class="text-muted">Pending Review</p>
+                        <div class="col-md-3 mb-3">
+                            <div class="summary-stat pending">
+                                <h3>5</h3>
+                                <p style="color: #666; margin: 0;">Pending Review</p>
+                            </div>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <h3 class="text-success">18</h3>
-                            <p class="text-muted">Approved This Week</p>
+                        <div class="col-md-3 mb-3">
+                            <div class="summary-stat approved">
+                                <h3>18</h3>
+                                <p style="color: #666; margin: 0;">Approved This Week</p>
+                            </div>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <h3 class="text-danger">2</h3>
-                            <p class="text-muted">Rejected This Week</p>
+                        <div class="col-md-3 mb-3">
+                            <div class="summary-stat rejected">
+                                <h3>2</h3>
+                                <p style="color: #666; margin: 0;">Rejected This Week</p>
+                            </div>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <h3 class="text-info">3</h3>
-                            <p class="text-muted">Changes Requested</p>
+                        <div class="col-md-3 mb-3">
+                            <div class="summary-stat changes">
+                                <h3>3</h3>
+                                <p style="color: #666; margin: 0;">Changes Requested</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -418,20 +1080,27 @@
 
     <!-- Request Changes Modal -->
     <div class="modal fade" id="requestChangesModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Request Changes</h5>
+                    <h5 class="modal-title">
+                        <i class="fas fa-edit me-2"></i>Request Changes
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="requestChangesForm">
                         <input type="hidden" id="changeEventId" name="event_id">
-                        
+
                         <div class="mb-3">
-                            <label for="changeCategory" class="form-label">Change Category</label>
+                            <label class="form-label" style="font-weight: 500; color: var(--indigo);">Event</label>
+                            <input type="text" class="form-control" id="changeEventTitle" readonly style="background: rgba(212,163,115,0.1);">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="changeCategory" class="form-label" style="font-weight: 500; color: var(--indigo);">Change Category</label>
                             <select class="form-select" id="changeCategory" name="change_category">
-                                <option value="">Select category</option>
+                                <option value="">Select category...</option>
                                 <option value="content">Content & Description</option>
                                 <option value="venue">Venue Information</option>
                                 <option value="date">Date & Time</option>
@@ -441,32 +1110,38 @@
                                 <option value="other">Other</option>
                             </select>
                         </div>
-                        
+
                         <div class="mb-3">
-                            <label for="changeDetails" class="form-label">Requested Changes</label>
+                            <label for="changeDetails" class="form-label" style="font-weight: 500; color: var(--indigo);">Requested Changes</label>
                             <textarea class="form-control" id="changeDetails" name="change_details" rows="4" placeholder="Please describe the specific changes needed for approval..."></textarea>
                         </div>
-                        
-                        <div class="mb-3">
-                            <label for="changePriority" class="form-label">Priority</label>
-                            <select class="form-select" id="changePriority" name="priority">
-                                <option value="low">Low - Minor adjustments needed</option>
-                                <option value="medium" selected>Medium - Moderate changes required</option>
-                                <option value="high">High - Significant issues to address</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="notifyOrganizer" name="notify_organizer" checked>
-                            <label class="form-check-label" for="notifyOrganizer">
-                                Send email notification to organizer
-                            </label>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="changePriority" class="form-label" style="font-weight: 500; color: var(--indigo);">Priority</label>
+                                <select class="form-select" id="changePriority" name="priority">
+                                    <option value="low">Low - Minor adjustments needed</option>
+                                    <option value="medium" selected>Medium - Moderate changes required</option>
+                                    <option value="high">High - Significant issues to address</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" style="font-weight: 500; color: var(--indigo);">Notification</label>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="notifyOrganizer" name="notify_organizer" checked>
+                                    <label class="form-check-label" for="notifyOrganizer">
+                                        Send email notification to organizer
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-warning" onclick="submitChangeRequest()">Send Change Request</button>
+                    <button type="button" class="btn btn-outline-secondary btn-admin" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning-moroccan btn-admin" onclick="submitChangeRequest()">
+                        <i class="fas fa-paper-plane me-2"></i>Send Change Request
+                    </button>
                 </div>
             </div>
         </div>
@@ -474,67 +1149,76 @@
 
     <!-- Bootstrap 5 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JavaScript -->
-    <script src="js/main.js"></script>
-    
+
     <script>
-        // Approval page specific JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set up event ID for change request modal
-            const requestChangesButtons = document.querySelectorAll('[data-bs-target="#requestChangesModal"]');
-            requestChangesButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const eventId = this.getAttribute('data-event-id');
-                    document.getElementById('changeEventId').value = eventId;
-                });
-            });
+        // Set up event data for change request modal
+        const requestChangesModal = document.getElementById('requestChangesModal');
+        requestChangesModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const eventId = button.getAttribute('data-event-id');
+            const eventTitle = button.getAttribute('data-event-title');
+
+            document.getElementById('changeEventId').value = eventId;
+            document.getElementById('changeEventTitle').value = eventTitle;
         });
-        
+
+        function approveEvent(eventId) {
+            if (confirm('Approve this event? It will be published and visible to the public.')) {
+                console.log('Approving event:', eventId);
+                alert('Event approved successfully!');
+            }
+        }
+
+        function rejectEvent(eventId, eventTitle) {
+            if (confirm('Reject "' + eventTitle + '"? This will notify the organizer and remove the event from the queue.')) {
+                console.log('Rejecting event:', eventId);
+                alert('Event rejected and organizer notified.');
+            }
+        }
+
         function submitChangeRequest() {
             const form = document.getElementById('requestChangesForm');
-            const formData = new FormData(form);
-            
-            if (!formData.get('change_details').trim()) {
+            const category = document.getElementById('changeCategory').value;
+            const details = document.getElementById('changeDetails').value;
+
+            if (!category) {
+                alert('Please select a change category.');
+                return;
+            }
+
+            if (!details.trim()) {
                 alert('Please provide details about the requested changes.');
                 return;
             }
-            
-            // Implementation for submitting change request
-            console.log('Submitting change request:', Object.fromEntries(formData));
-            
-            const modal = bootstrap.Modal.getInstance(document.getElementById('requestChangesModal'));
-            modal.hide();
-            
-            showSuccessMessage('Change request sent to organizer successfully!');
+
+            const btn = document.querySelector('button[onclick="submitChangeRequest()"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+
+            setTimeout(() => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('requestChangesModal'));
+                modal.hide();
+                btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Send Change Request';
+                form.reset();
+                alert('Change request sent to organizer successfully!');
+            }, 1200);
         }
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
     </script>
-    
-    <style>
-        .approval-card {
-            border: 1px solid var(--border-light);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .approval-card:hover {
-            box-shadow: 0 5px 15px var(--shadow-medium);
-        }
-        
-        .priority-indicator .badge {
-            font-size: 0.75rem;
-        }
-        
-        .review-checklist .form-check {
-            margin-bottom: 0.5rem;
-        }
-        
-        .approval-actions {
-            border-top: 1px solid var(--border-light);
-            padding-top: 1rem;
-            margin-top: 1rem;
-        }
-    </style>
 </body>
 </html>
