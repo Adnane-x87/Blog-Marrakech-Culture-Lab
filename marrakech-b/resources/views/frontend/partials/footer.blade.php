@@ -18,19 +18,19 @@
                 <div class="col-lg-2 col-md-6 mb-4 reveal" style="transition-delay: 0.1s;">
                     <h5>Explore</h5>
                     <ul class="footer-links">
-                        <li><a href="events.html">All Events</a></li>
-                        <li><a href="category.html?cat=music">Music</a></li>
-                        <li><a href="category.html?cat=exhibition">Art Exhibitions</a></li>
-                        <li><a href="category.html?cat=theater">Theater</a></li>
-                        <li><a href="category.html?cat=workshop">Workshops</a></li>
+                        <li><a href="#">All Events</a></li>
+                        <li><a href="#">Music</a></li>
+                        <li><a href="#">Art Exhibitions</a></li>
+                        <li><a href="#">Theater</a></li>
+                        <li><a href="#">Workshops</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-2 col-md-6 mb-4 reveal" style="transition-delay: 0.2s;">
                     <h5>Community</h5>
                     <ul class="footer-links">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="submit-event.html">Submit Event</a></li>
+                        <li><a href="{{ url('/about') }}">About Us</a></li>
+                        <li><a href="#">Submit Event</a></li>
                         <li><a href="#">Contact</a></li>
                         <li><a href="#">FAQ</a></li>
                         <li><a href="#">Guidelines</a></li>

@@ -27,11 +27,11 @@
                             Immerse yourself in the rich artistic heritage of Morocco's red city. From traditional music concerts to contemporary art exhibitions, explore the vibrant cultural landscape that makes Marrakech unique.
                         </p>
                         <div class="hero-buttons">
-                            <a href="events.html" class="btn btn-primary-custom">
+                            <a href="#" class="btn btn-primary-custom">
                                 <i class="fas fa-calendar-alt"></i>
                                 Explore Events
                             </a>
-                            <a href="about.html" class="btn btn-outline-custom">
+                            <a href="{{ url('/about') }}" class="btn btn-outline-custom">
                                 <i class="fas fa-play-circle"></i>
                                 Watch Film
                             </a>
@@ -86,7 +86,7 @@
                                 <i class="fas fa-map-marker-alt"></i>
                                 Cultural Center, Medina
                             </span>
-                            <a href="event-details.html?id=1" class="btn-view-details">
+                            <a href="#" class="btn-view-details">
                                 Details <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
@@ -112,7 +112,7 @@
                                 <i class="fas fa-map-marker-alt"></i>
                                 Gallery Moderne, Gueliz
                             </span>
-                            <a href="event-details.html?id=2" class="btn-view-details">
+                            <a href="#" class="btn-view-details">
                                 Details <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
@@ -138,7 +138,7 @@
                                 <i class="fas fa-map-marker-alt"></i>
                                 Artisan Quarter, Mellah
                             </span>
-                            <a href="event-details.html?id=3" class="btn-view-details">
+                            <a href="#" class="btn-view-details">
                                 Details <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
@@ -147,7 +147,7 @@
             </div>
 
             <div class="text-center mt-5 reveal">
-                <a href="events.html" class="btn btn-primary-custom">
+                <a href="#" class="btn btn-primary-custom">
                     <i class="fas fa-th-large me-2"></i>View All Events
                 </a>
             </div>

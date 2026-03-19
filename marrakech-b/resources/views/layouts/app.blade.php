@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marrakech Cultural Scene - Discover Local Arts & Events</title>
     <meta name="description" content="Discover Marrakech's vibrant cultural scene. Find art exhibitions, music concerts, theater performances, and cultural workshops in the heart of Morocco.">
+        
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('front/css/custom.css') }}">
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,6 +39,7 @@
     <!-- Bootstrap 5 JavaScript -->
 
     @include('frontend.partials.script')
+    @stack('scripts')
  
 </body>
 </html>

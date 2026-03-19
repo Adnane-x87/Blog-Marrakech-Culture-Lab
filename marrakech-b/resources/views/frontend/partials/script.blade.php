@@ -1,13 +1,15 @@
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+            if (navbar) {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
             }
         });
 
@@ -15,26 +17,29 @@
         const video = document.querySelector('.hero-video');
         const muteBtn = document.getElementById('muteBtn');
         const playPauseBtn = document.getElementById('playPauseBtn');
-        let isMuted = true;
-        let isPlaying = true;
+        
+        if (video && muteBtn && playPauseBtn) {
+            let isMuted = true;
+            let isPlaying = true;
 
-        muteBtn.addEventListener('click', () => {
-            isMuted = !isMuted;
-            video.muted = isMuted;
-            muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-            muteBtn.style.background = isMuted ? 'rgba(255,255,255,0.1)' : 'var(--terracotta)';
-        });
+            muteBtn.addEventListener('click', () => {
+                isMuted = !isMuted;
+                video.muted = isMuted;
+                muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+                muteBtn.style.background = isMuted ? 'rgba(255,255,255,0.1)' : 'var(--terracotta)';
+            });
 
-        playPauseBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                video.pause();
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            } else {
-                video.play();
-                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            }
-            isPlaying = !isPlaying;
-        });
+            playPauseBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    video.pause();
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                } else {
+                    video.play();
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                }
+                isPlaying = !isPlaying;
+            });
+        }
 
         // Scroll Reveal Animation
         const revealElements = document.querySelectorAll('.reveal');
@@ -68,22 +73,25 @@
         });
 
         // Newsletter form handling
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const input = this.querySelector('input');
-            if (input.value) {
-                const btn = this.querySelector('button');
-                const originalIcon = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check"></i>';
-                btn.style.background = '#28a745';
-                input.value = '';
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = this.querySelector('input');
+                if (input.value) {
+                    const btn = this.querySelector('button');
+                    const originalIcon = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i>';
+                    btn.style.background = '#28a745';
+                    input.value = '';
 
-                setTimeout(() => {
-                    btn.innerHTML = originalIcon;
-                    btn.style.background = '';
-                }, 2000);
-            }
-        });
+                    setTimeout(() => {
+                        btn.innerHTML = originalIcon;
+                        btn.style.background = '';
+                    }, 2000);
+                }
+            });
+        }
 
         // Parallax effect for hero video on scroll
         window.addEventListener('scroll', () => {

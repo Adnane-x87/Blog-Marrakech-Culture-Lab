@@ -1,6 +1,6 @@
   <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="brand-logo" href="index.html">
+            <a class="brand-logo" href="{{ url('/') }}">
                 <div class="logo-icon">
                     <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                         <!-- Decorative outer ring with Moroccan pattern -->
@@ -37,22 +37,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.html">
+                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">
                             <i class="fas fa-home me-1"></i>Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="events.html">
+                        <a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="{{url('/events')}}">
                             <i class="fas fa-calendar-alt me-1"></i>Events
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">
+                        <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ url('/about') }}">
                             <i class="fas fa-info-circle me-1"></i>About
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="submit-event.html">
+                        <a class="nav-link" href="#">
                             <i class="fas fa-plus-circle me-1"></i>Submit Event
                         </a>
                     </li>
